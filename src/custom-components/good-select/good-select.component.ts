@@ -1,12 +1,20 @@
-import { Component, OnInit, Input, forwardRef, NgModule, TemplateRef, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, forwardRef, NgModule, TemplateRef, Output, EventEmitter, ViewChild, ViewContainerRef, ElementRef, ContentChild } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormsModule } from "@angular/forms";
-import { CommonModule } from "@angular/common";
+import { CommonModule, NgForOfContext } from "@angular/common";
 import { NgZorroAntdModule } from '../../../index.showcase';
 import { API } from '../services/api';
+import { Observable } from "rxjs/Rx";
+import { Subject } from 'rxjs/Rx';
 
 export interface GoodOpt {
-    goodId: string,
-    name: string
+    name: string,
+    goodId?: string,
+    disabled?: boolean
+}
+
+export interface DomOpt {
+    _value: string,
+    _label: string
 }
 
 export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
@@ -14,40 +22,27 @@ export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
     useExisting: forwardRef(() => GoodSelectComponent),
     multi: true
 };
-// <nz-select
-//         class="good-select"
-//         [style.width]="_width"
-//         nzKeepUnListOptions
-//         [nzMode]="'multiple'"
-//         [nzPlaceHolder]="'请选择关键字'"
-//         (nzSearchChange)="searchChange($event)"
-//         [(ngModel)]="selectedMultipleOption"
-//         [nzNotFoundContent]="'无法找到'">
-//         <nz-option
-//         *ngFor="let option of searchOptions"
-//         [nzLabel]="option[0]"
-//         [nzValue]="option[0]">
-//         </nz-option>
-//     </nz-select>
 @Component({
     selector: `good-select`,
     template: `
     <nz-select 
         [style.width]="_width" 
         [nzPlaceHolder]="placeHolder" 
-        [nzMode]="_nzMode" 
+        [nzMode]="_nzMode"
+        [nzFilter]="nzFilter"
         [nzAllowClear]="_allowClear"
-        [nzNotFoundContent]="'找不到选项'"
-        (nzOpenChange)="yztOpenChange($event)"
         (nzScrollToBottom)="yztScrollToBottom()"
         (nzSearchChange)="yztSearchChange($event)"
         [(ngModel)]="value">
         <nz-option
+            #domOpt
             *ngFor="let option of options"
             [nzLabel]="option.name"
             [nzValue]="option.goodId"
             [nzDisabled]="option.disabled">
-            <ng-template *ngIf="_hasTemplate" [ngTemplateOutlet]="_content" #nzOptionTemplate></ng-template>
+            <ng-template *ngIf="_hasTemplate" #nzOptionTemplate>
+                <ng-container #nzOptionCon [ngTemplateOutlet]="_content" [ngTemplateOutletContext]="option"></ng-container>
+            </ng-template>
         </nz-option>
     </nz-select>
     `,
@@ -59,7 +54,7 @@ export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
     providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR]
 })
 export class GoodSelectComponent implements ControlValueAccessor, OnInit {
-
+    @ViewChild("domOpt") domOpt: DomOpt;
     private onTouchedCallback: () => () => {};
     private onChangeCallback: (_: any) => () => {};
 
@@ -71,14 +66,28 @@ export class GoodSelectComponent implements ControlValueAccessor, OnInit {
     _allowClear = true;
     _nzMode = "combobox";
     _hasTemplate = false;
+    // 下拉过滤含关键字选项，false为不过滤
+    _filter = false;
+    currentText = '';
     firstNum = 0;
+    canQuery = true;
+    keyWordStream = new Subject<string>()
+    keyWord$: any;
 
     @Input() placeholder = "请选择品名";
     @Input() rowsNum = 10;
+    @Input() valueType = "";
 
     set value(v: string) {
         this._value = v;
-        this.onChangeCallback(v);
+        // 双向绑定获取对象
+        if(this.valueType === "object") {
+            const {_value, _label} = this.domOpt;
+            this.onChangeCallback({value: _value, label: _label});
+        } else {
+            this.onChangeCallback(v);
+        }
+        
     }
 
     get value(): string {
@@ -86,10 +95,11 @@ export class GoodSelectComponent implements ControlValueAccessor, OnInit {
     };
 
     @Input() set width(v: any) {
-        this._width = Array.from(v).includes("%") ? `${v}%` : isNaN(parseInt(v)) ? this._width : `${v}px`;
+        const width = parseInt(v);
+        this._width = Array.from(v).includes("%") ? `${v}%` : isNaN(width) ? this._width : `${width}px`;
     }
 
-    @Input() set nzMode(v) {
+    @Input() set goodMode(v) {
         this._nzMode = v;
         this._allowClear = v === "combobox" ? true : false;
     };
@@ -101,28 +111,35 @@ export class GoodSelectComponent implements ControlValueAccessor, OnInit {
         }
     }
 
-    @Output() openChange: EventEmitter<any> = new EventEmitter()
+    @Output() openChange: EventEmitter<any> = new EventEmitter();
+    @Output() outOptions: EventEmitter<any> = new EventEmitter();
 
     constructor(private api: API) {
     }
 
     ngOnInit() {
+        // 限流
+        this.keyWord$ = this.keyWordStream
+            .debounceTime(250)
+            .subscribe(word => {
+                this.queryData(word, [])
+            });
+        
+    }
+
+    ngOnDestroy() {
+        this.keyWord$.unsubscribe()
     }
 
     yztSearchChange(event) {
-        console.log(event, "yztSearchChange");
+        this.canQuery = true;
+        this.currentText = event;
         this.firstNum = 0;
-        this.queryData(event);
-    }
-
-    yztOpenChange(event) {
-        console.log(event, "yztOpenChange")
-        this.openChange.emit(event);
+        this.keyWordStream.next(event);
     }
 
     yztScrollToBottom() {
-        console.log("yztScrollToBottom")
-        this.queryData()
+        this.queryData(this.currentText, this.options);
     }
 
     // 写入值
@@ -146,14 +163,22 @@ export class GoodSelectComponent implements ControlValueAccessor, OnInit {
      * 查询数据
      * @param $event
      */
-    queryData(searchText?: string) {
+    queryData(searchText?: string, options?: Array<GoodOpt>) {
+        if (!this.canQuery) return;
         const goodName = searchText;
         let pageParms = { "first": this.firstNum, "rows": this.rowsNum };
         this.api.call("abnormalOtherHandleController.waybillGoodsQuery", pageParms, {
             name: goodName
         }).ok(json => {
-            let result: any = json.result && json.result.content || [];
-            this.options = result || [];
+            const result = json.result && json.result.content || [];
+            if (!result.length) {
+                const lastItem = new Array<GoodOpt>({ goodId: "V--93HPfRsZtgTnb", name: "没有更多选项！", disabled: true });
+                this.options = options.concat(lastItem);
+                this.canQuery = false;
+                return;
+            }
+            this.options = options.concat(result);
+            this.outOptions.emit(this.options);
             this.firstNum += this.rowsNum;
         }).fail(err => {
             throw new Error(err);

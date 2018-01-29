@@ -4,14 +4,12 @@ import { Component, OnInit } from '@angular/core';
   selector: 'good-select-demo-basic',
   template: `
     <good-select [(ngModel)]="value"></good-select>
-    <button (click)="handle()">手动阀</button>
+    <button (click)="handle()">获取品名ID</button>
   `,
   styles  : []
 })
 export class GoodSelectDemoBasicComponent implements OnInit {
-  options = [];
-  selectedOption;
-  value: string = "";
+  value = "";
   ngOnInit() {
 
   }
