@@ -40,7 +40,7 @@ export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
             [nzLabel]="option.name"
             [nzValue]="option.goodId"
             [nzDisabled]="option.disabled">
-            <ng-template *ngIf="_hasTemplate" #nzOptionTemplate>
+            <ng-template *ngIf="_content" #nzOptionTemplate>
                 <ng-container #nzOptionCon [ngTemplateOutlet]="_content" [ngTemplateOutletContext]="option"></ng-container>
             </ng-template>
         </nz-option>
@@ -65,7 +65,6 @@ export class GoodSelectComponent implements ControlValueAccessor, OnInit {
     _content: TemplateRef<any>;
     _allowClear = true;
     _nzMode = "combobox";
-    _hasTemplate = false;
     // 下拉过滤含关键字选项，false为不过滤
     _filter = false;
     currentText = '';
@@ -107,7 +106,6 @@ export class GoodSelectComponent implements ControlValueAccessor, OnInit {
     @Input() set customTemplate(tpl: TemplateRef<any>) {
         if (tpl instanceof TemplateRef) {
             this._content = tpl;
-            this._hasTemplate = true;
         }
     }
 
