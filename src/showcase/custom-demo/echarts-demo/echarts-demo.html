@@ -1,0 +1,145 @@
+<article>
+    <section class="markdown"><h1>Echarts 指令</h1>
+      <section class="markdown">
+        <p>基于echarts3扩展的ng指令，统计图表，地图，折线图、柱状图、饼图等，只要是echarts支持的图都可以实现。</p>
+        <p>基于开源组件修改：https://github.com/xieziyu/ngx-echarts/</p>
+        <p>options属 性配置请到 Echarts官网看文档：<a href="http://echarts.baidu.com/" target="_blank">http://echarts.baidu.com/</a></p>
+        <h2 id="何时使用"><span>何时使用</span>
+          <!-- <a class="anchor">#</a> -->
+        </h2>
+        <ul>
+          <li><p>通过统计数据，进行绘制统计图表。</p></li>
+        </ul>
+      </section>
+      <h2>代码演示<i class="code-box-expand-trigger anticon anticon-appstore" title="展开全部代码"></i></h2>
+    </section>
+    <div nz-row [nzGutter]="8">
+      <div nz-col [nzSpan]="11">
+        <nz-code-box [nzTitle]="'地图'" id="components-echarts-demo-map" [nzCode]="EchartsDemoMapComponent">
+          <echarts-demo-map demo></echarts-demo-map>
+          <div intro>
+            <p>地图统计</p>
+          </div>
+        </nz-code-box>
+        <nz-code-box [nzTitle]="'柱状图'" id="components-echarts-demo-bar" [nzCode]="EchartsDemoBarComponent">
+          <echarts-demo-bar demo></echarts-demo-bar>
+          <div intro>
+            <p>使用 <code>dataset</code>  更容易更新图表数据</p>
+          </div>
+        </nz-code-box>
+        <nz-code-box [nzTitle]="'图表切换'" id="components-echarts-demo-options" [nzCode]="EchartsDemoOptionsComponent">
+            <echarts-demo-options demo></echarts-demo-options>
+            <div intro>
+              <p>如何更新 "options" 来改变图表</p>
+            </div>
+          </nz-code-box>
+      </div>
+      <div nz-col [nzSpan]="12">
+          <nz-code-box [nzTitle]="'嵌套饼图'" id="components-echarts-demo-pie" [nzCode]="EchartsDemoPieComponent">
+            <echarts-demo-pie demo></echarts-demo-pie>
+            <div intro>
+              <p>多个饼图，中心，半径设置，文本标签显示</p>
+            </div>
+          </nz-code-box>
+          <nz-code-box [nzTitle]="'点击事件'" id="components-echarts-demo-click" [nzCode]="EchartsDemoClickComponent">
+            <echarts-demo-click demo></echarts-demo-click>
+            <div intro>
+              <p>绑定鼠标 单击 和 双击 事件，单击图表查看效果，打开console可以查看输出信息</p>
+            </div>
+          </nz-code-box>
+          <nz-code-box [nzTitle]="'堆叠区域图'" id="components-echarts-demo-line" [nzCode]="EchartsDemoLineComponent">
+              <echarts-demo-line demo></echarts-demo-line>
+              <div intro>
+                <p>堆叠区域图 示例</p>
+              </div>
+            </nz-code-box>
+        </div>
+    </div>
+    <section class="markdown api-container">
+      <h2 id="API"><span>API</span>
+        <!-- <a class="anchor">#</a> -->
+      </h2>
+      <h3 id="Rate"><span>[echarts]</span>
+        <!-- <a class="anchor">#</a> -->
+      </h3>
+      <table>
+        <thead>
+          <tr>
+            <th>参数</th>
+            <th>说明</th>
+            <th>类型</th>
+            <th>默认值</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>options</td>
+            <td>必填参数，Echarts的options参数，详情参看 http://echarts.baidu.com/ </td>
+            <td>Object</td>
+            <td> - </td>
+          </tr>
+          <tr>
+            <td>dataset</td>
+            <td>可选参数，可通过dataset快速改变统计数据 </td>
+            <td> Array </td>
+            <td> - </td>
+          </tr>
+          <tr>
+            <td>theme</td>
+            <td>主题颜色</td>
+            <td>String</td>
+            <td> - </td>
+          </tr>
+          <tr>
+            <td>loading</td>
+            <td>图标加载动画效果，数据渲染慢的时候可以提升交互体验</td>
+            <td>Boolean</td>
+            <td> false </td>
+          </tr>
+          <tr>
+            <td>chartClick</td>
+            <td>图表点击事件</td>
+            <td>EventEmitter</td>
+            <td> - </td>
+          </tr>
+          <tr>
+            <td>chartDblClick</td>
+            <td>图表双击事件</td>
+            <td>EventEmitter</td>
+            <td> - </td>
+          </tr>
+          <tr>
+            <td>chartMouseDown</td>
+            <td>图表鼠标按下事件</td>
+            <td>EventEmitter</td>
+            <td> - </td>
+          </tr>
+          <tr>
+            <td>chartMouseUp</td>
+            <td>图表鼠标释放事件</td>
+            <td>EventEmitter</td>
+            <td> - </td>
+          </tr>
+          <tr>
+            <td>chartMouseOver</td>
+            <td>图表mouseover事件</td>
+            <td>EventEmitter</td>
+            <td> - </td>
+          </tr>
+          <tr>
+            <td>chartMouseOut</td>
+            <td>图表mouseout事件</td>
+            <td>EventEmitter</td>
+            <td> - </td>
+          </tr>
+          <tr>
+            <td>chartGlobalOut</td>
+            <td>图表全图mouseout事件</td>
+            <td>EventEmitter</td>
+            <td> - </td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+  </article>
+  

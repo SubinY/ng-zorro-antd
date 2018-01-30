@@ -1,9 +1,18 @@
-import { Component, OnInit, Input, forwardRef, NgModule, TemplateRef, Output, EventEmitter, ViewChild, ViewContainerRef, ElementRef, ContentChild } from '@angular/core';
+import {
+    Component,
+    OnInit,
+    Input,
+    forwardRef,
+    NgModule,
+    TemplateRef,
+    Output,
+    EventEmitter,
+    ViewChild
+} from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormsModule } from "@angular/forms";
-import { CommonModule, NgForOfContext } from "@angular/common";
+import { CommonModule } from "@angular/common";
 import { NgZorroAntdModule } from '../../../index.showcase';
 import { API } from '../services/api';
-import { Observable } from "rxjs/Rx";
 import { Subject } from 'rxjs/Rx';
 
 export interface GoodOpt {
@@ -41,7 +50,7 @@ export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
             [nzValue]="option.goodId"
             [nzDisabled]="option.disabled">
             <ng-template *ngIf="_content" #nzOptionTemplate>
-                <ng-container #nzOptionCon [ngTemplateOutlet]="_content" [ngTemplateOutletContext]="option"></ng-container>
+                <ng-container [ngTemplateOutlet]="_content" [ngTemplateOutletContext]="option"></ng-container>
             </ng-template>
         </nz-option>
     </nz-select>
@@ -80,13 +89,13 @@ export class GoodSelectComponent implements ControlValueAccessor, OnInit {
     set value(v: string) {
         this._value = v;
         // 双向绑定获取对象
-        if(this.valueType === "object") {
-            const {_value, _label} = this.domOpt;
-            this.onChangeCallback({value: _value, label: _label});
+        if (this.valueType === "object") {
+            const { _value, _label } = this.domOpt;
+            this.onChangeCallback({ value: _value, label: _label });
         } else {
             this.onChangeCallback(v);
         }
-        
+
     }
 
     get value(): string {
@@ -122,7 +131,7 @@ export class GoodSelectComponent implements ControlValueAccessor, OnInit {
             .subscribe(word => {
                 this.queryData(word, [])
             });
-        
+
     }
 
     ngOnDestroy() {

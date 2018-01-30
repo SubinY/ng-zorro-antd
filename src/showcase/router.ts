@@ -23,7 +23,18 @@ export const ROUTER_LIST = {
   ],
   'components': [
     {
-      'name'    : 'customComponent',
+      'name'    : 'UIComponent',
+      'children': [
+        {
+          'label'       : 'echarts',
+          'path'        : 'directive/echarts',
+          // 'loadChildren': './nz-demo-button/nz-demo-button.module#NzDemoButtonModule',
+          'zh'          : 'Echarts指令'
+        }
+      ]
+    },
+    {
+      'name'    : 'businessComponent',
       'children': [
         {
           'label'       : 'good-select',
@@ -552,6 +563,10 @@ export const DEMO_ROUTES = [
   {
     'path'        : 'components/good-select',
     'loadChildren': './custom-demo/good-select/good-select-demo.module#GoodSelectDemoModule'
+  },
+  {
+    'path'        : 'directive/echarts',
+    'loadChildren': './custom-demo/echarts-demo/echarts-demo.module#EchartsDemoModule'
   },
 ];
 
