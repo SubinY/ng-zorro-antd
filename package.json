@@ -41,6 +41,7 @@
   },
   "dependencies": {
     "@angular/cdk": "^5.0.0",
+    "echarts": "^4.0.2",
     "moment": "^2.18.1",
     "tslib": "^1.7.1"
   },

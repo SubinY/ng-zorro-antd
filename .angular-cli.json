@@ -20,7 +20,9 @@
       "prefix": "nz",
       "styles": [
       ],
-      "scripts": [],
+      "scripts": [
+        "../node_modules/echarts/dist/echarts.js"
+      ],
       "environmentSource": "environments/environment.ts",
       "environments": {
         "dev": "environments/environment.ts",

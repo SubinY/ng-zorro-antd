@@ -1,23 +1,15 @@
-import {
-    Component,
-    OnInit,
-    Input,
-    forwardRef,
-    NgModule,
-    TemplateRef,
-    Output,
-    EventEmitter,
-    ViewChild
-} from '@angular/core';
+import { Component, OnInit, Input, forwardRef, NgModule, TemplateRef, Output, EventEmitter, ViewChild, ViewContainerRef, ElementRef, ContentChild } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormsModule } from "@angular/forms";
-import { CommonModule } from "@angular/common";
+import { CommonModule, NgForOfContext } from "@angular/common";
 import { NgZorroAntdModule } from '../../../index.showcase';
 import { API } from '../services/api';
 import { Subject } from 'rxjs/Rx';
 
-export interface GoodOpt {
+export interface Shipper {
     name: string;
-    goodId?: string;
+    id?: string;
+    idBak?: string;
+    mobile?: string;
     disabled?: boolean;
 }
 
@@ -28,11 +20,12 @@ export interface DomOpt {
 
 export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
     provide: NG_VALUE_ACCESSOR,
-    useExisting: forwardRef(() => GoodSelectComponent),
+    useExisting: forwardRef(() => ShipperSelectComponent),
     multi: true
 };
+
 @Component({
-    selector: `good-select`,
+    selector: `shipper-select`,
     template: `
     <nz-select 
         [style.width]="_width" 
@@ -47,27 +40,28 @@ export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
             #domOpt
             *ngFor="let option of options"
             [nzLabel]="option.name"
-            [nzValue]="option.goodId"
+            [nzValue]="option.idBak"
             [nzDisabled]="option.disabled">
             <ng-template *ngIf="_content" #nzOptionTemplate>
-                <ng-container [ngTemplateOutlet]="_content" [ngTemplateOutletContext]="option"></ng-container>
+                <ng-container #nzOptionCon [ngTemplateOutlet]="_content" [ngTemplateOutletContext]="option"></ng-container>
             </ng-template>
         </nz-option>
     </nz-select>
     `,
     styles: [`
-    .good-select{
+    .shipper-select{
         display: inline-block;
     }
     `],
     providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR]
 })
-export class GoodSelectComponent implements ControlValueAccessor, OnInit {
+export class ShipperSelectComponent implements ControlValueAccessor, OnInit {
+
     @ViewChild("domOpt") domOpt: DomOpt;
     private onTouchedCallback: () => () => {};
     private onChangeCallback: (_: any) => () => {};
 
-    options: Array<GoodOpt> = [];
+    options: Array<Shipper> = [];
     // 单选的时候传字符串，多选传数组
     _value: string;
     _width = "100%";
@@ -77,13 +71,11 @@ export class GoodSelectComponent implements ControlValueAccessor, OnInit {
     // 下拉过滤含关键字选项，false为不过滤
     _filter = false;
     currentText = '';
-    firstNum = 0;
     canQuery = true;
     keyWordStream = new Subject<string>()
     keyWord$: any;
 
     @Input() placeholder = "请选择品名";
-    @Input() rowsNum = 10;
     @Input() valueType = "";
 
     set value(v: string) {
@@ -141,7 +133,6 @@ export class GoodSelectComponent implements ControlValueAccessor, OnInit {
     yztSearchChange(event) {
         this.canQuery = true;
         this.currentText = event;
-        this.firstNum = 0;
         this.keyWordStream.next(event);
     }
 
@@ -170,23 +161,22 @@ export class GoodSelectComponent implements ControlValueAccessor, OnInit {
      * 查询数据
      * @param $event
      */
-    queryData(searchText?: string, options?: Array<GoodOpt>) {
+    queryData(searchText?: string, options?: Array<Shipper>) {
         if (!this.canQuery) return;
-        const goodName = searchText;
-        let pageParms = { "first": this.firstNum, "rows": this.rowsNum };
-        this.api.call("abnormalOtherHandleController.waybillGoodsQuery", pageParms, {
-            name: goodName
+        const value = searchText;
+        this.api.call("customerWorkerController.queryShipperNameLike",{
+            name: value,
+            clientType:"send"
         }).ok(json => {
-            const result = json.result && json.result.content || [];
+            const result = json.result || [];
             if (!result.length) {
-                const lastItem = new Array<GoodOpt>({ goodId: "V--93HPfRsZtgTnb", name: "没有更多选项！", disabled: true });
+                const lastItem = new Array<Shipper>({ name: "没有更多选项！", disabled: true });
                 this.options = options.concat(lastItem);
                 this.canQuery = false;
                 return;
             }
             this.options = options.concat(result);
             this.outOptions.emit(this.options);
-            this.firstNum += this.rowsNum;
         }).fail(err => {
             throw new Error(err);
         });
@@ -202,8 +192,8 @@ export class GoodSelectComponent implements ControlValueAccessor, OnInit {
         NgZorroAntdModule,
     ],
     declarations: [
-        GoodSelectComponent
+        ShipperSelectComponent
     ],
-    exports: [GoodSelectComponent]
+    exports: [ShipperSelectComponent]
 })
-export class GoodSelectModule { }
+export class ShipperSelectModule {}

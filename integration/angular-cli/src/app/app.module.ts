@@ -12,7 +12,7 @@ import { YztCustomModule } from '../../../../src/custom-components/yzt-custom.mo
   imports: [
     BrowserModule,
     NgZorroAntdModule.forRoot(),
-    YztCustomModule.forRoot(),
+    YztCustomModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]

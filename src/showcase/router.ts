@@ -23,14 +23,31 @@ export const ROUTER_LIST = {
   ],
   'components': [
     {
-      'name'    : 'customComponent',
+      'name'    : 'UIComponent',
+      'children': [
+        {
+          'label'       : 'echarts',
+          'path'        : 'directive/echarts',
+          // 'loadChildren': './nz-demo-button/nz-demo-button.module#NzDemoButtonModule',
+          'zh'          : 'Echarts指令'
+        }
+      ]
+    },
+    {
+      'name'    : 'businessComponent',
       'children': [
         {
           'label'       : 'good-select',
           'path'        : 'components/good-select',
           // 'loadChildren': './nz-demo-button/nz-demo-button.module#NzDemoButtonModule',
           'zh'          : '品名选择'
-        }
+        },
+        {
+          'label'       : 'ui-grid',
+          'path'        : 'components/ui-grid',
+          // 'loadChildren': './nz-demo-button/nz-demo-button.module#NzDemoButtonModule',
+          'zh'          : '数据表格'
+        },
       ]
     },
     {
@@ -552,6 +569,14 @@ export const DEMO_ROUTES = [
   {
     'path'        : 'components/good-select',
     'loadChildren': './custom-demo/good-select/good-select-demo.module#GoodSelectDemoModule'
+  },
+  {
+    'path'        : 'directive/echarts',
+    'loadChildren': './custom-demo/echarts-demo/echarts-demo.module#EchartsDemoModule'
+  },
+  {
+    'path'        : 'components/ui-grid',
+    'loadChildren': './custom-demo/ui-grid/ui-grid-demo.module#UIGridDemoModule'
   },
 ];
 
