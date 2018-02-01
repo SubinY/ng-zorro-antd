@@ -16,14 +16,14 @@ import { API } from '../services/api';
 import { Subject } from 'rxjs/Rx';
 
 export interface GoodOpt {
-    name: string,
-    goodId?: string,
-    disabled?: boolean
+    name: string;
+    goodId?: string;
+    disabled?: boolean;
 }
 
 export interface DomOpt {
-    _value: string,
-    _label: string
+    _value: string;
+    _label: string;
 }
 
 export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {

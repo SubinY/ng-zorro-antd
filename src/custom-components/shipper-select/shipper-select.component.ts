@@ -3,20 +3,19 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormsModule } from "@angular/f
 import { CommonModule, NgForOfContext } from "@angular/common";
 import { NgZorroAntdModule } from '../../../index.showcase';
 import { API } from '../services/api';
-import { Observable } from "rxjs/Rx";
 import { Subject } from 'rxjs/Rx';
 
 export interface Shipper {
-    name: string,
-    id?: string,
-    idBak?: string,
-    mobile?: string,
-    disabled?: boolean
+    name: string;
+    id?: string;
+    idBak?: string;
+    mobile?: string;
+    disabled?: boolean;
 }
 
 export interface DomOpt {
-    _value: string,
-    _label: string
+    _value: string;
+    _label: string;
 }
 
 export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
