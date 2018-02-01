@@ -9,6 +9,7 @@ import { ModuleWithProviders, NgModule } from '@angular/core';
 import { GoodSelectModule } from './good-select/good-select.component';
 import { NgZorroAntdModule } from '../components/ng-zorro-antd.module';
 import { EchartsModule } from './echarts/echarts.component';
+import { UIGridModule } from './ui-grid/ui-grid.component';
 // Services
 
 // Tokens (eg. global services' config)
@@ -35,7 +36,8 @@ export { NzRootConfig } from '../components/ng-zorro-antd.module';
   exports: [
     NgZorroAntdModule,
     GoodSelectModule,
-    EchartsModule
+    EchartsModule,
+    UIGridModule
   ]
 })
 export class YztCustomModule {
