@@ -17,6 +17,7 @@ import { CommonModule } from "@angular/common";
 import { NgZorroAntdModule } from '../../../index.showcase';
 import { GridUtilService } from './share/grid-util.service';
 import { API } from '../services/api';
+import { GridIconModule } from './grid-icon.component';
 
 interface PageData {
     content: Array<any>,
@@ -38,7 +39,7 @@ export class UIGridComponent {
 
     _data: PageData;
     _dataSet = [];
-    _selections = [];
+    _selections: any;
     _loading = false;
     _pagination = true;
     _fixScrollY = 0;
@@ -64,7 +65,11 @@ export class UIGridComponent {
     _indeterminate = false;
     _displayData = [];
 
-
+    @Output() load: EventEmitter<PageIndexAndSize> = new EventEmitter();
+    @Output() selectionChange: EventEmitter<any> = new EventEmitter();
+    @Output() cellClick: EventEmitter<any> = new EventEmitter();
+    @Output() cellOver: EventEmitter<any> = new EventEmitter();
+    @Output() exportCSV: EventEmitter<any> = new EventEmitter();
 
     @Input() id: string;
     @Input() columns = [];
@@ -114,8 +119,15 @@ export class UIGridComponent {
         }
     }
 
-    @Output() load: EventEmitter<any> = new EventEmitter();
-    @Output() rowSelect: EventEmitter<any> = new EventEmitter();
+    @Input()
+    set selection(value: Array<any>) {
+        // 单选接受一个对象多选接受数组
+        if (!this.util.isEqual(this._selections, value)) {
+            this._selections = value;
+            this.selectionChange.emit(value);
+        }
+    }
+
 
     constructor(private util: GridUtilService,
         public _vcr: ViewContainerRef,
@@ -137,7 +149,19 @@ export class UIGridComponent {
         }
     }
 
+    ngOnChanges() {
+    }
+
     ngAfterViewInit() {
+    }
+
+    ngOnDestroy() {
+        if (this.id) {
+            localStorage[this.id] = JSON.stringify({
+                sourceColumns: this.columns,
+                targetColumns: this.targetColumns
+            });
+        }
     }
 
     onLazyLoad(page: PageIndexAndSize = { first: this._first, rows: this._rows }): any {
@@ -157,34 +181,198 @@ export class UIGridComponent {
      * 记录选择事件
      * @param rows
      */
-    onRowSelectChange(event: any) {
-        this.rowSelect.emit(event);
+    onRowSelectChange(data: any) {
+        data.checked = !data.checked;
+
+        this.mulitipy ? this.refreshStatus() : this.selection = data;
+
         return false;
     }
-    
+
     /**
      * 选择checkbox
      */
-    refreshStatus() {
+    refreshStatus(event?: MouseEvent) {
+        if (event) {
+            event.stopPropagation();
+        }
         const selections = this._displayData.filter(value => value.checked === true);
         const allChecked = this._displayData.every(value => value.checked === true);
         const allUnChecked = this._displayData.every(value => !value.checked);
         this._allChecked = allChecked;
         this._indeterminate = (!allChecked) && (!allUnChecked);
-        this._selections = selections;
+        this.selection = selections;
     }
-    
+
+    /**
+     * 全选和反选
+     * @param value 
+     * @param data 
+     */
     checkAll(value, data: Array<any>) {
-      if (value) {
-        this._displayData.forEach(data => {
-          data.checked = true;
+        if (value) {
+            this._displayData.forEach(data => {
+                data.checked = true;
+            });
+        } else {
+            this._displayData.forEach(data => {
+                data.checked = false;
+            });
+        }
+        this.refreshStatus();
+    }
+
+
+    /**
+     * cell点击事件
+     * @param event
+     * @param row
+     * @param field
+     */
+    onCellClick(event: Event, row: any, field: any) {
+        event.stopPropagation();
+        let value = row[field];
+        this.cellClick.emit({
+            row: row,
+            field: field,
+            value: value,
+            originalEvent: event
         });
-      } else {
-        this._displayData.forEach(data => {
-          data.checked = false;
+    }
+
+    /**
+     * 鼠标mouseover事件
+     */
+    onCellMouseover(event: any, row: any, field: any) {
+        event.stopPropagation();
+        // let value = this.value(row, field);
+        let value = row[field];
+        this.cellOver.emit({
+            row: row,
+            field: field,
+            value: value,
+            originalEvent: event
         });
-      }
-      this.refreshStatus();
+    }
+
+    /**
+     * 数据转为字符串
+     * @param val
+     * @returns {any}
+     * @constructor
+     */
+    dataToStr(val: any) {
+        let resultData;
+        if (typeof val == 'number') {
+            resultData = val.toString();
+        } else if (typeof val == 'undefined') {
+            resultData = '';
+        } else if (val == null) {
+            resultData = '';
+        } else if (typeof val == 'object') {
+            resultData = JSON.stringify(val);
+        } else if (typeof val == 'boolean') {
+            resultData = val ? '是' : '否';
+        } else {
+            resultData = val;
+        }
+        return resultData;
+    }
+
+    /**
+     * 对有textLength属性的column进行字节数量控制
+     * @param val
+     * @param textLength
+     * @returns {string|void|any}
+     */
+    replaceTextOmit(val: any, textLength: number = 20) {
+        let resultData, temp;
+
+        resultData = this.dataToStr(val);
+        if (typeof resultData === 'string') {
+            temp = resultData.slice(0, textLength);
+            return resultData.length > textLength ? `${temp}...` : resultData;
+        } else {
+            return resultData;
+        }
+    }
+
+    /**
+     *
+     * @param grid
+     * @param data
+     * @param isFailed 失败了
+     */
+    doExportCSV(grid, data, isFailed?: boolean) {
+        grid.exportDisable = false;
+        if (isFailed) {
+            return;
+        }
+        let columns = grid.columns;
+        var csv = '\ufeff';
+        //headers
+        for (var i = 0; i < columns.length; i++) {
+            if (columns[i].field && !columns[i].hidden) {
+                csv += '"' + (columns[i].header || columns[i].field) + '"';
+                if (i < (columns.length - 1)) {
+                    csv += ",";
+                }
+            }
+        }
+        //body
+        data.forEach(function (record, i) {
+            csv += '\n';
+            for (var i_1 = 0; i_1 < columns.length; i_1++) {
+                if (columns[i_1].field && !columns[i_1].hidden) {
+                    let value = Object.defineProperty(record, columns[i_1].field, null);
+                    if (typeof value === 'string') {
+                        value = value.replace('"', '""');
+                    } else if (value === null || value === 'null' || value === 'undefined') {
+                        value = "";
+                    }
+                    if (!isNaN(Number(value)) && value.length > 12) {
+                        csv += '"' + value + '\ufeff"';
+                    } else {
+                        csv += '"' + value + '"';
+                    }
+                    if (i_1 < (columns.length - 1)) {
+                        csv += ",";
+                    }
+                }
+            }
+        });
+        var blob = new Blob([csv], {
+            type: 'text/csv;charset=utf-8;'
+        });
+        if (window.navigator.msSaveOrOpenBlob) {
+            navigator.msSaveOrOpenBlob(blob, '导出.csv');
+        }
+        else {
+            var link = document.createElement("a");
+            link.style.display = 'none';
+            document.body.appendChild(link);
+            if (link.download !== undefined) {
+                link.setAttribute('href', URL.createObjectURL(blob));
+                link.setAttribute('download', '导出.csv');
+                link.click();
+            }
+            else {
+                csv = 'data:text/csv;charset=utf-8,' + csv;
+                window.open(encodeURI(csv));
+            }
+            document.body.removeChild(link);
+        }
+    }
+
+    exportDisable = false;
+
+    exportCSVIntenal() {
+        let $this = this;
+        this.exportDisable = true;
+        this.exportCSV.emit({
+            done: $this.doExportCSV,
+            grid: $this
+        });
     }
 
 }
@@ -194,6 +382,7 @@ export class UIGridComponent {
         CommonModule,
         FormsModule,
         NgZorroAntdModule,
+        GridIconModule
     ],
     declarations: [
         UIGridComponent

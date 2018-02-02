@@ -11,6 +11,7 @@ import { NgZorroAntdModule } from '../components/ng-zorro-antd.module';
 import { EchartsModule } from './echarts/echarts.component';
 import { UIGridModule } from './ui-grid/ui-grid.component';
 import { ShipperSelectModule } from "./shipper-select/shipper-select.component";
+import { GridIconModule } from './ui-grid/grid-icon.component';
 
 // Services
 
@@ -40,7 +41,8 @@ export { NzRootConfig } from '../components/ng-zorro-antd.module';
     GoodSelectModule,
     EchartsModule,
     UIGridModule,
-    ShipperSelectModule
+    ShipperSelectModule,
+    GridIconModule
   ]
 })
 export class YztCustomModule {
