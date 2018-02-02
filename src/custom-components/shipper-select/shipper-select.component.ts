@@ -29,9 +29,9 @@ export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
     template: `
     <nz-select 
         [style.width]="_width" 
-        [nzPlaceHolder]="placeHolder" 
+        [nzPlaceHolder]="placeholder" 
         [nzMode]="_nzMode"
-        [nzFilter]="nzFilter"
+        [nzFilter]="_filter"
         [nzAllowClear]="_allowClear"
         (nzScrollToBottom)="yztScrollToBottom()"
         (nzSearchChange)="yztSearchChange($event)"
