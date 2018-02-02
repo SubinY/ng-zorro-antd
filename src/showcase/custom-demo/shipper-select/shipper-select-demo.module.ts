@@ -9,11 +9,12 @@ import { ShipperSelectDemoComponent } from "./shipper-select-demo.component";
 import { ShipperSelectDemoRoutingModule } from "./shipper-select-demo.routing.module";
 import { ShipperSelectDemoBasicComponent } from "./shipper-select-demo-basic.component";
 import { ShipperSelectDemoMultipleComponent } from "./shipper-select-demo-multiple.component";
+import { ShipperSelectDemoTemplateComponent } from "./shipper-select-demo-template.component";
 
 
 
 @NgModule({
-  imports     : [ ShipperSelectDemoRoutingModule, CommonModule, NzCodeBoxModule, YztCustomModule, FormsModule, JsonpModule ],
-  declarations: [ ShipperSelectDemoComponent, ShipperSelectDemoBasicComponent,ShipperSelectDemoMultipleComponent]
+    imports: [ShipperSelectDemoRoutingModule, CommonModule, NzCodeBoxModule, YztCustomModule, FormsModule, JsonpModule],
+    declarations: [ShipperSelectDemoComponent, ShipperSelectDemoBasicComponent, ShipperSelectDemoMultipleComponent, ShipperSelectDemoTemplateComponent]
 })
 export class ShipperSelectDemoModule { }

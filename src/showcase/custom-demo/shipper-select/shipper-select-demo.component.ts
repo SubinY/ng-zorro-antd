@@ -9,5 +9,6 @@ import { Component, ViewEncapsulation } from '@angular/core';
 export class ShipperSelectDemoComponent {
     ShipperSelectDemoBasicCode = require('!!raw-loader!./shipper-select-demo-basic.component');
     ShipperSelectDemoMultipleComponent = require('!!raw-loader!./shipper-select-demo-multiple.component');
+    ShipperSelectDemoTemplateComponent = require('!!raw-loader!./shipper-select-demo-template.component');
 
 }
