@@ -4,7 +4,7 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'echarts-demo-pie',
   template: `
-  <button pButton (click)="toggleLoading()">Loading状态切换-{{this.chartLoading}}</button>
+  <button nz-button [nzType]="'primary'" (click)="toggleLoading()">Loading状态切换-{{this.chartLoading}}</button>
   <div echarts [options]="chartOption" [loading]="chartLoading"  class="demo-chart"></div>
   `,
   styleUrls: ['./echarts-demo.css']

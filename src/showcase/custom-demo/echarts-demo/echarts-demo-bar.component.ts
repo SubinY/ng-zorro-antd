@@ -4,7 +4,7 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'echarts-demo-bar',
   template: `
-  <button pButton pButton type="button" (click)="chageDataset()">Change dateset</button>
+  <button nz-button type="button" (click)="chageDataset()">Change dateset</button>
   <div echarts [options]="chartOption" [dataset]="dataset" class="demo-chart"></div>
   `,
   styleUrls: ['./echarts-demo.css']

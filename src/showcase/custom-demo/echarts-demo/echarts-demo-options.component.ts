@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'echarts-demo-options',
   template: `
-  <button class="btn btn-primary" (click)="changeOptions()" [disabled]="revert">Change Options
+  <button nz-button [nzType]="'primary'" [nzType]="'primary'" (click)="changeOptions()" [disabled]="revert">Change Options
   </button>
-  <button class="btn btn-primary" (click)="revertOptions()" [disabled]="!revert">Revert Options
+  <button nz-button [nzType]="'primary'" [nzType]="'primary'" (click)="revertOptions()" [disabled]="!revert">Revert Options
   </button>
   <div echarts [options]="chartOption" [dataset]="dataset" class="demo-chart"></div>
   `,
