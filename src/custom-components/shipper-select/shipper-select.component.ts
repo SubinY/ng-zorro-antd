@@ -29,7 +29,7 @@ export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
     template: `
     <nz-select 
         [style.width]="_width" 
-        [nzPlaceHolder]="placeHolder" 
+        [nzPlaceHolder]="placeholder" 
         [nzMode]="_nzMode"
         [nzFilter]="nzFilter"
         [nzAllowClear]="_allowClear"
@@ -75,7 +75,7 @@ export class ShipperSelectComponent implements ControlValueAccessor, OnInit {
     keyWordStream = new Subject<string>()
     keyWord$: any;
 
-    @Input() placeholder = "请选择品名";
+    @Input() placeholder = "请选择发货人";
     @Input() valueType = "";
 
     set value(v: string) {
@@ -99,7 +99,7 @@ export class ShipperSelectComponent implements ControlValueAccessor, OnInit {
         this._width = Array.from(v).includes("%") ? `${v}%` : isNaN(width) ? this._width : `${width}px`;
     }
 
-    @Input() set goodMode(v) {
+    @Input() set shipperMode(v) {
         this._nzMode = v;
         this._allowClear = v === "combobox" ? true : false;
     };
