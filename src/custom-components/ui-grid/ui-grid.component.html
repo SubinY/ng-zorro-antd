@@ -18,10 +18,10 @@
             <ng-template #defaultTitle>
                 <div>
                     <button class="btn-editcol" nz-button [nzType]="'primary'" *ngIf="buttonGather.showEditColumn">
-                        <span><i class="anticon anticon-edit"></i>编辑列</span>
+                        <i class="anticon anticon-edit"></i><span>编辑列</span>
                     </button>
-                    <button class="btn-export" nz-button [nzType]="'primary'" [nzLoading]="_exportLoading" *ngIf="buttonGather.enableExport">
-                        <span><i class="anticon anticon-export"></i>导出</span>
+                    <button class="btn-export" nz-button [nzType]="'primary'" [nzLoading]="_exportLoading" *ngIf="buttonGather.enableExport" (click)="exportCSVIntenal()">
+                        <i class="anticon anticon-export"></i><span>导出</span>
                     </button>
                 </div>
             </ng-template>
@@ -30,8 +30,7 @@
         <ng-template #nzFixedHeader [ngIf]="!_fixScrollY">
             <thead nz-thead>
                 <tr>
-                    <!-- checkbox宽度大小要全局控制，添加到真正项目的时候要全局修改 -->
-                    <th nz-th nzCheckbox *ngIf="mulitipy" class="checkbox">
+                    <th nz-th nzCheckbox *ngIf="mulitipy">
                         <label nz-checkbox [(ngModel)]="_allChecked" [nzIndeterminate]="_indeterminate" (ngModelChange)="checkAll($event, nzTable.data)">
                         </label>
                     </th>
@@ -42,13 +41,27 @@
             </thead>
         </ng-template>
         <tbody nz-tbody>
-            <tr nz-tbody-tr *ngFor="let data of nzTable.data" (click)="onRowSelectChange(data)">
+            <tr nz-tbody-tr *ngFor="let data of nzTable.data; let ri = index" (click)="onRowSelectChange(data)" [style.background]="data.checked? '#eee':'#fff'">
                 <td nz-td nzCheckbox *ngIf="mulitipy">
-                    <label nz-checkbox [(ngModel)]="data.checked" (ngModelChange)="refreshStatus(data)">
+                    <label #checkbox_item nz-checkbox [(ngModel)]="data.checked" (click)="refreshStatus($event)">
                     </label>
                 </td>
                 <td nz-td *ngFor="let column of columns">
-                    <span>{{data[column.field]}}</span>
+                    <ng-template #default_cell>
+                        <grid-icon [field]="column.field" [data]="data"></grid-icon>
+                        <a href="javascript:;" *ngIf="column.link" class="column-link">
+                            <span (click)="onCellClick($event,data,column.field)">{{data[column.field]}}</span>
+                        </a>
+                        <nz-popover *ngIf="!column.link" [nzTrigger]="'hover'" nzOverlayStyle>
+                            <span nz-popover (mouseenter)="onCellMouseover($event,data,column.field)">{{replaceTextOmit(data[column.field], column.textLength?column.textLength: 20)}}</span>
+                            <div *ngIf="(data[column.field].length>(column.textLength?column.textLength: 20)) && !column.defaultTipsHidden">
+                               <ng-template #nzTemplate>
+                                    <p style="max-width: 300px;">{{data[column.field]}}</p>
+                                </ng-template>
+                            </div>
+                        </nz-popover>
+                    </ng-template>
+                    <ng-template [ngTemplateOutlet]="default_cell"></ng-template>
                 </td>
             </tr>
         </tbody>
