@@ -34,31 +34,57 @@ export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
 @Component({
     selector: `good-select`,
     template: `
-    <nz-select 
-        [style.width]="_width" 
-        [nzPlaceHolder]="placeholder" 
-        [nzMode]="_nzMode"
-        [nzFilter]="_filter"
-        [nzAllowClear]="_allowClear"
-        (nzScrollToBottom)="yztScrollToBottom()"
-        (nzSearchChange)="yztSearchChange($event)"
-        [(ngModel)]="value">
-        <nz-option
-            #domOpt
-            *ngFor="let option of options"
-            [nzLabel]="option.name"
-            [nzValue]="option.goodId"
-            [nzDisabled]="option.disabled">
-            <ng-template *ngIf="_content" #nzOptionTemplate>
-                <ng-container [ngTemplateOutlet]="_content" [ngTemplateOutletContext]="option"></ng-container>
-            </ng-template>
-        </nz-option>
-    </nz-select>
+    <div class="good-select">
+        <nz-select 
+            class="good-nz-select"
+            [style.width]="_width" 
+            [nzPlaceHolder]="placeholder" 
+            [nzMode]="_nzMode"
+            [nzFilter]="_filter"
+            [nzAllowClear]="_allowClear"
+            (nzScrollToBottom)="yztScrollToBottom()"
+            (nzSearchChange)="yztSearchChange($event)"
+            [(ngModel)]="value">
+            <nz-option
+                #domOpt
+                *ngFor="let option of options"
+                [nzLabel]="option.name"
+                [nzValue]="option.goodId"
+                [nzDisabled]="option.disabled">
+                <ng-template *ngIf="_content" #nzOptionTemplate>
+                    <ng-container [ngTemplateOutlet]="_content" [ngTemplateOutletContext]="option"></ng-container>
+                </ng-template>
+            </nz-option>
+        </nz-select>
+        <span
+          role="close-icon"
+          (click)="clearSelect($event)"
+          class="ant-select-selection__clear close-icon"
+          style="-webkit-user-select: none;"
+          *ngIf="!_allowClear&&options.length">
+        </span>
+    </div>
     `,
     styles: [`
-    .good-select{
-        display: inline-block;
-    }
+        .close-icon {
+            opacity: 0;
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            margin-top: -10px;
+        }
+        .close-icon:hover {
+            opacity: 1;
+        }
+        .good-nz-select:hover +.close-icon {
+            opacity: 1;
+        }
+        .good-select {
+            position: relative;
+        }
+        .multiple-close {
+            position: absolute;
+        }
     `],
     providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR]
 })
@@ -93,7 +119,8 @@ export class GoodSelectComponent implements ControlValueAccessor, OnInit {
             const { _value, _label } = this.domOpt;
             this.onChangeCallback({ value: _value, label: _label });
         } else {
-            this.onChangeCallback(v);
+            const innerValue = this._allowClear ? (v || "") : (v || []);
+            this.onChangeCallback(innerValue);
         }
 
     }
@@ -118,9 +145,6 @@ export class GoodSelectComponent implements ControlValueAccessor, OnInit {
         }
     }
 
-    @Output() openChange: EventEmitter<any> = new EventEmitter();
-    @Output() outOptions: EventEmitter<any> = new EventEmitter();
-
     constructor(private api: API) {
     }
 
@@ -136,17 +160,6 @@ export class GoodSelectComponent implements ControlValueAccessor, OnInit {
 
     ngOnDestroy() {
         this.keyWord$.unsubscribe()
-    }
-
-    yztSearchChange(event) {
-        this.canQuery = true;
-        this.currentText = event;
-        this.firstNum = 0;
-        this.keyWordStream.next(event);
-    }
-
-    yztScrollToBottom() {
-        this.queryData(this.currentText, this.options);
     }
 
     // 写入值
@@ -166,6 +179,30 @@ export class GoodSelectComponent implements ControlValueAccessor, OnInit {
         this.onTouchedCallback = fn;
     }
 
+    yztSearchChange(event) {
+        this.canQuery = true;
+        this.currentText = event;
+        this.firstNum = 0;
+        this.keyWordStream.next(event);
+    }
+
+    yztScrollToBottom() {
+        this.queryData(this.currentText, this.options);
+    }
+
+
+    /** 
+     * 仅作清空多选选项
+     */
+    clearSelect($event?: MouseEvent): void {
+        if ($event) {
+            $event.preventDefault();
+            $event.stopPropagation();
+        }
+        this.options = [];
+        this.value = '';
+    }
+
     /**
      * 查询数据
      * @param $event
@@ -179,20 +216,17 @@ export class GoodSelectComponent implements ControlValueAccessor, OnInit {
         }).ok(json => {
             const result = json.result && json.result.content || [];
             if (!result.length) {
-                const lastItem = new Array<GoodOpt>({ goodId: "V--93HPfRsZtgTnb", name: "没有更多选项！", disabled: true });
+                const lastItem = new Array<GoodOpt>({ goodId: "empty", name: "没有更多选项！", disabled: true });
                 this.options = options.concat(lastItem);
                 this.canQuery = false;
                 return;
             }
             this.options = options.concat(result);
-            this.outOptions.emit(this.options);
             this.firstNum += this.rowsNum;
         }).fail(err => {
             throw new Error(err);
         });
     }
-
-
 }
 
 @NgModule({
