@@ -17,7 +17,8 @@
         "fullName": "测试  数据fullName",
         "name": "测试数据",
         "id": 199,
-        "code": "1231234"
+        "code": "1231234",
+        "lock": true
 
     },{
         "userJzts": [{
@@ -27,7 +28,8 @@
         "fullName": "测试数据fullName",
         "name": "测试数据",
         "id": "11",
-        "code": "1231234TDSFFASDTKYUK67"
+        "code": "1231234TDSFFASDTKYUK67",
+        "lock": true
 
     },{
         "userJzts": [{

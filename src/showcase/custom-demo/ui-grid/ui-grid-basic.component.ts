@@ -5,7 +5,7 @@ import { Component, OnInit } from '@angular/core';
   template: `
     <ui-grid [data]="data" [columns]="columns" [(selection)]="selection" mulitipy="true" (load)="load($event)" (exportCSV)="exportCSV($event)"></ui-grid>
     <button class="operate" nz-button (click)="getSel()">获取选中数据</button>
-    <nz-modal [nzVisible]="isVisible" [nzTitle]="'测试数据'" [nzContent]="modalContent" (nzOnCancel)="handleCancel($event)">
+    <nz-modal [nzVisible]="isVisible" [nzTitle]="'测试数据'" [nzContent]="modalContent" (nzOnCancel)="handleCancel()">
       <ng-template #modalContent>
         <p>{{selection}}</p>
       </ng-template>
