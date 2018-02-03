@@ -3,8 +3,8 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'ui-grid-basic',
   template: `
-    <ui-grid [data]="data" [columns]="columns" [(selection)]="selection" mulitipy="true" (load)="load($event)" (exportCSV)="exportCSV($event)">
-      <grid-icon [field]="'name'" [prop]="'lock'">
+    <ui-grid [data]="data" [columns]="columns" [(selection)]="selection" mulitipy="true" [grid-icon]="grid_icon" (load)="load($event)" (exportCSV)="exportCSV($event)">
+      <grid-icon #grid_icon [field]="'name'" [prop]="'lock'">
         <ng-template #iconTemplate>
           <a href="javascript:void(0);" title="锁定" class="operation-a operation-lock"><i></i></a>
         </ng-template>

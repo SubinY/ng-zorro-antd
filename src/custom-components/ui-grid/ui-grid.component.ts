@@ -128,8 +128,11 @@ export class UIGridComponent {
         }
     }
 
+    @Input('grid-icon')
+    set gridIcon(component: GridIconComponent) {
 
-    public gridIconComponent: GridIconComponent
+    }
+
     constructor(private util: GridUtilService,
         public _vcr: ViewContainerRef,
         public api: API) { }
@@ -148,12 +151,6 @@ export class UIGridComponent {
                 }
             }
         }
-    }
-
-    ngAfterViewInit() {
-        setTimeout(_ => {
-            console.log(this.gridIconComponent, 'gridIconComponent123123');
-        },100)
     }
 
     ngOnChanges() {
