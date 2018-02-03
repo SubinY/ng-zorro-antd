@@ -21,7 +21,7 @@ An enterprise-class UI components based on Ant Design and Angular.
 
 * [ ]  UISelect （现有 `ui-select-box` 组件优化，可用于地址选择，异常类型选择组件封装）
 * [ ]  日期选择 `nz-datepicker`
-* [ ]  表格 `nz-table` (扩展支持现有系统的悬浮列弹窗查询、图标等功能）
+* [x]  表格 `nz-table` (扩展支持现有系统的悬浮列弹窗查询、图标等功能）
 * [ ]  图片&文件上传 (`nz-upload` ）
 * [ ]  地址选择 (用现有地址选择组件，修改样式统一风格，或优化细节等)
 * [ ]  省市区多选组件 (用现有地址选择组件，修改样式统一风格，或优化细节等）
@@ -29,10 +29,10 @@ An enterprise-class UI components based on Ant Design and Angular.
 * [ ]  字典选择 `nz-select` 扩展
 * [ ]  开单网点 `nz-select` (扩展自定义模板)
 * [ ]  发货人选择 `nz-select` 扩展
-* [ ]  收货人选择 `nz-select` 扩展
+* [x]  收货人选择 `nz-select` 扩展
 * [ ]  异常类型选择  `UISelect`扩展
 * [ ]  师傅名称/账号 `nz-select` 扩展
-* [ ]  品名选择 `nz-select` 扩展
+* [x]  品名选择 `nz-select` 扩展
 * [ ]  维修品名 `nz-select` 扩展
 * [ ]  图片预览组件 （可用现有指令`Viewer`）
 * [x]  Echarts指令 （可用现有指令）
