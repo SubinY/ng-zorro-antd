@@ -3,13 +3,14 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'ui-grid-basic',
   template: `
-    <ui-grid [data]="data" [columns]="columns" [(selection)]="selection" mulitipy="true" [grid-icon]="grid_icon" (load)="load($event)" (exportCSV)="exportCSV($event)">
-      <grid-icon #grid_icon [field]="'name'" [prop]="'lock'">
-        <ng-template #iconTemplate>
-          <a href="javascript:void(0);" title="锁定" class="operation-a operation-lock"><i></i></a>
-        </ng-template>
-      </grid-icon>
-      
+    <grid-icon #grid_icon [outField]="'name'" [outProp]="'lock'">
+      <ng-template #iconTemplate let-name="lock">
+        <a *ngIf="name" href="javascript:void(0);" title="锁定" class="operation-a operation-lock"><i></i></a>
+        <a *ngIf="!name" href="javascript:void(0);" title="未锁定" class="operation-a operation-unlock"><i></i></a>
+      </ng-template>
+    </grid-icon>
+    <ui-grid [data]="data" [columns]="columns" [(selection)]="selection" mulitipy="true" [grid_icon]="grid_icon" (load)="load($event)" (cellClick)="cellClick($event)" (exportCSV)="exportCSV($event)">
+    
     </ui-grid>
     <button class="operate" nz-button (click)="getSel()">获取选中数据</button>
     <nz-modal [nzVisible]="isVisible" [nzTitle]="'测试数据'" [nzContent]="modalContent" (nzOnCancel)="handleCancel()">

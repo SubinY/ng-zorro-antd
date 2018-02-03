@@ -10,19 +10,26 @@ import {
     ComponentFactory,
     ViewChild,
     ViewContainerRef,
-    ComponentRef
+    ComponentRef,
+    ContentChild
 } from '@angular/core';
 import { FormsModule } from "@angular/forms";
 import { CommonModule } from "@angular/common";
 import { NgZorroAntdModule } from '../../../index.showcase';
 import { GridUtilService } from './share/grid-util.service';
 import { API } from '../services/api';
-import { GridIconModule, GridIconComponent } from './grid-icon.component';
+import { GridIconModule } from './grid-icon.component';
 
 interface PageData {
-    content: Array<any>,
-    numberOfElements: number
-    [portName: string]: any
+    content: Array<any>;
+    numberOfElements: number;
+    [portName: string]: any;
+}
+
+class GridIconIF {
+    field: '';
+    prop: '';
+    iconTemplate: TemplateRef<any>
 }
 
 export interface PageIndexAndSize {
@@ -37,6 +44,7 @@ export interface PageIndexAndSize {
 })
 export class UIGridComponent {
     @ViewChild('gridImg', { read: ViewContainerRef }) gridImg: ViewContainerRef;
+
     _data: PageData;
     _dataSet = [];
     _selections: any;
@@ -127,10 +135,14 @@ export class UIGridComponent {
             this.selectionChange.emit(value);
         }
     }
-
-    @Input('grid-icon')
-    set gridIcon(component: GridIconComponent) {
-
+    _iconComp = {};
+    @Input('grid_icon')
+    set gridIcon({ outField, outProp, iconTemplate }) {
+        this._iconComp = {
+            outField: outField || '',
+            outProp: outProp || '',
+            iconTemplate: iconTemplate || '',
+        }
     }
 
     constructor(private util: GridUtilService,
@@ -154,6 +166,9 @@ export class UIGridComponent {
     }
 
     ngOnChanges() {
+    }
+
+    ngAfterViewInit() {
     }
 
     ngOnDestroy() {

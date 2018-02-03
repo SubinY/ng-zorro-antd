@@ -48,8 +48,7 @@
                 </td>
                 <td nz-td *ngFor="let column of columns">
                     <ng-template #default_cell>
-                        <ng-container [ngTemplateOutlet]="_gridIcon" [ngTemplateOutletContext]="data"></ng-container>
-                        <!-- <grid-icon [field]="column.field" [data]="data"></grid-icon> -->
+                        <ng-container *ngIf="column.field === _iconComp.outField" [ngTemplateOutlet]="_iconComp.iconTemplate" [ngTemplateOutletContext]="data"></ng-container>
                         <a href="javascript:;" *ngIf="column.link" class="column-link">
                             <span (click)="onCellClick($event,data,column.field)">{{data[column.field]}}</span>
                         </a>
@@ -68,5 +67,4 @@
         </tbody>
         <span nz-table-footer>Here is footer</span>
     </nz-table>
-
 </div>

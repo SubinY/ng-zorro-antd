@@ -22,18 +22,12 @@ import { UIGridComponent } from './ui-grid.component';
 export class GridIconComponent {
   
   @ContentChild('iconTemplate') iconTemplate: TemplateRef<any>;
-  @Input() field = '';
-  @Input() prop = '';
+  @Input() outField = '';
+  @Input() outProp = '';
 
   constructor() { }
 
   ngOnInit(): void {
-  }
-
-  ngOnChanges() {
-    console.log(this.field, 'this.field')
-    console.log(this.prop, 'this.prop')
-    console.log(this.iconTemplate, 'this.iconTemplate')
   }
 }
 
