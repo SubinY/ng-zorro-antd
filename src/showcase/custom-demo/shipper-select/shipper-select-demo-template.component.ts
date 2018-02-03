@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NzMessageService } from "../../../components/ng-zorro-antd.module";
 
 @Component({
     selector: 'shipper-select-demo-template',
@@ -11,7 +12,7 @@ import { Component, OnInit } from '@angular/core';
         </div>
       </ng-template>
     </shipper-select>
-    <button (click)="handle()">获取发货人编号</button>
+    <button nz-button [nzType]="'primary'" (click)="handle()">获取发货人编号</button>
   `,
     styles: [`
         .border-right{
@@ -23,12 +24,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ShipperSelectDemoTemplateComponent implements OnInit {
     value: any;
-    constructor() { }
+    constructor(private _message: NzMessageService) { }
 
     ngOnInit() {
     }
     handle() {
-        console.log(this.value);
+        this._message.info('获取发货人编号为:'+this.value);
     }
 
 }

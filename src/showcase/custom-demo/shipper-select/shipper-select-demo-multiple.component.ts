@@ -1,21 +1,22 @@
 import { Component, OnInit } from '@angular/core';
+import { NzMessageService } from "../../../components/ng-zorro-antd.module";
 
 @Component({
     selector: 'shipper-select-demo-multiple',
     template: `
     <shipper-select [(ngModel)]="value" [shipperMode]="'multiple'"></shipper-select>
-    <button (click)="handle()">获取发货人编号数组</button>
+    <button nz-button [nzType]="'primary'" (click)="handle()">获取发货人编号数组</button>
   `,
     styles: []
 })
 export class ShipperSelectDemoMultipleComponent implements OnInit {
     value: any[] = [];
-    constructor() { }
+    constructor(private _message: NzMessageService) { }
 
     ngOnInit() {
     }
     handle() {
-        console.log(this.value);
+        this._message.info("发货人编号数组为："+this.value);
     }
 
 }
