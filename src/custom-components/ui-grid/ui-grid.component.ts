@@ -10,14 +10,14 @@ import {
     ComponentFactory,
     ViewChild,
     ViewContainerRef,
-    ComponentRef,
+    ComponentRef
 } from '@angular/core';
 import { FormsModule } from "@angular/forms";
 import { CommonModule } from "@angular/common";
 import { NgZorroAntdModule } from '../../../index.showcase';
 import { GridUtilService } from './share/grid-util.service';
 import { API } from '../services/api';
-import { GridIconModule } from './grid-icon.component';
+import { GridIconModule, GridIconComponent } from './grid-icon.component';
 
 interface PageData {
     content: Array<any>,
@@ -36,7 +36,7 @@ export interface PageIndexAndSize {
     styleUrls: [`ui-grid.component.scss`]
 })
 export class UIGridComponent {
-
+    @ViewChild('gridImg', { read: ViewContainerRef }) gridImg: ViewContainerRef;
     _data: PageData;
     _dataSet = [];
     _selections: any;
@@ -129,6 +129,7 @@ export class UIGridComponent {
     }
 
 
+    public gridIconComponent: GridIconComponent
     constructor(private util: GridUtilService,
         public _vcr: ViewContainerRef,
         public api: API) { }
@@ -149,10 +150,13 @@ export class UIGridComponent {
         }
     }
 
-    ngOnChanges() {
+    ngAfterViewInit() {
+        setTimeout(_ => {
+            console.log(this.gridIconComponent, 'gridIconComponent123123');
+        },100)
     }
 
-    ngAfterViewInit() {
+    ngOnChanges() {
     }
 
     ngOnDestroy() {
@@ -162,6 +166,12 @@ export class UIGridComponent {
                 targetColumns: this.targetColumns
             });
         }
+    }
+
+    addTempInOption(item) {
+        this._data.push(item);
+        //
+        console.log(this._data);
     }
 
     onLazyLoad(page: PageIndexAndSize = { first: this._first, rows: this._rows }): any {
