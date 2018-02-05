@@ -6,15 +6,15 @@ import "rxjs/add/operator/catch";
 import "rxjs/add/operator/toPromise";
 import 'rxjs/add/observable/throw';
 import "rxjs/add/operator/map";
-import { environment } from "../../environments/environment";
-
+// import { environment } from "../../environments/environment";
+var BASEURL: "http://120.76.247.73:11006"
 /**
  * 通用API服务，用于简单的调用后端的Controller及其方法，避免后端人员自行处理Restful类型API的麻烦
  */
 @Injectable()
 export class API {
 
-    _url = environment.BASEURL + '/api.do';
+    _url = BASEURL + '/api.do';
     /**
      * 设置API地址，如果是多个服务器，请使用Nginx或者其它网关软件先行统一地址
      * @param url API地址
