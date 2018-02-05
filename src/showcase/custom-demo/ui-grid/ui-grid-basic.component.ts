@@ -9,7 +9,7 @@ import { Component, OnInit } from '@angular/core';
         <a *ngIf="!name" href="javascript:void(0);" title="未锁定" class="operation-a operation-unlock"><i></i></a>
       </ng-template>
     </grid-icon>
-    <ui-grid [data]="data" [columns]="columns" [(selection)]="selection" mulitipy="true" [grid_icon]="grid_icon" (load)="load($event)" (cellClick)="cellClick($event)" (exportCSV)="exportCSV($event)">
+    <ui-grid [data]="data" [columns]="columns" [(selection)]="selection" mulitipy="true" [grid_icon]="grid_icon" (load)="load($event)" (exportCSV)="exportCSV($event)">
     
     </ui-grid>
     <button class="operate" nz-button (click)="getSel()">获取选中数据</button>
