@@ -17,7 +17,7 @@
         <div class="table-title" nz-table-title>
             <ng-template #defaultTitle>
                 <div>
-                    <button class="btn-editcol" nz-button [nzType]="'primary'" *ngIf="buttonGather.showEditColumn">
+                    <button class="btn-editcol" nz-button [nzType]="'primary'" *ngIf="buttonGather.showEditColumn" (click)="_editCol = !_editCol">
                         <i class="anticon anticon-edit"></i><span>编辑列</span>
                     </button>
                     <button class="btn-export" nz-button [nzType]="'primary'" [nzLoading]="_exportLoading" *ngIf="buttonGather.enableExport" (click)="exportCSVIntenal()">
@@ -67,4 +67,22 @@
         </tbody>
         <span nz-table-footer>Here is footer</span>
     </nz-table>
+</div>
+
+<div class="edit-wrap" *ngIf="_editCol">
+    <div class="edit-title ant-modal-header" drag-box>
+        <div class="ant-modal-title">编辑列</div>
+        <button aria-label="Close" class="ant-modal-close ng-star-inserted">
+            <span class="ant-modal-close-x"></span>
+        </button>
+    </div>
+    <div class="edit-content ant-modal-body">
+        <nz-transfer
+            [nzDataSource]="list"
+            [nzTitles]="['Source', 'Target']"
+            (nzSelectChange)="select($event)"
+            (nzChange)="change($event)">
+        </nz-transfer>
+    </div>
+    <div class="edit-footer ant-modal-footer"></div>
 </div>

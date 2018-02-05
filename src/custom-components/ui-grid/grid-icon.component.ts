@@ -11,7 +11,6 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { UIGridComponent } from './ui-grid.component';
 
-
 @Component({
   selector: 'grid-icon',
   template: `
@@ -20,14 +19,22 @@ import { UIGridComponent } from './ui-grid.component';
   styles: []
 })
 export class GridIconComponent {
-  
+
   @ContentChild('iconTemplate') iconTemplate: TemplateRef<any>;
   @Input() outField = '';
   @Input() outProp = '';
+  @Input('ui_grid') uiGrid: UIGridComponent;
 
   constructor() { }
 
-  ngOnInit(): void {
+  ngOnInit() {
+
+  }
+
+  ngOnChanges(simple) {
+    if(this.uiGrid && simple['outField']) {
+      this.uiGrid.getIconInstance(this);
+    }
   }
 }
 

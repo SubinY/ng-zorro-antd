@@ -18,7 +18,7 @@ import { CommonModule } from "@angular/common";
 import { NgZorroAntdModule } from '../../../index.showcase';
 import { GridUtilService } from './share/grid-util.service';
 import { API } from '../services/api';
-import { GridIconModule } from './grid-icon.component';
+import { DirectivesModule } from '../share/directives/yzt-directives.modules';
 
 interface PageData {
     content: Array<any>;
@@ -44,7 +44,6 @@ export interface PageIndexAndSize {
 })
 export class UIGridComponent {
     @ViewChild('gridImg', { read: ViewContainerRef }) gridImg: ViewContainerRef;
-
     _data: PageData;
     _dataSet = [];
     _selections: any;
@@ -53,7 +52,8 @@ export class UIGridComponent {
     _fixScrollY = 0;
     _title = '';
     _titleTpl: TemplateRef<any>;
-    _exportLoading: false;
+    _exportLoading = false;
+    _editCol = false;
     //用于存放可选列
     targetColumns: any[] = [];
     //grid表格按钮控制
@@ -72,6 +72,8 @@ export class UIGridComponent {
     _allChecked = false;
     _indeterminate = false;
     _displayData = [];
+    // 自定义图片实例
+    _iconComp = {};
 
     @Output() load: EventEmitter<PageIndexAndSize> = new EventEmitter();
     @Output() selectionChange: EventEmitter<any> = new EventEmitter();
@@ -135,20 +137,12 @@ export class UIGridComponent {
             this.selectionChange.emit(value);
         }
     }
-    _iconComp = {};
-    @Input('grid_icon')
-    set gridIcon({ outField, outProp, iconTemplate }) {
-        this._iconComp = {
-            outField: outField || '',
-            outProp: outProp || '',
-            iconTemplate: iconTemplate || '',
-        }
-    }
 
     constructor(private util: GridUtilService,
         public _vcr: ViewContainerRef,
         public api: API) { }
 
+    list = []
     ngOnInit() {
         this.onLazyLoad();
         if (this.id) {
@@ -163,12 +157,18 @@ export class UIGridComponent {
                 }
             }
         }
+        for (let i = 0; i < 20; i++) {
+          this.list.push({
+            key: i.toString(),
+            title: `content${i + 1}`,
+            disabled: i % 3 < 1,
+          });
+        }
+    
+        [ 2, 3 ].forEach(idx => this.list[idx].direction = 'right');
     }
 
     ngOnChanges() {
-    }
-
-    ngAfterViewInit() {
     }
 
     ngOnDestroy() {
@@ -178,12 +178,6 @@ export class UIGridComponent {
                 targetColumns: this.targetColumns
             });
         }
-    }
-
-    addTempInOption(item) {
-        this._data.push(item);
-        //
-        console.log(this._data);
     }
 
     onLazyLoad(page: PageIndexAndSize = { first: this._first, rows: this._rows }): any {
@@ -197,6 +191,14 @@ export class UIGridComponent {
         }
         let page = { first: this._first, rows: this._rows };
         this.onLazyLoad(page);
+    }
+
+    getIconInstance({ outField, outProp, iconTemplate }) {
+        this._iconComp = {
+            outField: outField || '',
+            outProp: outProp || '',
+            iconTemplate: iconTemplate || '',
+        }
     }
 
     /**
@@ -404,7 +406,7 @@ export class UIGridComponent {
         CommonModule,
         FormsModule,
         NgZorroAntdModule,
-        GridIconModule
+        DirectivesModule
     ],
     declarations: [
         UIGridComponent

@@ -1,12 +1,12 @@
 
-/**
- * 关键字数组分解成含'|'的字符串
- * @param arr 分解的数组
- * @param keyName 对象关键字
- */
 import { Injectable } from "@angular/core";
 @Injectable()
 export class YZTUtil {
+    /**
+     * 关键字数组分解成含'|'的字符串
+     * @param arr 分解的数组
+     * @param keyName 对象关键字
+     */
     generateColumnKey(arr: Array<string | Object>, keyName: string): string {
         if (!arr.length) return '';
         let fields = [];
