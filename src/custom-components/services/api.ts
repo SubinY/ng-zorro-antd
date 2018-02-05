@@ -6,7 +6,7 @@ import "rxjs/add/operator/catch";
 import "rxjs/add/operator/toPromise";
 import 'rxjs/add/observable/throw';
 import "rxjs/add/operator/map";
-import { environment } from "../../environments/environment";
+// import { environment } from "../../environments/environment";
 const BASEURL = "http://120.76.247.73:11006"
 /**
  * 通用API服务，用于简单的调用后端的Controller及其方法，避免后端人员自行处理Restful类型API的麻烦
