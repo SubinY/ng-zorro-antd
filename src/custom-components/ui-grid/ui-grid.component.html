@@ -69,10 +69,10 @@
     </nz-table>
 </div>
 
-<div class="edit-wrap" *ngIf="_editCol">
-    <div class="edit-title ant-modal-header" drag-box>
+<div #edit_box class="edit-wrap" *ngIf="_editCol">
+    <div drag-box [box]="edit_box" class="edit-title ant-modal-header">
         <div class="ant-modal-title">编辑列</div>
-        <button aria-label="Close" class="ant-modal-close ng-star-inserted">
+        <button aria-label="Close" class="ant-modal-close ng-star-inserted" (click)="_editCol=false">
             <span class="ant-modal-close-x"></span>
         </button>
     </div>
@@ -81,6 +81,7 @@
             [nzDataSource]="list"
             [nzTitles]="['Source', 'Target']"
             (nzSelectChange)="select($event)"
+            [nzListStyle]="{'width.px': 230, 'height.px': 300, 'text-align': 'left'}"
             (nzChange)="change($event)">
         </nz-transfer>
     </div>

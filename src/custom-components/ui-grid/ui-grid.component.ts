@@ -44,6 +44,7 @@ export interface PageIndexAndSize {
 })
 export class UIGridComponent {
     @ViewChild('gridImg', { read: ViewContainerRef }) gridImg: ViewContainerRef;
+    
     _data: PageData;
     _dataSet = [];
     _selections: any;
