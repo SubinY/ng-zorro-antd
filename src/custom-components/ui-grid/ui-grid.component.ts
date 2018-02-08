@@ -44,7 +44,7 @@ export interface PageIndexAndSize {
 })
 export class UIGridComponent {
     @ViewChild('gridImg', { read: ViewContainerRef }) gridImg: ViewContainerRef;
-    
+
     _data: PageData;
     _dataSet = [];
     _selections: any;
@@ -57,6 +57,8 @@ export class UIGridComponent {
     _editCol = false;
     //用于存放可选列
     targetColumns: any[] = [];
+    //备份完整columns
+    editColumns: any[] = [];
     //grid表格按钮控制
     buttonGather = {
         showEditColumn: true,
@@ -75,6 +77,13 @@ export class UIGridComponent {
     _displayData = [];
     // 自定义图片实例
     _iconComp = {};
+
+    set editCol(show: boolean) {
+        if (show) {
+            this.editColumns = [...this.columns, ...this.targetColumns];
+        }
+        this._editCol = show;
+    }
 
     @Output() load: EventEmitter<PageIndexAndSize> = new EventEmitter();
     @Output() selectionChange: EventEmitter<any> = new EventEmitter();
@@ -139,11 +148,11 @@ export class UIGridComponent {
         }
     }
 
+
     constructor(private util: GridUtilService,
         public _vcr: ViewContainerRef,
         public api: API) { }
 
-    list = []
     ngOnInit() {
         this.onLazyLoad();
         if (this.id) {
@@ -158,15 +167,14 @@ export class UIGridComponent {
                 }
             }
         }
-        for (let i = 0; i < 20; i++) {
-          this.list.push({
-            key: i.toString(),
-            title: `content${i + 1}`,
-            disabled: i % 3 < 1,
-          });
-        }
-    
-        [ 2, 3 ].forEach(idx => this.list[idx].direction = 'right');
+        this.editColumns = this.columns;
+        this.editColumns.forEach((column, i) => {
+            Object.defineProperties(column, {
+                title: { value: column.header },
+                disabled: { value: column.transferVisabled || false }
+            })
+        })
+
     }
 
     ngOnChanges() {
@@ -179,6 +187,30 @@ export class UIGridComponent {
                 targetColumns: this.targetColumns
             });
         }
+    }
+
+    editChange(change: any) {
+        let originChange = change,
+            items = originChange.list;
+
+        items.forEach((item, index) => {
+            if (change.from === 'left') {
+                this.editColumns.forEach(column => {
+                    if (item['field'] === column['field'] && column.direction !== 'right')
+                        column.direction = 'right';
+                })
+            } else {
+                this.targetColumns.forEach(column => {
+                    if (item['field'] === column['field'] && column.direction === 'right')
+                        column.direction = 'left';
+                })
+            }
+        })
+
+        this.columns = this.editColumns.filter(column => column.direction !== 'right');
+        this.targetColumns = this.editColumns.filter(column => column.direction === 'right');
+        // 重新赋值，保证穿梭框排序保持最新一次
+        this.editColumns = [...this.columns, ...this.targetColumns];
     }
 
     onLazyLoad(page: PageIndexAndSize = { first: this._first, rows: this._rows }): any {
