@@ -30,6 +30,12 @@ export const ROUTER_LIST = {
           'path'        : 'directive/echarts',
           // 'loadChildren': './nz-demo-button/nz-demo-button.module#NzDemoButtonModule',
           'zh'          : 'Echarts指令'
+        },
+        {
+          'label'       : 'yzt-viewer',
+          'path'        : 'directive/yzt-viewer',
+          // 'loadChildren': './nz-demo-button/nz-demo-button.module#NzDemoButtonModule',
+          'zh'          : '图片预览'
         }
       ]
     },
@@ -588,6 +594,10 @@ export const DEMO_ROUTES = [
     'path'        : 'components/shipper-select',
     'loadChildren': './custom-demo/shipper-select/shipper-select-demo.module#ShipperSelectDemoModule'
   },
+  {
+    'path'        : 'directive/yzt-viewer',
+    'loadChildren': './custom-demo/yzt-viewer/yzt-viewer-demo.module#YZTViewerDemoModule'
+  }
 ];
 
 // export const INTRO_ROUTES = ROUTER_LIST.intro.map(route => {

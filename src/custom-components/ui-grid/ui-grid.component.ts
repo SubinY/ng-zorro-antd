@@ -19,6 +19,7 @@ import { NgZorroAntdModule } from '../../../index.showcase';
 import { GridUtilService } from './share/grid-util.service';
 import { API } from '../services/api';
 import { DirectivesModule } from '../share/directives/yzt-directives.modules';
+import { YZTViewerDirectiveModule } from '../yzt-viewer/yzt-viewer.directive';
 
 interface PageData {
     content: Array<any>;
@@ -112,7 +113,7 @@ export class UIGridComponent {
         for (let row of content) {
             for (let c of [].concat(this.columns).concat(this.targetColumns)) {
                 if (c.field && row[c.field] === undefined) {
-                    row[c.field] = Object.defineProperty(row, c.field, "");
+                    Object.defineProperty(row, c.field, {value: ""});
                 }
             }
         }
@@ -439,7 +440,8 @@ export class UIGridComponent {
         CommonModule,
         FormsModule,
         NgZorroAntdModule,
-        DirectivesModule
+        DirectivesModule,
+        YZTViewerDirectiveModule
     ],
     declarations: [
         UIGridComponent

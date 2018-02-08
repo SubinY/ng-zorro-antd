@@ -52,7 +52,7 @@
                         <a href="javascript:;" *ngIf="column.link" class="column-link">
                             <span (click)="onCellClick($event,data,column.field)">{{data[column.field]}}</span>
                         </a>
-                        <nz-popover *ngIf="!column.link" [nzTrigger]="'hover'" nzOverlayStyle>
+                        <nz-popover *ngIf="!column.link && !column.thumbnail" [nzTrigger]="'hover'" nzOverlayStyle>
                             <span nz-popover (mouseenter)="onCellMouseover($event,data,column.field)">{{replaceTextOmit(data[column.field], column.textLength?column.textLength: 20)}}</span>
                             <div *ngIf="(data[column.field].length>(column.textLength?column.textLength: 20)) && !column.defaultTipsHidden">
                                <ng-template #nzTemplate>
@@ -60,6 +60,12 @@
                                 </ng-template>
                             </div>
                         </nz-popover>
+                        <!--图片附件-->
+                        <div *ngIf="column.thumbnail && data[column.field]" yzt-viewer>
+                            <i class="anticon anticon-picture thumbnail" *ngFor="let addr of data[column.field]" target="_blank">
+                                <img style="opacity: 0;position: absolute;left: 0;top: 0;" name="{{addr}}" src="{{addr}}">
+                            </i>
+                        </div>
                     </ng-template>
                     <ng-template [ngTemplateOutlet]="default_cell"></ng-template>
                 </td>

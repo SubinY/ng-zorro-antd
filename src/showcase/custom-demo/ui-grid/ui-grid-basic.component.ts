@@ -54,7 +54,8 @@ export class UIGridBasicComponent implements OnInit {
     "ID-id--true",
     "简称-name-120px",
     "全称-fullName-200px",
-    "代码-code-150px"
+    "代码-code-150px",
+    "缩略图-picture-80px--true"
   ];
   selection = [];
   ngOnInit() {
@@ -66,7 +67,8 @@ export class UIGridBasicComponent implements OnInit {
           header: arr[0],
           field: arr[1],
           width: arr[2],
-          link: arr[3]
+          link: arr[3],
+          thumbnail: arr[4]
         });
     }
   }

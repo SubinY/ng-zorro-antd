@@ -1,0 +1,72 @@
+<article>
+  <section class="markdown">
+    <h1>Viewer</h1>
+    <section class="markdown">
+      <p>基于
+        <a href="https://github.com/fengyuanchen/viewerjs" target="_black">viewer.js</a> 封装的指令</p>
+      <p>使用之前需要将viewer.js和viewer.css引入工程为全局文件</p>
+      <h2 id="何时使用">
+        <span>何时使用</span>
+        <!-- <a class="anchor">#</a> -->
+      </h2>
+      <ul>
+        <li>
+          <p>图片预览</p>
+        </li>
+      </ul>
+    </section>
+    <h2>代码演示
+      <i class="code-box-expand-trigger anticon anticon-appstore" title="展开全部代码"></i>
+    </h2>
+  </section>
+  <div nz-row [nzGutter]="8">
+    <div nz-col [nzSpan]="24">
+      <nz-code-box [nzTitle]="'基本'" id="components-yzt-viewer-basic" [nzCode]="YZTViewerBasicDemoCode">
+        <yzt-viewer-basic-demo demo></yzt-viewer-basic-demo>
+        <div intro>
+          <p>用法举例，name 为原图路径，src为缩略图路径。</p>
+        </div>
+      </nz-code-box>
+    </div>
+  </div>
+  <section class="markdown api-container">
+    <h2 id="API">
+      <span>API</span>
+      <!-- <a class="anchor">#</a> -->
+    </h2>
+    <h3 id="Rate">
+      <span>[viewer]</span>
+      <!-- <a class="anchor">#</a> -->
+    </h3>
+    <table>
+      <thead>
+        <tr>
+          <th>参数</th>
+          <th>说明</th>
+          <th>类型</th>
+          <th>默认值</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>[viewer-content]</td>
+          <td>用于标识图片的内容，当动态添加图片的时候，动态初始化viewer</td>
+          <td> Directive </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>#content</td>
+          <td>图片内容标识，如果图标使用ngFor方式循环数组展示，请在父级元素加上#content （ngFor模板初始化比ngOnInit晚）</td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>originalAttr</td>
+          <td>原图路径属性，非必须</td>
+          <td>String</td>
+          <td>name</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+</article>
