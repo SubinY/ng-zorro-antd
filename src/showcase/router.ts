@@ -30,11 +30,16 @@ export const ROUTER_LIST = {
           'path'        : 'directive/echarts',
           // 'loadChildren': './nz-demo-button/nz-demo-button.module#NzDemoButtonModule',
           'zh'          : 'Echarts指令'
+        },
+        {
+          'label'       : 'yzt-upload',
+          'path'        : 'components/yzt-upload',
+          'zh'          : '附件上传'
         }
       ]
     },
     {
-      'name'    : 'businessComponent',
+      'name'    : 'YztBusinessComponent',
       'children': [
         {
           'label'       : 'good-select',
@@ -577,6 +582,10 @@ export const DEMO_ROUTES = [
   {
     'path'        : 'components/ui-grid',
     'loadChildren': './custom-demo/ui-grid/ui-grid-demo.module#UIGridDemoModule'
+  },
+  {
+    'path'        : 'components/yzt-upload',
+    'loadChildren': './custom-demo/yzt-demo-upload/yzt-demo-upload.module#YztDemoUploadModule',
   },
 ];
 
