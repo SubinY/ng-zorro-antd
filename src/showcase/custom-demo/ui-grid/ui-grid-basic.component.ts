@@ -37,11 +37,11 @@ import { Component, OnInit } from '@angular/core';
       vertical-align: middle;
     }
     a.operation-unlock>i {
-      background: url(/assets/custom-img/operation.png) no-repeat -1px -120px;
+      background: url(./assets/custom-img/operation.png) no-repeat -1px -120px;
       background-size: 122px;
     }
     a.operation-lock>i {
-      background: url(/assets/custom-img/operation.png) no-repeat 0px -49px;
+      background: url(./assets/custom-img/operation.png) no-repeat 0px -49px;
       background-size: 122px;
     }
   `]
@@ -74,7 +74,7 @@ export class UIGridBasicComponent implements OnInit {
   }
 
   load(page) {
-    fetch('/assets/simulate-data/data.json', { method: 'get' }).then(result => result.json())
+    fetch('./assets/simulate-data/data.json', { method: 'get' }).then(result => result.json())
       .then(data => {
         this.data = data;
       })

@@ -63,7 +63,7 @@ export class EchartsDirective implements OnInit, OnChanges, OnDestroy {
     }
 
     initMapData() {
-        this.http.get('./custom-components/assets/map/china.json').subscribe(chinaJson => {
+        this.http.get('./assets/map/china.json').subscribe(chinaJson => {
             echarts.registerMap('china', chinaJson);
         })
     }
@@ -73,7 +73,7 @@ export class EchartsDirective implements OnInit, OnChanges, OnDestroy {
         let series = this.options && this.options.series && this.options.series[0] && this.options.series[0];
         if (series['type'] === 'map') {
             let mapType = series['mapType'];
-            this.http.get(`/assets/map/${mapType}.json`).subscribe((data) => {
+            this.http.get(`./assets/map/${mapType}.json`).subscribe((data) => {
                 const mapJson = JSON.parse((<any>data)._body);
                 echarts.registerMap(mapType, mapJson);
                 this.myChart.setOption(this.options);
