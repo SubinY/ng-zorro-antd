@@ -51,6 +51,11 @@ export const ROUTER_LIST = {
           'zh'          : '品名选择'
         },
         {
+          'label'       : 'repair-good-select',
+          'path'        : 'components/repair-good-select',
+          'zh'          : '维修品名选择'
+        },
+        {
           'label'       : 'ui-grid',
           'path'        : 'components/ui-grid',
           'zh'          : '数据表格'
@@ -581,6 +586,10 @@ export const DEMO_ROUTES = [
   {
     'path'        : 'components/good-select',
     'loadChildren': './custom-demo/good-select/good-select-demo.module#GoodSelectDemoModule'
+  },
+  {
+    'path'        : 'components/repair-good-select',
+    'loadChildren': './custom-demo/repair-good-select/repair-good-select-demo.module#RepairGoodSelectModule'
   },
   {
     'path'        : 'directive/echarts',

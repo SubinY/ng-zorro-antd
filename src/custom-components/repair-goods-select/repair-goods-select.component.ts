@@ -28,13 +28,13 @@ export interface DomOpt {
 
 export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
     provide: NG_VALUE_ACCESSOR,
-    useExisting: forwardRef(() => GoodSelectComponent),
+    useExisting: forwardRef(() => RepairGoodSelectComponent),
     multi: true
 };
 @Component({
-    selector: `good-select`,
+    selector: `repair-goods-select`,
     template: `
-    <div class="good-select">
+    <div class="repair-goods-select">
         <nz-select 
             class="good-nz-select"
             [style.width]="_width" 
@@ -42,7 +42,6 @@ export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
             [nzMode]="_nzMode"
             [nzFilter]="_filter"
             [nzAllowClear]="_allowClear"
-            (nzScrollToBottom)="yztScrollToBottom()"
             (nzSearchChange)="yztSearchChange($event)"
             [(ngModel)]="value">
             <nz-option
@@ -79,7 +78,7 @@ export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
         .good-nz-select:hover +.close-icon {
             opacity: 1;
         }
-        .good-select {
+        .repair-goods-select {
             position: relative;
         }
         .multiple-close {
@@ -88,7 +87,7 @@ export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
     `],
     providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR]
 })
-export class GoodSelectComponent implements ControlValueAccessor, OnInit {
+export class RepairGoodSelectComponent implements ControlValueAccessor, OnInit {
     @ViewChild("domOpt") domOpt: DomOpt;
     private onTouchedCallback: () => () => {};
     private onChangeCallback: (_: any) => () => {};
@@ -103,20 +102,16 @@ export class GoodSelectComponent implements ControlValueAccessor, OnInit {
     // 下拉过滤含关键字选项，false为不过滤
     _filter = false;
     currentText = '';
-    firstNum = 0;
     canQuery = true;
     keyWordStream = new Subject<string>()
     keyWord$: any;
 
-    @Input() placeholder = "请选择品名";
-    @Input() rowsNum = 10;
+    @Input() placeholder = "请选择维修品名";
     @Input() valueType = "";
 
-    set value(v: string) {
-        if(typeof v === 'string' && v.trim() === '' || !v) {
-            this.firstNum = 0;
-            this.queryData('', []);
-        }
+    set value(v: any) {
+        if(typeof v === 'string' && v.trim() === '' || !v) 
+            this.options = [];
         this._value = v;
         // 双向绑定获取对象
         if (this.valueType === "object") {
@@ -129,7 +124,7 @@ export class GoodSelectComponent implements ControlValueAccessor, OnInit {
 
     }
 
-    get value(): string {
+    get value(): any {
         return this._value;
     };
 
@@ -157,7 +152,7 @@ export class GoodSelectComponent implements ControlValueAccessor, OnInit {
         this.keyWord$ = this.keyWordStream
             .debounceTime(250)
             .subscribe(word => {
-                this.queryData(word, []);
+                this.queryData(word, [])
             });
 
     }
@@ -183,17 +178,11 @@ export class GoodSelectComponent implements ControlValueAccessor, OnInit {
         this.onTouchedCallback = fn;
     }
 
-    yztSearchChange(event) {
+    yztSearchChange(event: string) {
         this.canQuery = true;
         this.currentText = event;
-        this.firstNum = 0;
         this.keyWordStream.next(event);
     }
-
-    yztScrollToBottom() {
-        this.queryData(this.currentText, this.options);
-    }
-
 
     /** 
      * 仅作清空多选选项
@@ -213,21 +202,24 @@ export class GoodSelectComponent implements ControlValueAccessor, OnInit {
      */
     queryData(searchText?: string, options?: Array<GoodOpt>) {
         if (!this.canQuery) return;
-        const goodName = searchText;
-        let pageParms = { "first": this.firstNum, "rows": this.rowsNum };
-        this.api.call("abnormalOtherHandleController.waybillGoodsQuery", pageParms, {
-            name: goodName
+        const waybillId = searchText;
+        this.options = [];
+        this.api.call("AbnormalRegistController.waybillQuery", {
+            waybillId: waybillId
         }).ok(json => {
-            const result = json.result && json.result.content || [];
-            if (!result.length) {
+            const repairGoods = json.result && json.result.waybillGoodsInfo || [];
+            repairGoods.forEach((repairGood) => {
+                repairGood.name = repairGood["goodsName"];
+                repairGood.goodId = repairGood["wayBillGoodsId"];
+            });
+            this.options = repairGoods;
+        }).fail(err => {
+            if (!this.options.length) {
                 const lastItem = new Array<GoodOpt>({ goodId: "empty", name: "没有更多选项！", disabled: true });
                 this.options = options.concat(lastItem);
                 this.canQuery = false;
                 return;
             }
-            this.options = options.concat(result);
-            this.firstNum += this.rowsNum;
-        }).fail(err => {
             throw new Error(err);
         });
     }
@@ -240,8 +232,8 @@ export class GoodSelectComponent implements ControlValueAccessor, OnInit {
         NgZorroAntdModule,
     ],
     declarations: [
-        GoodSelectComponent
+        RepairGoodSelectComponent
     ],
-    exports: [GoodSelectComponent]
+    exports: [RepairGoodSelectComponent]
 })
-export class GoodSelectModule { }
+export class RepairGoodSelectModule { }

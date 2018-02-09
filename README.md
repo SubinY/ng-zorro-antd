@@ -22,7 +22,7 @@ An enterprise-class UI components based on Ant Design and Angular.
 * [ ]  UISelect （现有 `ui-select-box` 组件优化，可用于地址选择，异常类型选择组件封装）
 * [ ]  日期选择 `nz-datepicker`
 * [x]  表格 `nz-table` (扩展支持现有系统的悬浮列弹窗查询、图标等功能）
-* [ ]  图片&文件上传 (`nz-upload` ）
+* [x]  图片&文件上传 (`nz-upload` ）
 * [ ]  地址选择 (用现有地址选择组件，修改样式统一风格，或优化细节等)
 * [ ]  省市区多选组件 (用现有地址选择组件，修改样式统一风格，或优化细节等）
 * [ ]  区域树 (`zorro v0.6.10` 缺失tree组件）
@@ -33,11 +33,19 @@ An enterprise-class UI components based on Ant Design and Angular.
 * [ ]  异常类型选择  `UISelect`扩展
 * [ ]  师傅名称/账号 `nz-select` 扩展
 * [x]  品名选择 `nz-select` 扩展
-* [ ]  维修品名 `nz-select` 扩展
-* [ ]  图片预览组件 （可用现有指令`Viewer`）
+* [x]  维修品名 `nz-select` 扩展
+* [x]  图片预览组件 （可用现有指令`Viewer`）
 * [x]  Echarts指令 （可用现有指令）
 * [ ]  G2指令 （可扩展封装：https://antv.alipay.com/zh-cn/g2/3.x/index.html ）
 
+## 记录自定义组件未修复及可以优化的地方
+
+* [ ]  拖拽表格至边缘会出现1像素震动 (drag-box.directive.ts)
+* [ ]  viewer预览组件可以扩展支持缩略图 (yzt-viewer.directive.ts)
+* [ ]  select扩展加载下拉数据loading提示动画 (yzt-viewer.directive.ts)
+
+
+以下是对现有业务组件功能点，对应使用 `ZORRO` 组件封装说明。
 
 ## Features
 

@@ -14,6 +14,7 @@ import { ShipperSelectModule } from "./shipper-select/shipper-select.component";
 import { GridIconModule } from './ui-grid/grid-icon.component';
 import { YztUploadModule } from './upload/yzt-upload.module';
 import { YZTViewerDirectiveModule } from './yzt-viewer/yzt-viewer.directive';
+import { RepairGoodSelectModule } from './repair-goods-select/repair-goods-select.component';
 
 // Services
 
@@ -49,6 +50,7 @@ export { NzRootConfig } from '../components/ng-zorro-antd.module';
     EchartsModule,
     UIGridModule,
     ShipperSelectModule,
+    RepairGoodSelectModule,
     GridIconModule,
     DirectivesModule,
     YztUploadModule,
