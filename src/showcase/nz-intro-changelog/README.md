@@ -9,8 +9,6 @@
 
 更新日志也可以在[Github](https://github.com/NG-ZORRO/ng-zorro-antd/releases)查看
 
-<<<<<<< HEAD
-=======
 # 0.6.14
 `2018-02-04`
 
@@ -27,7 +25,6 @@
 
 * `Affix` 新增完善单例测试 [#982](https://github.com/NG-ZORRO/ng-zorro-antd/pull/982) [@pjurczynski](https://github.com/pjurczynski)
 
->>>>>>> zorro/master
 # 0.6.13
 `2018-01-28`
 

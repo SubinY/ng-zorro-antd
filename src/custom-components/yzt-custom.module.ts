@@ -12,6 +12,7 @@ import { EchartsModule } from './echarts/echarts.component';
 import { UIGridModule } from './ui-grid/ui-grid.component';
 import { ShipperSelectModule } from "./shipper-select/shipper-select.component";
 import { GridIconModule } from './ui-grid/grid-icon.component';
+import { YztUploadModule } from './upload/yzt-upload.module';
 
 import { DirectivesModule } from './share/directives/yzt-directives.modules';
 // Services
@@ -22,9 +23,11 @@ import { NzRootConfig } from '../components/ng-zorro-antd.module';
 // ---------------------------------------------------------
 // | Exports
 // ---------------------------------------------------------
+// interface
+export * from './upload/interface';
 
 // Modules
-
+export { YztUploadModule } from './upload/yzt-upload.module';
 // Components
 
 // Services
@@ -44,7 +47,8 @@ export { NzRootConfig } from '../components/ng-zorro-antd.module';
     UIGridModule,
     ShipperSelectModule,
     GridIconModule,
-    DirectivesModule
+    DirectivesModule,
+    YztUploadModule
   ]
 })
 export class YztCustomModule {
