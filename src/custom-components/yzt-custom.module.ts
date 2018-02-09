@@ -13,9 +13,12 @@ import { UIGridModule } from './ui-grid/ui-grid.component';
 import { ShipperSelectModule } from "./shipper-select/shipper-select.component";
 import { GridIconModule } from './ui-grid/grid-icon.component';
 import { YztUploadModule } from './upload/yzt-upload.module';
+import { YZTViewerDirectiveModule } from './yzt-viewer/yzt-viewer.directive';
 
-import { DirectivesModule } from './share/directives/yzt-directives.modules';
 // Services
+
+// Directives
+import { DirectivesModule } from './share/directives/yzt-directives.modules';
 
 // Tokens (eg. global services' config)
 import { NzRootConfig } from '../components/ng-zorro-antd.module';
@@ -48,7 +51,8 @@ export { NzRootConfig } from '../components/ng-zorro-antd.module';
     ShipperSelectModule,
     GridIconModule,
     DirectivesModule,
-    YztUploadModule
+    YztUploadModule,
+    YZTViewerDirectiveModule
   ]
 })
 export class YztCustomModule {

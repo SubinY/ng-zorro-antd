@@ -43,7 +43,8 @@
     "@angular/cdk": "^5.0.0",
     "echarts": "^4.0.2",
     "moment": "^2.18.1",
-    "tslib": "^1.7.1"
+    "tslib": "^1.7.1",
+    "viewerjs": "^1.0.0-beta.1"
   },
   "devDependencies": {
     "@angular/animations": "^5.0.0",
