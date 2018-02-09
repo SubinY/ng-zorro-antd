@@ -28,20 +28,17 @@ export const ROUTER_LIST = {
         {
           'label'       : 'echarts',
           'path'        : 'directive/echarts',
-          // 'loadChildren': './nz-demo-button/nz-demo-button.module#NzDemoButtonModule',
           'zh'          : 'Echarts指令'
         },
         {
-<<<<<<< HEAD
           'label'       : 'yzt-upload',
           'path'        : 'components/yzt-upload',
           'zh'          : '附件上传'
-=======
+        },
+        {
           'label'       : 'yzt-viewer',
           'path'        : 'directive/yzt-viewer',
-          // 'loadChildren': './nz-demo-button/nz-demo-button.module#NzDemoButtonModule',
           'zh'          : '图片预览'
->>>>>>> develop
         }
       ]
     },
@@ -51,19 +48,16 @@ export const ROUTER_LIST = {
         {
           'label'       : 'good-select',
           'path'        : 'components/good-select',
-          // 'loadChildren': './nz-demo-button/nz-demo-button.module#NzDemoButtonModule',
           'zh'          : '品名选择'
         },
         {
           'label'       : 'ui-grid',
           'path'        : 'components/ui-grid',
-          // 'loadChildren': './nz-demo-button/nz-demo-button.module#NzDemoButtonModule',
           'zh'          : '数据表格'
         },
         {
           'label'       : 'shipper-select',
           'path'        : 'components/shipper-select',
-          // 'loadChildren': './nz-demo-button/nz-demo-button.module#NzDemoButtonModule',
           'zh'          : '发货人选择'
         },
       ]
@@ -601,15 +595,13 @@ export const DEMO_ROUTES = [
     'loadChildren': './custom-demo/shipper-select/shipper-select-demo.module#ShipperSelectDemoModule'
   },
   {
-<<<<<<< HEAD
-    'path'        : 'components/yzt-upload',
-    'loadChildren': './custom-demo/yzt-demo-upload/yzt-demo-upload.module#YztDemoUploadModule',
-  },
-=======
     'path'        : 'directive/yzt-viewer',
     'loadChildren': './custom-demo/yzt-viewer/yzt-viewer-demo.module#YZTViewerDemoModule'
+  },
+  {
+    'path'        : 'components/yzt-upload',
+    'loadChildren': './custom-demo/yzt-demo-upload/yzt-demo-upload.module#YztDemoUploadModule',
   }
->>>>>>> develop
 ];
 
 // export const INTRO_ROUTES = ROUTER_LIST.intro.map(route => {
