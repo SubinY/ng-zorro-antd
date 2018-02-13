@@ -31,7 +31,7 @@ An enterprise-class UI components based on Ant Design and Angular.
 * [x]  发货人选择 `nz-select` 扩展
 * [x]  收货人选择 `nz-select` 扩展
 * [ ]  异常类型选择  `UISelect`扩展
-* [ ]  师傅名称/账号 `nz-select` 扩展
+* [x]  师傅名称/账号 `nz-select` 扩展
 * [x]  品名选择 `nz-select` 扩展
 * [x]  维修品名 `nz-select` 扩展
 * [x]  图片预览组件 （可用现有指令`Viewer`）

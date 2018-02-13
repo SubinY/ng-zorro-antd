@@ -16,6 +16,7 @@ import { YztUploadModule } from './upload/yzt-upload.module';
 import { YZTViewerDirectiveModule } from './yzt-viewer/yzt-viewer.directive';
 import { RepairGoodSelectModule } from './repair-goods-select/repair-goods-select.component';
 import { CneeSelectModule } from "./cnee-select/cnee-select.component";
+import { MasterSelectModule } from "./master-select/master-select.component";
 
 // Services
 
@@ -56,7 +57,8 @@ export { NzRootConfig } from '../components/ng-zorro-antd.module';
     DirectivesModule,
     YztUploadModule,
     YZTViewerDirectiveModule,
-    CneeSelectModule
+    CneeSelectModule,
+    MasterSelectModule
   ]
 })
 export class YztCustomModule {

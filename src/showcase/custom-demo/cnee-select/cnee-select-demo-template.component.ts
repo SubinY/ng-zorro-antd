@@ -5,10 +5,10 @@ import { NzMessageService } from "../../../components/ng-zorro-antd.module";
     selector: 'cnee-select-demo-template',
     template: `
      <cnee-select [(ngModel)]="value" [customTemplate]="content"  [valueType]="'object'">
-      <ng-template #content let-name="name" let-idBak="idBak">
+      <ng-template #content let-name="name" let-mobile="mobile">
         <div class="wrap">
           <span class="font-style border-right">{{name}}</span>
-          <span class="font-style">{{idBak}}</span>
+          <span class="font-style">{{mobile}}</span>
         </div>
       </ng-template>
     </cnee-select>

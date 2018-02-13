@@ -70,6 +70,11 @@ export const ROUTER_LIST = {
           'path'        : 'components/cnee-select',
           'zh'          : '收货人选择'
         },
+        {
+          'label'       : 'master-select',
+          'path'        : 'components/master-select',
+          'zh'          : '师傅名称/账号'
+        },
       ]
     },
     {
@@ -605,8 +610,16 @@ export const DEMO_ROUTES = [
     'loadChildren': './custom-demo/ui-grid/ui-grid-demo.module#UIGridDemoModule'
   },
   {
+    'path'        : 'components/shipper-select',
+    'loadChildren': './custom-demo/shipper-select/shipper-select-demo.module#ShipperSelectDemoModule'
+  },
+  {
     'path'        : 'components/cnee-select',
     'loadChildren': './custom-demo/cnee-select/cnee-select-demo.module#CneeSelectDemoModule'
+  },
+  {
+    'path'        : 'components/master-select',
+    'loadChildren': './custom-demo/master-select/master-select-demo.module#MasterSelectDemoModule'
   },
   {
     'path'        : 'directive/yzt-viewer',
