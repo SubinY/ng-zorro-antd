@@ -82,9 +82,6 @@ export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
         .good-select {
             position: relative;
         }
-        .multiple-close {
-            position: absolute;
-        }
     `],
     providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR]
 })
@@ -193,7 +190,6 @@ export class GoodSelectComponent implements ControlValueAccessor, OnInit {
     yztScrollToBottom() {
         this.queryData(this.currentText, this.options);
     }
-
 
     /** 
      * 仅作清空多选选项

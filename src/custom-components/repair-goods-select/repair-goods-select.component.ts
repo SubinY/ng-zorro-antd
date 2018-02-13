@@ -65,6 +65,9 @@ export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
     </div>
     `,
     styles: [`
+        .repair-goods-select {
+            position: relative;
+        }
         .close-icon {
             opacity: 0;
             position: absolute;
@@ -77,12 +80,6 @@ export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
         }
         .good-nz-select:hover +.close-icon {
             opacity: 1;
-        }
-        .repair-goods-select {
-            position: relative;
-        }
-        .multiple-close {
-            position: absolute;
         }
     `],
     providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR]

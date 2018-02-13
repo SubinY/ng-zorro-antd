@@ -5,7 +5,7 @@ import { NgZorroAntdModule } from '../../../index.showcase';
 import { API } from '../services/api';
 import { Subject } from 'rxjs/Rx';
 
-export interface Shipper {
+export interface Cnee {
     name: string;
     id?: string;
     idBak?: string;
@@ -20,16 +20,16 @@ export interface DomOpt {
 
 export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
     provide: NG_VALUE_ACCESSOR,
-    useExisting: forwardRef(() => ShipperSelectComponent),
+    useExisting: forwardRef(() => CneeSelectComponent),
     multi: true
 };
 
 @Component({
-    selector: `shipper-select`,
+    selector: `cnee-select`,
     template: `
-    <div class="shipper-select">
+    <div class="cnee-select">
         <nz-select 
-            class="shipper-nz-select"
+            class="cnee-nz-select"
             [style.width]="_width" 
             [nzPlaceHolder]="placeholder" 
             [nzMode]="_nzMode"
@@ -49,16 +49,16 @@ export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
             </nz-option>
         </nz-select>
         <span
-          role="close-icon"
-          (click)="clearSelect($event)"
-          class="ant-select-selection__clear close-icon"
-          style="-webkit-user-select: none;"
-          *ngIf="!_allowClear&&options.length">
+        role="close-icon"
+        (click)="clearSelect($event)"
+        class="ant-select-selection__clear close-icon"
+        style="-webkit-user-select: none;"
+        *ngIf="!_allowClear&&options.length">
         </span>
     </div>
     `,
     styles: [`
-    .shipper-select{
+    .cnee-select{
         position: relative;
     }
     .close-icon {
@@ -71,19 +71,19 @@ export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
     .close-icon:hover {
         opacity: 1;
     }
-    .shipper-nz-select:hover +.close-icon {
+    .cnee-nz-select:hover +.close-icon {
         opacity: 1;
     }
     `],
     providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR]
 })
-export class ShipperSelectComponent implements ControlValueAccessor, OnInit {
+export class CneeSelectComponent implements ControlValueAccessor, OnInit {
 
     @ViewChild("domOpt") domOpt: DomOpt;
     private onTouchedCallback: () => () => {};
     private onChangeCallback: (_: any) => () => {};
 
-    options: Array<Shipper> = [];
+    options: Array<Cnee> = [];
     // 单选的时候传字符串，多选传数组
     _value: string;
     _width = "100%";
@@ -97,15 +97,12 @@ export class ShipperSelectComponent implements ControlValueAccessor, OnInit {
     keyWordStream = new Subject<string>()
     keyWord$: any;
 
-    @Input() placeholder = "请输入发货人";
+    @Input() placeholder = "请输入收货人";
     @Input() valueType = "";
 
     set value(v: string) {
-        if(typeof v === 'string' && v.trim() === '' || !v) {
-            this.options = [];
-            this.currentText = '';
+        if(typeof v === 'string' && v.trim() === '' || !v) 
             this.queryData('', []);
-        }
         this._value = v;
         // 双向绑定获取对象
         if (this.valueType === "object") {
@@ -196,19 +193,19 @@ export class ShipperSelectComponent implements ControlValueAccessor, OnInit {
      * 查询数据
      * @param $event
      */
-    queryData(searchText?: string, options?: Array<Shipper>) {
+    queryData(searchText?: string, options?: Array<Cnee>) {
         if (!this.canQuery) return;
         const value = searchText;
-        this.api.call("customerWorkerController.queryShipperNameLike",{
+        this.api.call("customerWorkerController.queryShipperNameLike", {
             name: value,
-            clientType:"send"
+            clientType: "receive"
         }).ok(json => {
             const result = json.result || [];
             this.options = result;
             this.outOptions.emit(this.options);
         }).fail(err => {
             if (!this.options.length) {
-                const lastItem = new Array<Shipper>({ id: "empty", name: "没有更多选项！", disabled: true });
+                const lastItem = new Array<Cnee>({ id: "empty", name: "没有更多选项！", disabled: true });
                 this.options = options.concat(lastItem);
                 this.canQuery = false;
                 return;
@@ -227,8 +224,8 @@ export class ShipperSelectComponent implements ControlValueAccessor, OnInit {
         NgZorroAntdModule,
     ],
     declarations: [
-        ShipperSelectComponent
+        CneeSelectComponent
     ],
-    exports: [ShipperSelectComponent]
+    exports: [CneeSelectComponent]
 })
-export class ShipperSelectModule {}
+export class CneeSelectModule { }

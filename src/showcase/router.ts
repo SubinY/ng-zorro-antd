@@ -65,6 +65,11 @@ export const ROUTER_LIST = {
           'path'        : 'components/shipper-select',
           'zh'          : '发货人选择'
         },
+        {
+          'label'       : 'cnee-select',
+          'path'        : 'components/cnee-select',
+          'zh'          : '收货人选择'
+        },
       ]
     },
     {
@@ -600,8 +605,8 @@ export const DEMO_ROUTES = [
     'loadChildren': './custom-demo/ui-grid/ui-grid-demo.module#UIGridDemoModule'
   },
   {
-    'path'        : 'components/shipper-select',
-    'loadChildren': './custom-demo/shipper-select/shipper-select-demo.module#ShipperSelectDemoModule'
+    'path'        : 'components/cnee-select',
+    'loadChildren': './custom-demo/cnee-select/cnee-select-demo.module#CneeSelectDemoModule'
   },
   {
     'path'        : 'directive/yzt-viewer',

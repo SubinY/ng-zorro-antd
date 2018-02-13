@@ -15,6 +15,7 @@ import { GridIconModule } from './ui-grid/grid-icon.component';
 import { YztUploadModule } from './upload/yzt-upload.module';
 import { YZTViewerDirectiveModule } from './yzt-viewer/yzt-viewer.directive';
 import { RepairGoodSelectModule } from './repair-goods-select/repair-goods-select.component';
+import { CneeSelectModule } from "./cnee-select/cnee-select.component";
 
 // Services
 
@@ -54,7 +55,8 @@ export { NzRootConfig } from '../components/ng-zorro-antd.module';
     GridIconModule,
     DirectivesModule,
     YztUploadModule,
-    YZTViewerDirectiveModule
+    YZTViewerDirectiveModule,
+    CneeSelectModule
   ]
 })
 export class YztCustomModule {

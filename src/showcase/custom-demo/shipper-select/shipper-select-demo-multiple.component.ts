@@ -4,7 +4,7 @@ import { NzMessageService } from "../../../components/ng-zorro-antd.module";
 @Component({
     selector: 'shipper-select-demo-multiple',
     template: `
-    <shipper-select [(ngModel)]="value" [shipperMode]="'multiple'"></shipper-select>
+    <shipper-select [(ngModel)]="value" [OptionMode]="'multiple'"></shipper-select>
     <button nz-button [nzType]="'primary'" (click)="handle()">获取发货人编号数组</button>
   `,
     styles: []
