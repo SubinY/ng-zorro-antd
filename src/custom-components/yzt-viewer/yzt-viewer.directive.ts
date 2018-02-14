@@ -33,14 +33,15 @@ export class ViewerContentDirective {
   selector: '[yzt-viewer]'
 })
 export class YZTViewerDirective {
-  @Input()
-  originalAttr: string = "name";
+  
+  @Input()  originalAttr: string = "name";
+
   @ContentChild('content') content: ElementRef;
 
   @ContentChildren(ViewerContentDirective)
   set _imgContents(value) {
     this.imgContents = value;
-    this.renderContent(true);
+    this.renderContent();
   }
 
   viewer: any;
@@ -54,15 +55,13 @@ export class YZTViewerDirective {
   }
 
   ngOnInit() {
-    console.log(1);
     this.renderContent();
   }
 
   /**
    * 如果img动态增加，则动态渲染
-   * @param {boolean} flag 是否动态增加渲染
    */
-  renderContent(flag?: boolean) {
+  renderContent() {
     let nativeEl = this.nativeElement;
     if (this.content) {
       nativeEl = this.content.nativeElement;

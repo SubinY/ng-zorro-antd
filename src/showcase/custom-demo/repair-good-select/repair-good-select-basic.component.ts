@@ -4,7 +4,7 @@ import { NzMessageService } from '../../../../index.showcase';
 @Component({
   selector: 'repair-good-select-basic',
   template: `
-    <repair-goods-select [(ngModel)]="value"></repair-goods-select>
+    <yzt-repair-goods  [(ngModel)]="value"></yzt-repair-goods>
     <button  nz-button  [nzType]="'primary'" (click)="handle()">获取维修品名ID</button>
   `,
   styles  : []

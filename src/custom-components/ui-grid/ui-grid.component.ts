@@ -39,7 +39,7 @@ export interface PageIndexAndSize {
 }
 
 @Component({
-    selector: `ui-grid`,
+    selector: `yzt-grid`,
     templateUrl: `ui-grid.component.html`,
     styleUrls: [`ui-grid.component.scss`]
 })
