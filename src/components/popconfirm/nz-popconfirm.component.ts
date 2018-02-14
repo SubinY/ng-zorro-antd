@@ -1,32 +1,34 @@
 import {
+  ChangeDetectorRef,
   Component,
-  ViewEncapsulation,
+  EventEmitter,
   Input,
   Output,
-  EventEmitter,
-  ContentChild
+  ViewEncapsulation,
 } from '@angular/core';
-import { NzPopconfirmDirective } from './nz-popconfirm.directive';
-import { FadeAnimation } from '../core/animation/fade-animations';
+import { fadeAnimation } from '../core/animation/fade-animations';
+import { NzLocaleService } from '../locale/index';
 import { NzToolTipComponent } from '../tooltip/nz-tooltip.component';
+import { toBoolean } from '../util/convert';
 
 @Component({
   selector     : 'nz-popconfirm',
   encapsulation: ViewEncapsulation.None,
   animations   : [
-    FadeAnimation
+    fadeAnimation
   ],
   template     : `
     <ng-content></ng-content>
     <ng-template
-      nz-connected-overlay
-      [origin]="nzOrigin"
-      [hasBackdrop]="_hasBackdrop"
+      #overlay="cdkConnectedOverlay"
+      cdkConnectedOverlay
+      [cdkConnectedOverlayOrigin]="overlayOrigin"
+      [cdkConnectedOverlayHasBackdrop]="_hasBackdrop"
       (backdropClick)="hide()"
       (detach)="hide()"
       (positionChange)="onPositionChange($event)"
-      [positions]="_positions"
-      [open]="visible$ | async">
+      [cdkConnectedOverlayPositions]="_positions"
+      [cdkConnectedOverlayOpen]="visible$ | async">
       <div class="ant-popover" [ngClass]="_classMap" [ngStyle]="nzOverlayStyle" [@fadeAnimation]="''+(visible$ | async)"
         (@fadeAnimation.done)="_afterVisibilityAnimation($event)">
         <div class="ant-popover-content">
@@ -36,12 +38,12 @@ import { NzToolTipComponent } from '../tooltip/nz-tooltip.component';
               <div class="ant-popover-inner-content">
                 <div class="ant-popover-message" *ngIf="!nzTemplate">
                   <i class="anticon anticon-exclamation-circle"></i>
-                  <div class="ant-popover-message-title">{{nzTitle}}</div>
+                  <div class="ant-popover-message-title">{{ nzTitle }}</div>
                 </div>
                 <div class="ant-popover-buttons" *ngIf="!nzTemplate">
-                  <button nz-button [nzSize]="'small'" (click)="onCancel()"><span>{{nzCancelText}}</span></button>
+                  <button nz-button [nzSize]="'small'" (click)="onCancel()"><span>{{ nzCancelText }}</span></button>
                   <button nz-button [nzSize]="'small'" [nzType]="'primary'" (click)="onConfirm()">
-                    <span>{{nzOkText}}</span></button>
+                    <span>{{ nzOkText }}</span></button>
                 </div>
                 <ng-template
                   *ngIf="nzTemplate"
@@ -59,26 +61,29 @@ import { NzToolTipComponent } from '../tooltip/nz-tooltip.component';
   ]
 })
 export class NzPopconfirmComponent extends NzToolTipComponent {
+  private _condition = false;
   _prefix = 'ant-popover-placement';
   _trigger = 'click';
   _hasBackdrop = true;
-  _condition = false;
   @Input() nzContent;
-  @Input() nzOkText = '确定';
-  @Input() nzCancelText = '取消';
+  @Input() nzOkText = this._locale.translate('Modal.okText');
+  @Input() nzCancelText = this._locale.translate('Modal.cancelText');
 
-  @Input() set nzCondition(value) {
-    this._condition = value;
+  @Input()
+  set nzCondition(value: boolean) {
+    this._condition = toBoolean(value);
   }
 
-  get nzCondition() {
+  get nzCondition(): boolean {
     return this._condition;
   }
 
-  @Output() nzOnCancel: EventEmitter<any> = new EventEmitter();
-  @Output() nzOnConfirm: EventEmitter<any> = new EventEmitter();
-  @ContentChild(NzPopconfirmDirective) nzOrigin;
+  @Output() nzOnCancel: EventEmitter<void> = new EventEmitter();
+  @Output() nzOnConfirm: EventEmitter<void> = new EventEmitter();
 
+  constructor(cdr: ChangeDetectorRef, private _locale: NzLocaleService) {
+    super(cdr);
+  }
 
   show(): void {
     if (!this._condition) {
@@ -88,12 +93,12 @@ export class NzPopconfirmComponent extends NzToolTipComponent {
     }
   }
 
-  onCancel() {
+  onCancel(): void {
     this.nzOnCancel.emit();
     this.nzVisible = false;
   }
 
-  onConfirm() {
+  onConfirm(): void {
     this.nzOnConfirm.emit();
     this.nzVisible = false;
   }

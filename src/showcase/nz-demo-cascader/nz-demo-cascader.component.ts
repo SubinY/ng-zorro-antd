@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 
 
 @Component({
@@ -9,7 +9,7 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
     './nz-demo-cascader.less',
   ]
 })
-export class NzDemoCascaderComponent implements OnInit {
+export class NzDemoCascaderComponent {
   NzDemoCascaderBasicCode = require('!!raw-loader!./nz-demo-cascader-basic.component');
   NzDemoCascaderCustomTriggerCode = require('!!raw-loader!./nz-demo-cascader-custom-trigger.component');
   NzDemoCascaderDisabledCode = require('!!raw-loader!./nz-demo-cascader-disabled.component');
@@ -19,11 +19,5 @@ export class NzDemoCascaderComponent implements OnInit {
   NzDemoCascaderChangeOnSelectCode = require('!!raw-loader!./nz-demo-cascader-change-on-select.component');
   NzDemoCascaderCustomRenderCode = require('!!raw-loader!./nz-demo-cascader-custom-render.component');
   NzDemoCascaderLazyCode = require('!!raw-loader!./nz-demo-cascader-lazy.component');
-
-  constructor() {
-  }
-
-  ngOnInit() {
-  }
+  NzDemoCascaderReactiveFormCode = require('!!raw-loader!./nz-demo-cascader-reactive-form.component');
 }
-

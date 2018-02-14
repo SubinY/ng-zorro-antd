@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'nz-demo-progress-basic',
   template: `
+    <nz-progress [ngModel]="value"></nz-progress>
     <nz-progress [ngModel]="30"></nz-progress>
     <nz-progress [ngModel]="50" [nzStatus]="'active'"></nz-progress>
     <nz-progress [ngModel]="70" [nzStatus]="'exception'"></nz-progress>
@@ -11,11 +12,6 @@ import { Component, OnInit } from '@angular/core';
   `,
   styles  : []
 })
-export class NzDemoProgressBasicComponent implements OnInit {
-  constructor() {
-  }
-
-  ngOnInit() {
-  }
+export class NzDemoProgressBasicComponent {
+  value: number;
 }
-

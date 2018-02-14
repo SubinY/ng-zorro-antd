@@ -1,88 +1,103 @@
 import {
+  AfterViewInit,
   Component,
-  ViewEncapsulation,
-  OnInit,
-  Input,
-  EventEmitter,
-  Output,
-  Renderer2,
-  OnDestroy,
-  ViewChild,
   ElementRef,
-  HostBinding
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  Output,
+  SimpleChange,
+  SimpleChanges,
+  ViewChild,
+  ViewEncapsulation,
 } from '@angular/core';
-// import { Observable } from 'rxjs/Observable';
-import { RxChain } from '@angular/cdk';
-import { fromEvent } from 'rxjs/observable/fromEvent';
-import { throttleTime } from 'rxjs/operator/throttleTime';
-import { distinctUntilChanged } from 'rxjs/operator/distinctUntilChanged';
 import { Subscription } from 'rxjs/Subscription';
+import { fromEvent } from 'rxjs/observable/fromEvent';
+import { distinctUntilChanged } from 'rxjs/operators/distinctUntilChanged';
+import { throttleTime } from 'rxjs/operators/throttleTime';
 
-import { NzScrollService } from "../core/scroll/nz-scroll.service";
+import { NzScrollService } from '../core/scroll/nz-scroll.service';
 
 @Component({
-  selector: 'nz-affix',
+  selector     : 'nz-affix',
   encapsulation: ViewEncapsulation.None,
-  template: `<div #wrap><ng-content></ng-content></div>`,
-  styleUrls: [
+  template     : `
+    <div #wrap>
+      <ng-content></ng-content>
+    </div>`,
+  styleUrls    : [
     './style/index.less',
     './style/patch.less'
   ]
 })
-export class NzAffixComponent implements OnInit, OnDestroy {
+export class NzAffixComponent implements OnChanges, OnInit, OnDestroy, AfterViewInit {
 
+  private didScroll = false;
+  private scrollTime: number = null;
   private scroll$: Subscription = null;
   private scrollWinInTarget$: Subscription = null;
-  private target: Element = null;
+
   @ViewChild('wrap') private wrap: ElementRef;
   // 缓存固定状态
-  private fixed: boolean = false;
+  private fixed = false;
   // 原始位置
   private orgOffset: { top: number, left: number };
 
   @Input()
-  set nzTarget(el: Element) {
-    this.target = el;
-    this.registerScrollEvent();
-  }
+  nzTarget: Element;
 
-  @Input() nzOffsetTop: number = 0;
+  @Input() nzOffsetTop = 0;
 
-  @Input() nzOffsetBottom: number = 0;
+  @Input() nzOffsetBottom = 0;
 
   @Output() nzChange: EventEmitter<boolean> = new EventEmitter();
 
-  constructor(private scrollSrv: NzScrollService, private _el: ElementRef, private _renderer: Renderer2) { }
+  constructor(private scrollSrv: NzScrollService, private _el: ElementRef) { }
+
+  ngOnChanges(changes: { [P in keyof this]?: SimpleChange } & SimpleChanges): void {
+    if (changes.nzTarget) {
+      this.registerScrollEvent();
+    }
+  }
 
   ngOnInit(): void {
-    if (!this.scroll$) this.registerScrollEvent();
+    if (!this.nzTarget) {
+      this.registerScrollEvent();
+    }
   }
 
-  private getTarget(): Element | Window {
-    return this.target || window;
+  ngAfterViewInit(): void {
+    this.orgOffset = null;
+    this.fixed = false;
   }
 
-  private reCalculate() {
-    let elOffset = this.scrollSrv.getOffset(this._el.nativeElement);
+  private reCalculate(): this {
+    const elOffset = this.scrollSrv.getOffset(this._el.nativeElement);
     this.orgOffset = {
-      top: elOffset.top + this.scrollSrv.getScroll(this.getTarget()),
-      left: elOffset.left + this.scrollSrv.getScroll(this.getTarget(), false)
+      top : elOffset.top + this.scrollSrv.getScroll(this.nzTarget),
+      left: elOffset.left + this.scrollSrv.getScroll(this.nzTarget, false)
     };
 
     return this;
   }
 
-  private process() {
-    if (!this.orgOffset) this.reCalculate();
-    const containerScrollTop = this.scrollSrv.getScroll(this.getTarget());
-    let fixTop = this.getTarget() === window ? 0 : this.scrollSrv.getOffset(this.getTarget() as Element).top;
-    let hasFixed = this.orgOffset.top - fixTop - containerScrollTop - this.nzOffsetTop <= 0;
-    if (this.fixed === hasFixed) return;
+  private process(): void {
+    if (!this.orgOffset) {
+      this.reCalculate();
+    }
+    const containerScrollTop = this.scrollSrv.getScroll(this.nzTarget);
+    const fixTop = this.nzTarget ? this.scrollSrv.getOffset(this.nzTarget).top : 0;
+    const hasFixed = this.orgOffset.top - fixTop - containerScrollTop - this.nzOffsetTop <= 0;
+    if (this.fixed === hasFixed) {
+      return;
+    }
 
     const wrapEl = this.wrap.nativeElement;
-    wrapEl.classList[hasFixed ? 'add' : 'remove']('ant-affix');
+    wrapEl.classList[ hasFixed ? 'add' : 'remove' ]('ant-affix');
     if (hasFixed) {
-      wrapEl.style.cssText = `top:${this.nzOffsetTop + fixTop}px;left:${this.orgOffset.left}px`;
+      wrapEl.style.cssText = `top:${((+this.nzOffsetTop) + (+fixTop))}px;left:${this.orgOffset.left}px`;
     } else {
       wrapEl.style.cssText = ``;
     }
@@ -91,26 +106,34 @@ export class NzAffixComponent implements OnInit, OnDestroy {
     this.nzChange.emit(hasFixed);
   }
 
-  private removeListen() {
-    if (this.scroll$) this.scroll$.unsubscribe();
-    if (this.scrollWinInTarget$) this.scrollWinInTarget$.unsubscribe();
+  private removeListen(): void {
+    if (this.scrollTime) {
+      clearTimeout(this.scrollTime);
+    }
+    if (this.scroll$) {
+      this.scroll$.unsubscribe();
+    }
+    if (this.scrollWinInTarget$) {
+      this.scrollWinInTarget$.unsubscribe();
+    }
   }
 
-  private registerScrollEvent() {
+  private registerScrollEvent(): void {
     this.removeListen();
     this.reCalculate().process();
-    this.scroll$ = (RxChain.from(fromEvent(this.getTarget(), 'scroll')) as RxChain<any>)
-      .call(throttleTime, 50)
-      .call(distinctUntilChanged)
-      .subscribe(e => {
+    // TODO: should refactor this logic
+    this.scrollTime = window.setInterval(() => {
+      if (this.didScroll) {
+        this.didScroll = false;
         this.process();
-      });
+      }
+    }, 100);
+    this.scroll$ = fromEvent(this.nzTarget || window, 'scroll')
+      .subscribe(() => this.didScroll = true);
 
-    if (this.getTarget() !== window) {
+    if (this.nzTarget) {
       // 当 window 滚动位发生变动时，需要重新计算滚动容器
-      this.scrollWinInTarget$ = (RxChain.from(fromEvent(window, 'scroll')) as RxChain<any>)
-        .call(throttleTime, 50)
-        .call(distinctUntilChanged)
+      this.scrollWinInTarget$ = fromEvent(window, 'scroll').pipe(throttleTime(50), distinctUntilChanged())
         .subscribe(e => {
           this.orgOffset = null;
           this.fixed = false;

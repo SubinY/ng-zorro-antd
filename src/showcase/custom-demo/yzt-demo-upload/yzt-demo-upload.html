@@ -1,0 +1,163 @@
+<article>
+  <section class="markdown"><h1>yzt-upload 附件上传</h1>
+    <section class="markdown"><p>文件选择上传和拖拽上传控件。基于<code>nz-upload</code>封装 </p>
+      <h2 id="何时使用"><span>何时使用</span>
+        <a  class="anchor">#</a>
+      </h2>
+      <p>上传是将信息（网页、文字、图片、视频等）通过网页或者上传工具发布到远程服务器上的过程。</p>
+      <ul>
+        <li>当需要上传一个或一些文件时。</li>
+        <li>当需要展现上传的进度时。</li>
+        <li>当需要使用拖拽交互时。</li>
+      </ul>
+    </section>
+    <h2>代码演示<i class="code-box-expand-trigger anticon anticon-appstore" title="展开全部代码"></i></h2>
+  </section>
+  <div nz-row [nzGutter]="8">
+    <div nz-col [nzSpan]="12">
+      <nz-code-box [nzTitle]="'点击上传'" id="components-upload-demo-basic" [nzCode]="YztDemoUploadBasicCode">
+        <yzt-demo-upload-basic demo></yzt-demo-upload-basic>
+        <div intro>
+          <p>经典款式，用户点击按钮弹出文件选择框。多用于文件上传，默认<code>type==='basic'</code></p>
+        </div>
+      </nz-code-box>
+      <nz-code-box [nzTitle]="'已上传的文件列表'" id="components-upload-demo-filelist" [nzCode]="YztDemoUploadFileListCode">
+        <yzt-demo-upload-filelist demo></yzt-demo-upload-filelist>
+        <div intro>
+          <p>使用 <code>fileList</code> 设置已上传的内容。</p>
+        </div>
+      </nz-code-box>
+      <nz-code-box [nzTitle]="'图片列表样式'" id="components-upload-demo-picture-style" [nzCode]="YztDemoUploadPictureStyleComponentCode">
+        <yzt-demo-upload-picture-style demo></yzt-demo-upload-picture-style>
+        <div intro>
+          <p>分别为 <code>type="picture"</code> 、<code>type="picture-inline"</code></p>
+          <p>上传文件为图片，可展示本地缩略图。<code>IE8/9</code> 不支持浏览器本地缩略图展示（<a href="https://developer.mozilla.org/en-US/docs/Web/API/FileReader/readAsDataURL" target="_blank">Ref</a>），可以写 <code>thumbUrl</code> 属性来代替。</p>
+        </div>
+      </nz-code-box>
+    </div>
+    <div nz-col [nzSpan]="12">
+      <nz-code-box [nzTitle]="'用户头像'" id="components-upload-demo-avatar" [nzCode]="YztDemoUploadAvatarCode">
+        <yzt-demo-upload-avatar demo></yzt-demo-upload-avatar>
+        <div intro>
+          <p><code>type==='avatar'</code>点击上传用户头像，并使用 <code>beforeUpload</code> 限制用户上传的图片格式和大小。</p>
+        </div>
+      </nz-code-box>
+      <nz-code-box [nzTitle]="'照片墙'" id="components-upload-demo-picture-card" [nzCode]="YztDemoUploadPictureCardComponentCode">
+        <yzt-demo-upload-picture-card demo></yzt-demo-upload-picture-card>
+        <div intro>
+          <p>用户可以上传图片并在列表中显示缩略图。当上传照片数到达限制后<code>fileNum=4</code>，上传按钮消失。</p>
+        </div>
+      </nz-code-box>
+      <nz-code-box [nzTitle]="'拖拽上传'" id="components-upload-demo-drag" [nzCode]="YztDemoUploadDragComponentCode">
+        <yzt-demo-upload-drag demo></yzt-demo-upload-drag>
+        <div intro>
+          <p>把文件拖入指定区域，完成上传，同样支持点击上传。</p>
+          <p>设置 <code>nzMultiple</code> 后，在 <code>IE10+</code> 可以一次上传多个文件。</p>
+        </div>
+      </nz-code-box>
+    </div>
+  </div>
+  <section class="markdown api-container">
+    <h2 id="API"><span>API</span>
+      <!-- <a class="anchor">#</a> -->
+    </h2>
+    <blockquote>
+      <p>服务端上传接口实现可以参考 <a href="https://github.com/blueimp/jQuery-File-Upload/wiki" target="_blank">jQuery-File-Upload</a>。</p>
+    </blockquote>
+    <table>
+      <thead>
+        <tr>
+          <th>参数</th>
+          <th>说明</th>
+          <th>类型</th>
+          <th>默认值</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+            <td>type</td>
+            <td>上传列表的内建样式，支持6种基本样式 <code>basic</code>,<code>avatar</code>, <code>picture</code>, <code>picture-inline</code>, <code>picture-card</code> 和 <code>drag</code></td>
+            <td>string</td>
+            <td>'basic'</td>
+          </tr>
+          <tr>
+              <td>fileList</td>
+              <td>文件列表，双向绑定</td>
+              <td>YztUploadFile[]</td>
+              <td>无</td>
+            </tr>
+        <tr>
+          <td>fileAccept</td>
+          <td>接受上传的文件类型, 详见 <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#attr-accept" target="_blank">input accept Attribute</a></td>
+          <td>string</td>
+          <td>无</td>
+        </tr>
+        
+        <tr>
+          <td>disabled</td>
+          <td>是否禁用</td>
+          <td>boolean</td>
+          <td>false</td>
+        </tr>
+        <tr>
+          <td>fileNum</td>
+          <td>限制文件上传数量</td>
+          <td>number</td>
+          <td>50</td>
+        </tr>
+       
+        <tr>
+          <td>fileSize</td>
+          <td>限制文件大小，单位：KB；<code>0</code> 表示不限</td>
+          <td>number</td>
+          <td>0</td>
+        </tr>
+        <tr>
+          <td>fileType</td>
+          <td>限制文件类型，例如：<code>image/png,image/jpeg,image/gif,image/bmp</code></td>
+          <td>string</td>
+          <td>无</td>
+        </tr>
+       
+        <tr>
+          <td>multiple</td>
+          <td>是否支持多选文件，<code>IE10+</code> 支持。开启后按住 ctrl 可选择多个文件。</td>
+          <td>boolean</td>
+          <td>true</td>
+        </tr>
+        <tr>
+            <td>beforeUpload</td>
+            <td>上传文件之前的钩子，参数为上传的文件，若返回 <code>false</code> 则停止上传。注意：<strong>IE9</strong> 不支持该方法。注意：务必什么 <code>=></code> 定义处理方法。</td>
+            <td>(file, fileList) => <code>boolean | Observable&lt;boolean&gt;</code></td>
+            <td>无</td>
+          </tr>
+        <tr>
+          <td>removeHandler</td>
+          <td>点击移除文件时的回调，返回值为 false 时不移除。支持返回 Observable&lt;boolean&gt; 对象。注意：务必什么 <code>=></code> 定义处理方法。</td>
+          <td>(file: UploadFile) => boolean | Observable&lt;boolean&gt;</td>
+          <td>无</td>
+        </tr>
+        <tr>
+          <td>(onChange)</td>
+          <td>上传文件状态变更时回调</td>
+          <td>EventEmitter</td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+    <h2 id="onChange"><span>onChange</span>
+      <!-- <a class="anchor">#</a> -->
+    </h2>
+    <blockquote><p>开始、上传进度、完成、失败都会调用这个函数。</p></blockquote>
+    <p>文件状态改变的回调，返回为：</p>
+    <pre [innerHTML]="changeDEMO"></pre>
+    <ol>
+      <li>
+        <p><code>file</code> 当前操作的文件对象。</p>
+        <pre [innerHTML]="uploadFileDEMO"></pre>
+      </li>
+      <li><p><code>fileList</code> 当前的文件列表。</p></li>
+      <li><p><code>event</code> 上传中的服务端响应内容，包含了上传进度等信息，高级浏览器支持。</p></li>
+    </ol>
+  </section>
+</article>

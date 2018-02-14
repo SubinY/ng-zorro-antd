@@ -1,29 +1,30 @@
+import { ConnectedOverlayPositionChange, ConnectionPositionPair } from '@angular/cdk/overlay';
 import {
-  Component,
-  ViewEncapsulation,
   forwardRef,
+  Component,
+  Input,
   ViewChild,
-  Input
+  ViewEncapsulation,
 } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import * as moment from 'moment';
-import { DropDownAnimation } from '../core/animation/dropdown-animations';
-import { NzTimePickerInnerComponent } from './nz-timepicker-inner.component';
+import { dropDownAnimation } from '../core/animation/dropdown-animations';
 import { DEFAULT_DATEPICKER_POSITIONS } from '../core/overlay/overlay-position-map';
-import { ConnectionPositionPair } from '../core/overlay/index';
+import { toBoolean } from '../util/convert';
+import { NzTimePickerInnerComponent } from './nz-timepicker-inner.component';
 
 @Component({
   selector     : 'nz-timepicker',
   encapsulation: ViewEncapsulation.None,
   animations   : [
-    DropDownAnimation
+    dropDownAnimation
   ],
   template     : `
     <span
       class="ant-time-picker"
       [class.ant-time-picker-large]="nzSize=='large'"
       [class.ant-time-picker-small]="nzSize=='small'"
-      nz-overlay-origin #origin="nzOverlayOrigin"
+      cdkOverlayOrigin #origin="cdkOverlayOrigin"
       #trigger>
       <input
         [disabled]="nzDisabled"
@@ -31,18 +32,20 @@ import { ConnectionPositionPair } from '../core/overlay/index';
         [attr.placeholder]="nzPlaceHolder"
         (click)="_openCalendar()"
         (blur)="onTouched()"
-        [value]="_value|nzDate:_format">
+        [value]="_value|nzDate:_format"
+        readonly>
       <span class="ant-time-picker-icon"></span>
     </span>
     <ng-template
-      nz-connected-overlay
-      hasBackdrop
-      [positions]="_positions"
-      [origin]="origin"
+      cdkConnectedOverlay
+      cdkConnectedOverlayHasBackdrop
+      [cdkConnectedOverlayPositions]="_positions"
+      [cdkConnectedOverlayOrigin]="origin"
       (backdropClick)="_closeCalendar()"
       (detach)="_closeCalendar()"
       (positionChange)="onPositionChange($event)"
-      [open]="_open">
+      [cdkConnectedOverlayOpen]="_open"
+    >
       <div class="ant-time-picker-panel"
         [class.top]="_dropDownPosition==='top'"
         [class.bottom]="_dropDownPosition==='bottom'"
@@ -56,7 +59,7 @@ import { ConnectionPositionPair } from '../core/overlay/index';
               [value]="_value|nzDate:_format"
               (blur)="_manualChangeInput(inputTimeInstance)"
               (keydown.Enter)="_manualChangeInput(inputTimeInstance)">
-            <a class="ant-time-picker-panel-clear-btn" title="清除" (click)="_clearValue()"></a>
+            <a class="ant-time-picker-panel-clear-btn" title="{{ 'DateTime.clear' | nzTranslate }}" (click)="_clearValue()"></a>
           </div>
           <div class="ant-time-picker-panel-combobox">
             <div class="ant-time-picker-panel-select"
@@ -74,7 +77,7 @@ import { ConnectionPositionPair } from '../core/overlay/index';
                     [ngClass]="_hour.name"
                     *ngIf="!(nzHideDisabledOptions&&_hour.disabled)"
                     (click)="_selectHour(hourListInstance,_hour.index,_hour.disabled)">
-                    {{_hour.name}}
+                    {{ _hour.name }}
                   </li>
                 </ng-template>
               </ul>
@@ -96,7 +99,7 @@ import { ConnectionPositionPair } from '../core/overlay/index';
                     [class.ant-time-picker-panel-select-option-selected]="_minute.index===_selectedMinute"
                     [class.ant-time-picker-panel-select-option-disabled]="_minute.disabled"
                     (click)="_selectMinute(minuteListInstance,_minute.index,_minute.disabled)">
-                    {{_minute.name}}
+                    {{ _minute.name }}
                   </li>
                 </ng-template>
               </ul>
@@ -117,7 +120,7 @@ import { ConnectionPositionPair } from '../core/overlay/index';
                     [class.ant-time-picker-panel-select-option-disabled]="_second.disabled"
                     *ngIf="!(nzHideDisabledOptions&&_second.disabled)"
                     (click)="_selectSecond(secondListInstance,_second.index,_second.disabled)">
-                    {{_second.name}}
+                    {{ _second.name }}
                   </li>
                 </ng-template>
               </ul>
@@ -139,28 +142,23 @@ import { ConnectionPositionPair } from '../core/overlay/index';
   ]
 })
 export class NzTimePickerComponent extends NzTimePickerInnerComponent {
-  _disabled = false;
+  private _timePickerDisabled = false;
   _dropDownPosition = 'bottom';
-  _triggerWidth = 0;
   _positions: ConnectionPositionPair[] = [ ...DEFAULT_DATEPICKER_POSITIONS ];
 
   @ViewChild('trigger') trigger;
 
   @Input()
-  get nzDisabled(): boolean {
-    return this._disabled;
-  };
-
   set nzDisabled(value: boolean) {
-    this._disabled = value;
+    this._timePickerDisabled = toBoolean(value);
     this._closeCalendar();
   }
 
-  _setTriggerWidth(): void {
-    this._triggerWidth = this.trigger.nativeElement.getBoundingClientRect().width;
+  get nzDisabled(): boolean {
+    return this._timePickerDisabled;
   }
 
-  onPositionChange(position) {
+  onPositionChange(position: ConnectedOverlayPositionChange): void {
     const _position = position.connectionPair.originY === 'bottom' ? 'top' : 'bottom';
     if (this._dropDownPosition !== _position) {
       this._dropDownPosition = _position;
@@ -168,7 +166,7 @@ export class NzTimePickerComponent extends NzTimePickerInnerComponent {
     }
   }
 
-  _manualChangeInput(box) {
+  _manualChangeInput(box: HTMLInputElement): void {
     const _tempMoment = moment(box.value, this._format);
     if (Date.parse(_tempMoment.toDate().toString())) {
       this.nzValue = new Date((moment(this._value).hour(_tempMoment.hour()).minute(_tempMoment.minute()).second(_tempMoment.second())).toDate().getTime());
@@ -177,25 +175,25 @@ export class NzTimePickerComponent extends NzTimePickerInnerComponent {
     // this._closeCalendar();
   }
 
-  _overHour() {
+  _overHour(): void {
     const _start = this._format.indexOf('HH');
     const _end = _start + 2;
     this._inputTimeInstance.nativeElement.setSelectionRange(_start, _end);
   }
 
-  _overMinute() {
+  _overMinute(): void {
     const _start = this._format.indexOf('mm');
     const _end = _start + 2;
     this._inputTimeInstance.nativeElement.setSelectionRange(_start, _end);
   }
 
-  _overSecond() {
+  _overSecond(): void {
     const _start = this._format.indexOf('ss');
     const _end = _start + 2;
     this._inputTimeInstance.nativeElement.setSelectionRange(_start, _end);
   }
 
-  _clearValue() {
+  _clearValue(): void {
     this.nzValue = null;
     this._selectedHour = null;
     this._selectedMinute = null;
@@ -203,16 +201,15 @@ export class NzTimePickerComponent extends NzTimePickerInnerComponent {
     this._selectedSecond = null;
   }
 
-  _openCalendar() {
+  _openCalendar(): void {
     this._open = true;
-    this._setTriggerWidth();
     setTimeout(_ => {
       this._initPosition();
       this._inputTimeInstance.nativeElement.setSelectionRange(0, 8);
     });
   }
 
-  _closeCalendar() {
+  _closeCalendar(): void {
     if (!this._open) {
       return;
     }

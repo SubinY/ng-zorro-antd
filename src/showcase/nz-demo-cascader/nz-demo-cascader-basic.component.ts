@@ -11,6 +11,10 @@ const init_options = [{
       label: 'West Lake',
       isLeaf: true
     }],
+  }, {
+    value: 'ningbo',
+    label: 'Ningbo',
+    isLeaf: true
   }],
 }, {
   value: 'jiangsu',
@@ -85,9 +89,6 @@ export class NzDemoCascaderBasicComponent implements OnInit {
 
   _console(value) {
     console.log(value);
-  }
-
-  constructor() {
   }
 
   ngOnInit() {

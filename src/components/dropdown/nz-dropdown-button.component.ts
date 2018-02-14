@@ -1,30 +1,31 @@
 import {
+  AfterViewInit,
   Component,
-  ViewEncapsulation,
-  OnInit,
-  OnDestroy,
-  Input,
-  ViewChild,
-  Output,
   EventEmitter,
-  AfterViewInit
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+  ViewChild,
+  ViewEncapsulation,
 } from '@angular/core';
-import { DropDownAnimation } from '../core/animation/dropdown-animations';
-import { NzDropDownDirective } from './nz-dropdown.directive';
+import { dropDownAnimation } from '../core/animation/dropdown-animations';
+import { toBoolean } from '../util/convert';
 import { NzDropDownComponent } from './nz-dropdown.component';
+import { NzDropDownDirective } from './nz-dropdown.directive';
 
 @Component({
   selector     : 'nz-dropdown-button',
   encapsulation: ViewEncapsulation.None,
   animations   : [
-    DropDownAnimation
+    dropDownAnimation
   ],
   template     : `
     <div class="ant-btn-group ant-dropdown-button" nz-dropdown>
       <button
         type="button"
         nz-button
-        [disabled]="nzDisable"
+        [disabled]="nzDisabled"
         [nzType]="nzType"
         [nzSize]="nzSize"
         (click)="nzClick.emit($event)">
@@ -33,22 +34,23 @@ import { NzDropDownComponent } from './nz-dropdown.component';
         [nzSize]="nzSize"
         nz-button type="button"
         class="ant-dropdown-trigger"
-        [disabled]="nzDisable"
+        [disabled]="nzDisabled"
         (click)="_onClickEvent()"
         (mouseenter)="_onMouseEnterEvent($event)"
         (mouseleave)="_onMouseLeaveEvent($event)">
         <i class="anticon anticon-down"></i></button>
     </div>
     <ng-template
-      nz-connected-overlay
-      [hasBackdrop]="_hasBackdrop"
-      [positions]="_positions"
-      [origin]="_nzOrigin"
+      cdkConnectedOverlay
+      [cdkConnectedOverlayHasBackdrop]="_hasBackdrop"
+      [cdkConnectedOverlayPositions]="_positions"
+      [cdkConnectedOverlayOrigin]="_nzOrigin"
       (backdropClick)="_hide()"
       (detach)="_hide()"
-      [minWidth]="_triggerWidth"
+      [cdkConnectedOverlayMinWidth]="_triggerWidth"
       (positionChange)="_onPositionChange($event)"
-      [open]="nzVisible">
+      [cdkConnectedOverlayOpen]="nzVisible"
+    >
       <div
         class="{{'ant-dropdown ant-dropdown-placement-'+nzPlacement}}"
         [@dropDownAnimation]="_dropDownPosition"
@@ -66,28 +68,38 @@ import { NzDropDownComponent } from './nz-dropdown.component';
 })
 
 export class NzDropDownButtonComponent extends NzDropDownComponent implements OnInit, OnDestroy, AfterViewInit {
-  @Input() nzDisable = false;
+  _disabled = false;
   @Input() nzSize = 'default';
   @Input() nzType = 'default';
   @ViewChild('content') content;
   @Output() nzClick = new EventEmitter();
   @ViewChild(NzDropDownDirective) _nzOrigin;
 
+  @Input()
+  set nzDisabled(value: boolean) {
+    this._disabled = toBoolean(value);
+  }
+
+  get nzDisabled(): boolean {
+    return this._disabled;
+  }
+
   _onVisibleChange = (visible: boolean) => {
-    if (this.nzDisable) {
+    if (this.nzDisabled) {
       return;
     }
     if (visible) {
-      if (!this._triggerWidth) {
-        this._setTriggerWidth();
-      }
+      this._setTriggerWidth();
     }
-    this.nzVisible = visible;
+    if (this.nzVisible !== visible) {
+      this.nzVisible = visible;
+      this.nzVisibleChange.emit(this.nzVisible);
+    }
     this._changeDetector.markForCheck();
   }
 
   /** rewrite afterViewInit hook */
-  ngAfterViewInit() {
-    this._startSubscribe(this.nzVisibleChange.asObservable());
+  ngAfterViewInit(): void {
+    this._startSubscribe(this._visibleChange);
   }
 }

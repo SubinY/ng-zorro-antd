@@ -1,12 +1,13 @@
 import {
+  AfterContentInit,
   Component,
-  ViewEncapsulation,
-  Input,
   ElementRef,
   HostListener,
-  AfterContentInit,
-  Renderer2
+  Input,
+  Renderer2,
+  ViewEncapsulation,
 } from '@angular/core';
+import { toBoolean } from '../util/convert';
 
 export type NzButtonType = 'primary' | 'dashed' | 'danger';
 export type NzButtonShape = 'circle' | null ;
@@ -15,32 +16,29 @@ export type NzButtonSize = 'small' | 'large' | 'default' ;
 @Component({
   selector     : '[nz-button]',
   encapsulation: ViewEncapsulation.None,
-  template     : `
-    <i class="anticon anticon-spin anticon-loading" *ngIf="nzLoading"></i>
-    <ng-content></ng-content>
-  `,
+  templateUrl  : './nz-button.component.html',
   styleUrls    : [
     './style/index.less'
   ]
 })
 export class NzButtonComponent implements AfterContentInit {
+  private _ghost = false;
+  private _loading = false;
   _el: HTMLElement;
   nativeElement: HTMLElement;
   _iconElement: HTMLElement;
   _type: NzButtonType;
   _shape: NzButtonShape;
   _size: NzButtonSize;
-  _classList: Array<string> = [];
+  _classList: string[] = [];
   _iconOnly = false;
-  _loading = false;
   _clicked = false;
-  _ghost = false;
   _prefixCls = 'ant-btn';
   _sizeMap = { large: 'lg', small: 'sm' };
 
   @Input()
   set nzGhost(value: boolean) {
-    this._ghost = value;
+    this._ghost = toBoolean(value);
     this._setClassMap();
   }
 
@@ -51,7 +49,7 @@ export class NzButtonComponent implements AfterContentInit {
   @Input()
   get nzType(): NzButtonType {
     return this._type;
-  };
+  }
 
   set nzType(value: NzButtonType) {
     this._type = value;
@@ -61,7 +59,7 @@ export class NzButtonComponent implements AfterContentInit {
   @Input()
   get nzShape(): NzButtonShape {
     return this._shape;
-  };
+  }
 
   set nzShape(value: NzButtonShape) {
     this._shape = value;
@@ -76,44 +74,42 @@ export class NzButtonComponent implements AfterContentInit {
 
   get nzSize(): NzButtonSize {
     return this._size;
-  };
+  }
 
   @Input()
   set nzLoading(value: boolean) {
-    this._loading = value;
+    this._loading = toBoolean(value);
     this._setClassMap();
     this._setIconDisplay(value);
   }
 
   get nzLoading(): boolean {
     return this._loading;
-  };
+  }
 
   /** toggle button clicked animation */
   @HostListener('click')
-  _onClick() {
+  _onClick(): void {
     this._clicked = true;
     this._setClassMap();
     setTimeout(() => {
       this._clicked = false;
       this._setClassMap();
     }, 300);
-  };
+  }
 
-
-  _setIconDisplay(value: boolean) {
+  _setIconDisplay(value: boolean): void {
     const innerI = this._iconElement;
     if (innerI) {
       this._renderer.setStyle(innerI, 'display', value ? 'none' : 'inline-block');
     }
   }
 
-
   /** temp solution since no method add classMap to host https://github.com/angular/angular/issues/7289 */
   _setClassMap(): void {
     this._classList.forEach(_className => {
       this._renderer.removeClass(this._el, _className);
-    })
+    });
     this._classList = [
       this.nzType && `${this._prefixCls}-${this.nzType}`,
       this.nzShape && `${this._prefixCls}-${this.nzShape}`,
@@ -127,7 +123,7 @@ export class NzButtonComponent implements AfterContentInit {
     });
     this._classList.forEach(_className => {
       this._renderer.addClass(this._el, _className);
-    })
+    });
   }
 
   constructor(private _elementRef: ElementRef, private _renderer: Renderer2) {
@@ -136,7 +132,7 @@ export class NzButtonComponent implements AfterContentInit {
     this._renderer.addClass(this._el, this._prefixCls);
   }
 
-  ngAfterContentInit() {
+  ngAfterContentInit(): void {
     this._iconElement = this._innerIElement;
     /** check if host children only has i element */
     if (this._iconElement && this._el.children.length === 1 && (this._iconElement.isEqualNode(this._el.children[ 0 ]))) {
@@ -146,7 +142,7 @@ export class NzButtonComponent implements AfterContentInit {
     this._setIconDisplay(this.nzLoading);
   }
 
-  get _innerIElement() {
+  get _innerIElement(): HTMLElement {
     return this._el.querySelector('i');
   }
 }

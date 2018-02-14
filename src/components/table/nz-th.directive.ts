@@ -1,32 +1,42 @@
 import {
   Directive,
-  Input,
+  ElementRef,
   HostBinding,
-  ElementRef, OnInit, OnDestroy
+  Input,
 } from '@angular/core';
-import { NzTableComponent } from './nz-table.component';
+import { toBoolean } from '../util/convert';
 
 @Directive({
   selector: '[nz-th]'
 })
-export class NzThDirective implements OnInit, OnDestroy {
+export class NzThDirective {
+  private _checkbox = false;
+  private _expand = false;
+
   _el: HTMLElement;
   @Input() nzWidth;
-  @Input() @HostBinding(`class.ant-table-selection-column`) nzCheckbox;
-  @Input() @HostBinding(`class.ant-table-expand-icon-th`) nzExpand;
 
-  constructor(private _elementRef: ElementRef, private nzTableComponent: NzTableComponent) {
+  @Input()
+  @HostBinding(`class.ant-table-selection-column`)
+  set nzCheckbox(value: boolean) {
+    this._checkbox = toBoolean(value);
+  }
+
+  get nzCheckbox(): boolean {
+    return this._checkbox;
+  }
+
+  @Input()
+  @HostBinding(`class.ant-table-expand-icon-th`)
+  set nzExpand(value: boolean) {
+    this._expand = toBoolean(value);
+  }
+
+  get nzExpand(): boolean {
+    return this._expand;
+  }
+
+  constructor(private _elementRef: ElementRef) {
     this._el = this._elementRef.nativeElement;
-  }
-
-  ngOnInit() {
-    this.nzTableComponent.ths.push(this);
-  }
-
-  ngOnDestroy() {
-    const index = this.nzTableComponent.ths.indexOf(this);
-    if (index > -1) {
-      this.nzTableComponent.ths.splice(index, 1);
-    }
   }
 }
