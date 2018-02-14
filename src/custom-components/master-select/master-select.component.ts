@@ -26,7 +26,7 @@ export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
 };
 
 @Component({
-    selector: `master-select`,
+    selector: `yzt-master`,
     template: `
     <div class="master-select">
         <nz-select 

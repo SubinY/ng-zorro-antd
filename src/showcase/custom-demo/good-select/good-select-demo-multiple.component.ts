@@ -4,7 +4,7 @@ import { NzMessageService } from '../../../../index.showcase';
 @Component({
   selector: 'good-select-demo-multiple',
   template: `
-    <good-select [(ngModel)]="value" [goodMode]="'multiple'"></good-select>
+    <yzt-good [(ngModel)]="value" [goodMode]="'multiple'"></yzt-good>
     <button nz-button  [nzType]="'primary'"  (click)="handle()">获取品名ID数组</button>
   `,
   styles  : []

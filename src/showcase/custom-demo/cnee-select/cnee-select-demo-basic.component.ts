@@ -4,7 +4,7 @@ import { NzMessageService } from "../../../components/ng-zorro-antd.module";
 @Component({
     selector: 'cnee-select-demo-basic',
     template: `
-    <cnee-select [(ngModel)]="value"></cnee-select>
+    <yzt-cnee [(ngModel)]="value"></yzt-cnee>
     <button nz-button [nzType]="'primary'" (click)="handle()">获取收货人编号</button>
   `,
     styles: []

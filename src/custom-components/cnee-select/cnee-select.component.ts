@@ -25,7 +25,7 @@ export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
 };
 
 @Component({
-    selector: `cnee-select`,
+    selector: `yzt-cnee`,
     template: `
     <div class="cnee-select">
         <nz-select 
