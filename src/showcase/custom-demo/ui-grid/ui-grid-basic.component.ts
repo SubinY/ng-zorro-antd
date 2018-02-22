@@ -4,7 +4,7 @@ import { Component, OnInit } from '@angular/core';
   selector: 'ui-grid-basic',
   template: `
     <ui-grid #grid_basic [data]="data" [columns]="columns" [(selection)]="selection" mulitipy="true" (load)="load($event)" (exportCSV)="exportCSV($event)">
-      <grid-icon #grid_icon [ui_grid]="grid_basic" [outField]="'name'" [outProp]="'lock'">
+      <grid-icon #grid_icon [ui_grid]="grid_basic" [outField]="'name'">
         <ng-template #iconTemplate let-name="lock">
           <a *ngIf="name" href="javascript:void(0);" title="锁定" class="operation-a operation-lock"><i></i></a>
           <a *ngIf="!name" href="javascript:void(0);" title="未锁定" class="operation-a operation-unlock"><i></i></a>

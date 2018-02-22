@@ -94,7 +94,7 @@ export class UIGridComponent {
 
     @Input() id: string;
     @Input() columns = [];
-    @Input() showSizeChanger = false;
+    @Input() showSizeChanger = false; // 未知用途
     @Input() pageSizeValues = [10, 30, 50, 100];
     @Input() showTitle = true;
     @Input() mulitipy = false;
