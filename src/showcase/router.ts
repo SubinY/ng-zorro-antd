@@ -75,6 +75,11 @@ export const ROUTER_LIST = {
           'path'        : 'components/yzt-master',
           'zh'          : '师傅名称/账号'
         },
+        {
+          'label'       : 'Area',
+          'path'        : 'components/yzt-area',
+          'zh'          : '政区选择（单选）'
+        },
       ]
     },
     {
@@ -628,6 +633,10 @@ export const DEMO_ROUTES = [
   {
     'path'        : 'components/yzt-upload',
     'loadChildren': './custom-demo/yzt-demo-upload/yzt-demo-upload.module#YztDemoUploadModule',
+  },
+  {
+    'path'        : 'components/yzt-area',
+    'loadChildren': './custom-demo/yzt-demo-area-select/yzt-demo-area-select.module#YztAreaSelectDemoModule',
   }
 ];
 
