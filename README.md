@@ -29,7 +29,7 @@ An enterprise-class UI components based on Ant Design and Angular.
 * [ ]  开单网点 `nz-select` (扩展自定义模板)
 * [x]  **yzt-shipper** 发货人选择 `nz-select` 扩展
 * [x]  **yzt-cnee** 收货人选择 `nz-select` 扩展
-* [ ]  **yzt-abnormal** 异常类型选择  `UISelect`扩展
+* [x]  **yzt-abnormal** 异常类型选择  `UISelect`扩展
 * [x]  **yzt-master** 师傅名称/账号 `nz-select` 扩展
 * [x]  **yzt-good** 品名选择 `nz-select` 扩展
 * [x]  **yzt-repair-goods** 维修品名 `nz-select` 扩展

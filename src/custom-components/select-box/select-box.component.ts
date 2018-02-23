@@ -104,7 +104,7 @@ export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
         ul.header {
             margin: 0;
             list-style: none;
-            background-color: #2577e3;
+            background-color: #108ee9;
             height: 32px;
             padding: 6px 6px 0px;
             box-sizing: border-box;
@@ -122,7 +122,7 @@ export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
             cursor: pointer;
         }
         ul.header>li.active {
-            color: #2577e3;
+            color: #108ee9;
             background-color: #fff;
         }
 
@@ -145,7 +145,7 @@ export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
         }
 
         ul.body>li>a.active,ul.body>li>a:hover{
-            background: #3172c8;
+            background: #108ee9;
             color: #fff;
         }
 
