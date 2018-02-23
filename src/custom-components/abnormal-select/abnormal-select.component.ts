@@ -22,6 +22,7 @@ export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
         [label]="label" 
         [placeholder]="placeholder" 
         (onChange)="onValueChange($event)"
+        [label-handler]="labelHandler"
         [data-handler]="dataHandler"></ui-select-box>
     `,
     styles: [`
@@ -48,6 +49,7 @@ export class AbnormalSelectComponent implements ControlValueAccessor {
     public innerValue;
 
     dataHandler: Function = this.abnormalTypeService.selectBoxHandler();
+    labelHandler: Function = this.abnormalTypeService.selectBoxLabelHandler();
     // 获取属性
     get value(): any {
         return this.innerValue;
