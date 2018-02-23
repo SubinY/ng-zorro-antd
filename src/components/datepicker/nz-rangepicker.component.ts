@@ -40,13 +40,13 @@ import { measureScrollbar } from '../util/mesureScrollBar';
         <ng-container *ngTemplateOutlet="inputRangePart; context: { part: _part.Start }"></ng-container>
         <span class="ant-calendar-range-picker-separator"> ~ </span>
         <ng-container *ngTemplateOutlet="inputRangePart; context: { part: _part.End }"></ng-container>
-      </span>
-      <i class="ant-calendar-picker-clear anticon anticon-cross-circle"
+        <i class="ant-calendar-picker-clear anticon anticon-cross-circle"
          *ngIf="showClearIcon"
          (click)="onTouched();
          _clearValue($event)">
-      </i>
-      <span class="ant-calendar-picker-icon"></span>
+        </i>
+        <span class="ant-calendar-picker-icon"></span>
+      </span>
     </span>
 
     <ng-template cdkConnectedOverlay
@@ -99,7 +99,7 @@ import { measureScrollbar } from '../util/mesureScrollBar';
     </ng-template>
     <!-- input template -->
     <ng-template #inputRangePart let-part="part">
-      <input class="ant-calendar-range-picker-input" nz-input [nzDisabled]="nzDisabled"
+      <input class="ant-calendar-range-picker-input" [disabled]="nzDisabled"
              [value]="nzValue[part] | nzDate: nzFormat"
              [placeholder]="nzPlaceholder[part]">
     </ng-template>
@@ -564,10 +564,11 @@ export class NzRangePickerComponent implements ControlValueAccessor, OnInit {
     if (typeof window !== 'undefined' && this._open && this._cdkOverlay && this._cdkOverlay.overlayRef) {
       const originElement = this._cdkOverlay.origin.elementRef.nativeElement;
       const overlayElement = this._cdkOverlay.overlayRef.overlayElement;
-      const originX = originElement.getBoundingClientRect().x;
+      const originX = originElement.getBoundingClientRect().left;
       const overlayWidth = overlayElement.getBoundingClientRect().width;
       const margin = window.innerWidth - originX - overlayWidth;
-      this._offsetX = margin > 0 ? 0 : margin - (measureScrollbar() || 15);
+      const offsetX = margin > 0 ? 0 : margin - (measureScrollbar() || 15);
+      this._offsetX = Number.isFinite(offsetX) ? offsetX : 0;
       this._cdr.detectChanges();
     }
   }
