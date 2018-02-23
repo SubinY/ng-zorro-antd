@@ -4,10 +4,10 @@ import { NzMessageService } from "../../../components/ng-zorro-antd.module";
 @Component({
     selector: 'master-select-demo-valueField',
     template: `
-    <master-select [(ngModel)]="valueMobile" [valueField]="'mobile'"></master-select>
+    <yzt-master [(ngModel)]="valueMobile" [valueField]="'mobile'"></yzt-master>
     <button nz-button [nzType]="'primary'" (click)="handleMobile()">获取师傅电话/ID</button>
     <p style="padding: 5px;"></p>
-    <master-select [(ngModel)]="valueName" [valueField]="'realName'"></master-select>
+    <yzt-master [(ngModel)]="valueName" [valueField]="'realName'"></yzt-master>
     <button nz-button [nzType]="'primary'" (click)="handleName()">获取师傅姓名</button>
     `,
     styles: []

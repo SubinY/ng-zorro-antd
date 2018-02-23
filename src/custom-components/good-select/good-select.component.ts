@@ -32,7 +32,7 @@ export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
     multi: true
 };
 @Component({
-    selector: `good-select`,
+    selector: `yzt-good`,
     template: `
     <div class="good-select">
         <nz-select 

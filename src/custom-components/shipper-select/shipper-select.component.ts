@@ -25,7 +25,7 @@ export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
 };
 
 @Component({
-    selector: `shipper-select`,
+    selector: `yzt-shipper`,
     template: `
     <div class="shipper-select">
         <nz-select 

@@ -4,13 +4,13 @@ import { NzMessageService } from '../../../../index.showcase';
 @Component({
   selector: 'repair-good-select-template',
   template: `
-    <repair-goods-select [(ngModel)]="value" [customTemplate]="content" width="200px" [valueType]="'object'">
+    <yzt-repair-goods [(ngModel)]="value" [customTemplate]="content" width="200px" [valueType]="'object'">
       <ng-template #content let-name="name">
         <div class="wrap">
           <span class="font-style">{{name}}</span>
         </div>
       </ng-template>
-    </repair-goods-select>
+    </yzt-repair-goods>
     <button nz-button  [nzType]="'primary'"  (click)="handle()">获取维修品名对象</button>
   `,
   styles  : [`

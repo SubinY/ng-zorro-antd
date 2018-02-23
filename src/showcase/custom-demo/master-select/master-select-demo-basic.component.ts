@@ -4,7 +4,7 @@ import { NzMessageService } from "../../../components/ng-zorro-antd.module";
 @Component({
     selector: 'master-select-demo-basic',
     template: `
-    <master-select [(ngModel)]="value"></master-select>
+    <yzt-master [(ngModel)]="value"></yzt-master>
     <button nz-button [nzType]="'primary'" (click)="handle()">获取师傅对象</button>
   `,
     styles: []
