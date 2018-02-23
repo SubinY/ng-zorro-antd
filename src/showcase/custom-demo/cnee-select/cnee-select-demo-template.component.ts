@@ -4,14 +4,14 @@ import { NzMessageService } from "../../../components/ng-zorro-antd.module";
 @Component({
     selector: 'cnee-select-demo-template',
     template: `
-     <cnee-select [(ngModel)]="value" [customTemplate]="content"  [valueType]="'object'">
+     <yzt-cnee [(ngModel)]="value" [customTemplate]="content"  [valueType]="'object'">
       <ng-template #content let-name="name" let-mobile="mobile">
         <div class="wrap">
           <span class="font-style border-right">{{name}}</span>
           <span class="font-style">{{mobile}}</span>
         </div>
       </ng-template>
-    </cnee-select>
+    </yzt-cnee>
     <button nz-button [nzType]="'primary'" (click)="handle()">获取收货人编号</button>
   `,
     styles: [`

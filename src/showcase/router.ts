@@ -23,20 +23,20 @@ export const ROUTER_LIST = {
   ],
   'components': [
     {
-      'name'    : 'UIComponent',
+      'name'    : 'YztUIComponent',
       'children': [
         {
-          'label'       : 'echarts',
+          'label'       : 'Echarts',
           'path'        : 'directive/echarts',
           'zh'          : 'Echarts指令'
         },
         {
-          'label'       : 'yzt-upload',
+          'label'       : 'Upload',
           'path'        : 'components/yzt-upload',
           'zh'          : '附件上传'
         },
         {
-          'label'       : 'yzt-viewer',
+          'label'       : 'Viewer',
           'path'        : 'directive/yzt-viewer',
           'zh'          : '图片预览'
         }
@@ -46,34 +46,44 @@ export const ROUTER_LIST = {
       'name'    : 'YztBusinessComponent',
       'children': [
         {
-          'label'       : 'good-select',
-          'path'        : 'components/good-select',
+          'label'       : 'Good',
+          'path'        : 'components/yzt-good',
           'zh'          : '品名选择'
         },
         {
-          'label'       : 'repair-good-select',
-          'path'        : 'components/repair-good-select',
+          'label'       : 'RepairGood',
+          'path'        : 'components/yzt-repair-good',
           'zh'          : '维修品名选择'
         },
         {
-          'label'       : 'ui-grid',
-          'path'        : 'components/ui-grid',
+          'label'       : 'Grid',
+          'path'        : 'components/yzt-grid',
           'zh'          : '数据表格'
         },
         {
-          'label'       : 'shipper-select',
-          'path'        : 'components/shipper-select',
+          'label'       : 'Shipper',
+          'path'        : 'components/yzt-shipper',
           'zh'          : '发货人选择'
         },
         {
-          'label'       : 'cnee-select',
-          'path'        : 'components/cnee-select',
+          'label'       : 'Cnee',
+          'path'        : 'components/yzt-cnee',
           'zh'          : '收货人选择'
         },
         {
-          'label'       : 'master-select',
-          'path'        : 'components/master-select',
+          'label'       : 'Master',
+          'path'        : 'components/yzt-master',
           'zh'          : '师傅名称/账号'
+        },
+        {
+          'label'       : 'Area',
+          'path'        : 'components/yzt-area',
+          'zh'          : '政区选择（单选）'
+        },
+        {
+          'label'       : 'Abnormal',
+          'path'        : 'components/yzt-abnormal',
+          'zh'          : '异常类型选择'
         },
       ]
     },
@@ -594,11 +604,11 @@ export const DEMO_ROUTES = [
     'loadChildren': './nz-demo-locale/nz-demo-locale.module#NzDemoLocaleModule'
   },
   {
-    'path'        : 'components/good-select',
+    'path'        : 'components/yzt-good',
     'loadChildren': './custom-demo/good-select/good-select-demo.module#GoodSelectDemoModule'
   },
   {
-    'path'        : 'components/repair-good-select',
+    'path'        : 'components/yzt-repair-good',
     'loadChildren': './custom-demo/repair-good-select/repair-good-select-demo.module#RepairGoodSelectModule'
   },
   {
@@ -606,19 +616,19 @@ export const DEMO_ROUTES = [
     'loadChildren': './custom-demo/echarts-demo/echarts-demo.module#EchartsDemoModule'
   },
   {
-    'path'        : 'components/ui-grid',
+    'path'        : 'components/yzt-grid',
     'loadChildren': './custom-demo/ui-grid/ui-grid-demo.module#UIGridDemoModule'
   },
   {
-    'path'        : 'components/shipper-select',
+    'path'        : 'components/yzt-shipper',
     'loadChildren': './custom-demo/shipper-select/shipper-select-demo.module#ShipperSelectDemoModule'
   },
   {
-    'path'        : 'components/cnee-select',
+    'path'        : 'components/yzt-cnee',
     'loadChildren': './custom-demo/cnee-select/cnee-select-demo.module#CneeSelectDemoModule'
   },
   {
-    'path'        : 'components/master-select',
+    'path'        : 'components/yzt-master',
     'loadChildren': './custom-demo/master-select/master-select-demo.module#MasterSelectDemoModule'
   },
   {
@@ -628,6 +638,14 @@ export const DEMO_ROUTES = [
   {
     'path'        : 'components/yzt-upload',
     'loadChildren': './custom-demo/yzt-demo-upload/yzt-demo-upload.module#YztDemoUploadModule',
+  },
+  {
+    'path'        : 'components/yzt-area',
+    'loadChildren': './custom-demo/yzt-demo-area-select/yzt-demo-area-select.module#YztAreaSelectDemoModule',
+  },
+  {
+    'path'        : 'components/yzt-abnormal',
+    'loadChildren': './custom-demo/yzt-demo-abnormal-select/yzt-demo-abnormal-select.module#YztDemoAbnormalSelectModule',
   }
 ];
 

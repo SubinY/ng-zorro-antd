@@ -5,6 +5,14 @@
 // Common of angular
 import { ModuleWithProviders, NgModule } from '@angular/core';
 
+// Services
+
+// Directives
+import { DirectivesModule } from './share/directives/yzt-directives.modules';
+
+// Tokens (eg. global services' config)
+import { NzRootConfig } from '../components/ng-zorro-antd.module';
+
 // Modules
 import { GoodSelectModule } from './good-select/good-select.component';
 import { NgZorroAntdModule } from '../components/ng-zorro-antd.module';
@@ -17,15 +25,8 @@ import { YZTViewerDirectiveModule } from './yzt-viewer/yzt-viewer.directive';
 import { RepairGoodSelectModule } from './repair-goods-select/repair-goods-select.component';
 import { CneeSelectModule } from "./cnee-select/cnee-select.component";
 import { MasterSelectModule } from "./master-select/master-select.component";
-
-// Services
-
-// Directives
-import { DirectivesModule } from './share/directives/yzt-directives.modules';
-
-// Tokens (eg. global services' config)
-import { NzRootConfig } from '../components/ng-zorro-antd.module';
-
+import { AreaSelectModule } from './area-select/area-select.component';
+import { AbnormalSelectModule } from './abnormal-select/abnormal-select.component';
 // ---------------------------------------------------------
 // | Exports
 // ---------------------------------------------------------
@@ -34,6 +35,9 @@ export * from './upload/interface';
 
 // Modules
 export { YztUploadModule } from './upload/yzt-upload.module';
+export { AreaSelectModule } from './area-select/area-select.component';
+export { AbnormalSelectModule } from './abnormal-select/abnormal-select.component';
+
 // Components
 
 // Services
@@ -58,7 +62,9 @@ export { NzRootConfig } from '../components/ng-zorro-antd.module';
     YztUploadModule,
     YZTViewerDirectiveModule,
     CneeSelectModule,
-    MasterSelectModule
+    MasterSelectModule,
+    AbnormalSelectModule,
+    AreaSelectModule
   ]
 })
 export class YztCustomModule {
