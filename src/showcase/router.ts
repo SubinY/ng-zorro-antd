@@ -80,6 +80,11 @@ export const ROUTER_LIST = {
           'path'        : 'components/yzt-area',
           'zh'          : '政区选择（单选）'
         },
+        {
+          'label'       : 'Abnormal',
+          'path'        : 'components/yzt-abnormal',
+          'zh'          : '异常类型选择'
+        },
       ]
     },
     {
@@ -637,6 +642,10 @@ export const DEMO_ROUTES = [
   {
     'path'        : 'components/yzt-area',
     'loadChildren': './custom-demo/yzt-demo-area-select/yzt-demo-area-select.module#YztAreaSelectDemoModule',
+  },
+  {
+    'path'        : 'components/yzt-abnormal',
+    'loadChildren': './custom-demo/yzt-demo-abnormal-select/yzt-demo-abnormal-select.module#YztDemoAbnormalSelectModule',
   }
 ];
 

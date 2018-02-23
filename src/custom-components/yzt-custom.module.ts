@@ -26,7 +26,7 @@ import { RepairGoodSelectModule } from './repair-goods-select/repair-goods-selec
 import { CneeSelectModule } from "./cnee-select/cnee-select.component";
 import { MasterSelectModule } from "./master-select/master-select.component";
 import { AreaSelectModule } from './area-select/area-select.component';
-
+import { AbnormalSelectModule } from './abnormal-select/abnormal-select.component';
 // ---------------------------------------------------------
 // | Exports
 // ---------------------------------------------------------
@@ -36,11 +36,11 @@ export * from './upload/interface';
 // Modules
 export { YztUploadModule } from './upload/yzt-upload.module';
 export { AreaSelectModule } from './area-select/area-select.component';
+export { AbnormalSelectModule } from './abnormal-select/abnormal-select.component';
 
 // Components
 
 // Services
-import { AreaService } from './services/area.service';
 
 // Tokens (eg. global services' config)
 export { NzRootConfig } from '../components/ng-zorro-antd.module';
@@ -63,6 +63,7 @@ export { NzRootConfig } from '../components/ng-zorro-antd.module';
     YZTViewerDirectiveModule,
     CneeSelectModule,
     MasterSelectModule,
+    AbnormalSelectModule,
     AreaSelectModule
   ]
 })
