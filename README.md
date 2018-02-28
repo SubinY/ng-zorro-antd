@@ -18,11 +18,11 @@ An enterprise-class UI components based on Ant Design and Angular.
 以下是对现有业务组件功能点，对应使用 `ZORRO` 组件封装说明。为了便于区分，公司内部扩展的业务组件都统一 `yzt-` 前缀，二次开发组件都在文档的 `YztUIComponent` 和 `YztBusinessComponent` 两个分类下
 
 
-* [x]  **ui-select-box** UISelect 
+* [x]  **ui-select-box** UISelect (TODO:样式统一风格，或优化细节等)
 * [x]  日期选择 `nz-datepicker`
 * [x]  **yzt-grid** 表格 `nz-table` (扩展支持现有系统的悬浮列弹窗查询、图标等功能）
 * [x]  **yzt-upload** 图片&文件上传 (`nz-upload` ）
-* [x]  **yzt-area** 地址选择 (TODO: 用现有地址选择组件，修改样式统一风格，或优化细节等)
+* [x]  **yzt-area** 地址选择
 * [ ]  省市区多选组件 (用现有地址选择组件，修改样式统一风格，或优化细节等）
 * [ ]  区域树 (`zorro v0.6.10` 缺失tree组件）
 * [ ]  字典选择 `nz-select` 扩展
@@ -37,11 +37,14 @@ An enterprise-class UI components based on Ant Design and Angular.
 * [x]  **[echarts]** Echarts指令 
 * [ ]  G2指令 （可扩展封装：https://antv.alipay.com/zh-cn/g2/3.x/index.html ）
 
-## 记录自定义组件未修复及可以优化的地方
+## TODO
+
+记录自定义组件未修复及可以优化的地方
 
 * [ ]  拖拽表格至边缘会出现1像素震动 (drag-box.directive.ts)
 * [ ]  viewer预览组件可以扩展支持缩略图 (yzt-viewer.directive.ts)
 * [ ]  select扩展加载下拉数据loading提示动画 (yzt-viewer.directive.ts)
+* [ ]  `ui-select-box` 组件样式、细节需优化，优化后影响的组件将有`yzt-area`、`yzt-abnormal`
 
 
 ## Features
