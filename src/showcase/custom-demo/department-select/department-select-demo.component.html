@@ -27,6 +27,14 @@
                 </div>
             </nz-code-box>
         </div>
+        <div nz-col [nzSpan]="12">
+            <nz-code-box [nzTitle]="'自定义模板'" id="department-select-demo-template" [nzCode]="DepartmentSelectDemoTemplateCode">
+                <department-select-demo-template demo></department-select-demo-template>
+                <div intro>
+                    <p>使用[customCompanyTemplate]传入公司名称template模板,[customDepartmentTemplate]传入部门template模板，可以实现自定义下拉框样式及定制内容</p>
+                </div>
+            </nz-code-box>
+        </div>
     </div>
     <section class="markdown api-container">
         <h2 id="API"><span>API</span>
@@ -69,7 +77,18 @@
                     </td>
                     <td>'object'</td>
                 </tr>
-
+                <tr>
+                    <td>customCompanyTemplate</td>
+                    <td>支持自定义公司名称下拉选项，传入模板</td>
+                    <td>TemplateRef</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>customDepartmentTemplate</td>
+                    <td>支持自定义部门名称下拉选项，传入模板</td>
+                    <td>TemplateRef</td>
+                    <td>-</td>
+                </tr>
                 <tr>
                     <td>width</td>
                     <td>输入框宽度，支持百分比和像素</td>
