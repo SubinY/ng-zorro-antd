@@ -23,10 +23,10 @@ An enterprise-class UI components based on Ant Design and Angular.
 * [x]  **yzt-grid** 表格 `nz-table` (扩展支持现有系统的悬浮列弹窗查询、图标等功能）
 * [x]  **yzt-upload** 图片&文件上传 (`nz-upload` ）
 * [x]  **yzt-area** 地址选择
-* [ ]  省市区多选组件 (用现有地址选择组件，修改样式统一风格，或优化细节等）
+* [x]  **yzt-area-multiple** (用现有地址选择组件，修改样式统一风格，或优化细节等）
 * [ ]  区域树 (`zorro v0.6.10` 缺失tree组件）
 * [ ]  字典选择 `nz-select` 扩展
-* [ ]  开单网点 `nz-select` (扩展自定义模板)
+* [x]  **yzt-department** `nz-select` (扩展自定义模板)
 * [x]  **yzt-shipper** 发货人选择 `nz-select` 扩展
 * [x]  **yzt-cnee** 收货人选择 `nz-select` 扩展
 * [x]  **yzt-abnormal** 异常类型选择  `UISelect`扩展

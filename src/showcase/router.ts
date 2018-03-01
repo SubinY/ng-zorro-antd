@@ -81,6 +81,11 @@ export const ROUTER_LIST = {
           'zh'          : '政区选择（单选）'
         },
         {
+          'label'       : 'AreaMultiple',
+          'path'        : 'components/yzt-area-multiple',
+          'zh'          : '政区选择（多选）'
+        },
+        {
           'label'       : 'Abnormal',
           'path'        : 'components/yzt-abnormal',
           'zh'          : '异常类型选择'
@@ -655,6 +660,10 @@ export const DEMO_ROUTES = [
   {
     'path'        : 'components/yzt-department',
     'loadChildren': './custom-demo/department-select/department-select-demo.module#DepartmentSelectDemoModule',
+  },
+  {
+    'path'        : 'components/yzt-area-multiple',
+    'loadChildren': './custom-demo/city-select/city-select-demo.module#CitySelectDemoModule',
   }
 ];
 

@@ -28,6 +28,7 @@ import { MasterSelectModule } from "./master-select/master-select.component";
 import { AreaSelectModule } from './area-select/area-select.component';
 import { AbnormalSelectModule } from './abnormal-select/abnormal-select.component';
 import { DepartmentSelectModule } from './department-select/departement-select.component';
+import { CitySelectModule } from './city-select/city-select.component';
 // ---------------------------------------------------------
 // | Exports
 // ---------------------------------------------------------
@@ -35,9 +36,21 @@ import { DepartmentSelectModule } from './department-select/departement-select.c
 export * from './upload/interface';
 
 // Modules
+export { GoodSelectModule } from './good-select/good-select.component';
+export { NgZorroAntdModule } from '../components/ng-zorro-antd.module';
+export { EchartsModule } from './echarts/echarts.component';
+export { UIGridModule } from './ui-grid/ui-grid.component';
+export { ShipperSelectModule } from "./shipper-select/shipper-select.component";
+export { GridIconModule } from './ui-grid/grid-icon.component';
 export { YztUploadModule } from './upload/yzt-upload.module';
+export { YZTViewerDirectiveModule } from './yzt-viewer/yzt-viewer.directive';
+export { RepairGoodSelectModule } from './repair-goods-select/repair-goods-select.component';
+export { CneeSelectModule } from "./cnee-select/cnee-select.component";
+export { MasterSelectModule } from "./master-select/master-select.component";
 export { AreaSelectModule } from './area-select/area-select.component';
 export { AbnormalSelectModule } from './abnormal-select/abnormal-select.component';
+export { DepartmentSelectModule } from './department-select/departement-select.component';
+export { CitySelectModule } from './city-select/city-select.component';
 
 // Components
 
@@ -66,7 +79,8 @@ export { NzRootConfig } from '../components/ng-zorro-antd.module';
     MasterSelectModule,
     AbnormalSelectModule,
     AreaSelectModule,
-    DepartmentSelectModule
+    DepartmentSelectModule,
+    CitySelectModule
   ]
 })
 export class YztCustomModule {
