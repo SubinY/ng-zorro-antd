@@ -1,4 +1,4 @@
-prismjs@1.11.0
+prismjs@1.10.0
 MIT
 MIT LICENSE
 
@@ -44,7 +44,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
-@angular/cdk@5.2.0
+@angular/cdk@5.1.0
 MIT
 The MIT License
 
@@ -68,27 +68,27 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
-@angular/common@5.2.4
+@angular/common@5.2.1
 MIT
 MIT
 
-@angular/core@5.2.4
+@angular/core@5.2.1
 MIT
 MIT
 
-@angular/forms@5.2.4
+@angular/forms@5.2.1
 MIT
 MIT
 
-@angular/http@5.2.4
+@angular/http@5.2.1
 MIT
 MIT
 
-@angular/platform-browser@5.2.4
+@angular/platform-browser@5.2.1
 MIT
 MIT
 
-@angular/router@5.2.4
+@angular/router@5.2.1
 MIT
 MIT
 
