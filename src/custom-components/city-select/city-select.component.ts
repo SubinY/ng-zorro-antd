@@ -68,7 +68,7 @@ export class CitySelectComponent implements OnInit, AfterViewInit, ControlValueA
     @Input()
     maxNum: number | null = 3;
     @Input()
-    placeholder: string = '';
+    placeholder: string = '请选择地区';
 
     @Input() set width(v) {
         const width = parseInt(v);
