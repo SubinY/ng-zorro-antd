@@ -27,6 +27,7 @@ import { CneeSelectModule } from "./cnee-select/cnee-select.component";
 import { MasterSelectModule } from "./master-select/master-select.component";
 import { AreaSelectModule } from './area-select/area-select.component';
 import { AbnormalSelectModule } from './abnormal-select/abnormal-select.component';
+import { DepartmentSelectModule } from './department-select/departement-select.component';
 // ---------------------------------------------------------
 // | Exports
 // ---------------------------------------------------------
@@ -64,7 +65,8 @@ export { NzRootConfig } from '../components/ng-zorro-antd.module';
     CneeSelectModule,
     MasterSelectModule,
     AbnormalSelectModule,
-    AreaSelectModule
+    AreaSelectModule,
+    DepartmentSelectModule
   ]
 })
 export class YztCustomModule {

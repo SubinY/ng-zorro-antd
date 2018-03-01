@@ -85,6 +85,11 @@ export const ROUTER_LIST = {
           'path'        : 'components/yzt-abnormal',
           'zh'          : '异常类型选择'
         },
+        {
+          'label'       : 'Department',
+          'path'        : 'components/yzt-department',
+          'zh'          : '开单网点'
+        },
       ]
     },
     {
@@ -646,6 +651,10 @@ export const DEMO_ROUTES = [
   {
     'path'        : 'components/yzt-abnormal',
     'loadChildren': './custom-demo/yzt-demo-abnormal-select/yzt-demo-abnormal-select.module#YztDemoAbnormalSelectModule',
+  },
+  {
+    'path'        : 'components/yzt-department',
+    'loadChildren': './custom-demo/department-select/department-select-demo.module#DepartmentSelectDemoModule',
   }
 ];
 
