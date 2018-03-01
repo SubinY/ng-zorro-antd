@@ -11,7 +11,7 @@ import {NzMessageService} from '../../../../index.showcase';
     styles: []
 })
 export class CitySelectDemoBasicComponent implements OnInit {
-    value: any ='440106000000';
+    value: any ;
 
     ngOnInit() {
 
