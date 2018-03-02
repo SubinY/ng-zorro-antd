@@ -8,5 +8,7 @@ import { Component } from '@angular/core';
 export class MetaSelectDemoComponent  {
 
     MetaSelectDemoBasicCode = require('!!raw-loader!./meta-select-demo-basic.component');
+    MetaSelectDemoMultipleCode = require('!!raw-loader!./meta-select-demo-multiple.component');
+    MetaSelectDemoTemplateCode = require('!!raw-loader!./meta-select-demo-template.component');
 
 }

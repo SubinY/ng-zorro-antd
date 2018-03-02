@@ -59,21 +59,20 @@ export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
     </div>
     `,
     styles: [`
-    .meta-select{
-        position: relative;
-    }
     .close-icon {
         opacity: 0;
         position: absolute;
         right: 20px;
         top: 50%;
-        margin-top: -10px;
     }
     .close-icon:hover {
         opacity: 1;
     }
     .meta-nz-select:hover +.close-icon {
         opacity: 1;
+    }
+    .meta-select {
+        position: relative;
     }
     
     `],
@@ -107,6 +106,11 @@ export class MetaSelectComponent implements OnInit {
     // 需要获取的值类型
     @Input() valueType = "object";
 
+    @Input() set metaMode(v) {
+        this._nzMode = v;
+        this._allowClear = v === "combobox" ? true : false;
+    };
+
     // 设置属性，并触发监听器
     set value(v: any) {
         if (typeof v === 'string' && v.trim() === '' || !v)
@@ -116,9 +120,20 @@ export class MetaSelectComponent implements OnInit {
         if (this.valueType === "object") {
             this.onChangeCallback(v);
         } else {
-            let name = v.label || v;
-            let id = v.id || v;
-            this.valueType === "mobile" ? this.onChangeCallback(id) : this.onChangeCallback(name);
+            let id;
+            let name;
+            if(this._nzMode === 'multiple'){
+                let idArr = [];
+                v.forEach(item => {
+                    idArr.push(item.id);
+                });
+                id = idArr || v;
+            }else{
+                name = v.label || v;
+                id = v.id || v;
+            }
+            
+            this.valueType === "id" ? this.onChangeCallback(id) : this.onChangeCallback(name);
         }
     }
 
@@ -130,11 +145,6 @@ export class MetaSelectComponent implements OnInit {
         const width = parseInt(v);
         this._width = Array.from(v).includes("%") ? `${v}%` : isNaN(width) ? this._width : `${width}px`;
     }
-
-    @Input() set OptionMode(v) {
-        this._nzMode = v;
-        this._allowClear = v === "combobox" ? true : false;
-    };
 
     @Input() set customTemplate(tpl: TemplateRef<any>) {
         if (tpl instanceof TemplateRef) {
@@ -170,8 +180,8 @@ export class MetaSelectComponent implements OnInit {
             $event.preventDefault();
             $event.stopPropagation();
         }
-        this.options = [];
-        this.value = '';
+       this.value = [];
+        
     }
 
     // 写入值

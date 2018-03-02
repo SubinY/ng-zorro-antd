@@ -19,22 +19,22 @@
                 </div>
             </nz-code-box>
         </div>
-        <!-- <div nz-col [nzSpan]="12">
-            <nz-code-box [nzTitle]="'valueType属性'" id="department-select-demo-valueType" [nzCode]="DepartmentSelectDemoValueTypeCode">
-                <department-select-demo-valueType demo></department-select-demo-valueType>
+        <div nz-col [nzSpan]="12">
+            <nz-code-box [nzTitle]="'metaMode多选属性'" id="meta-select-demo-multiple" [nzCode]="MetaSelectDemoMultipleCode">
+                <meta-select-demo-multiple demo></meta-select-demo-multiple>
                 <div intro>
-                    <p>改变valueType可获取不同字段的值，姓名</p>
+                    <p>下拉框支持多选功能，并返回数组的形式(配合vauleType属性使用)</p>
                 </div>
             </nz-code-box>
         </div>
         <div nz-col [nzSpan]="12">
-            <nz-code-box [nzTitle]="'自定义模板'" id="department-select-demo-template" [nzCode]="DepartmentSelectDemoTemplateCode">
-                <department-select-demo-template demo></department-select-demo-template>
+            <nz-code-box [nzTitle]="'自定义模板'" id="meta-select-demo-template" [nzCode]="MetaSelectDemoTemplateCode">
+                <meta-select-demo-template demo></meta-select-demo-template>
                 <div intro>
-                    <p>使用[customCompanyTemplate]传入公司名称template模板,[customDepartmentTemplate]传入部门template模板，可以实现自定义下拉框样式及定制内容</p>
+                    <p>使用[customTemplate]传入template模板，可以实现自定义下拉框样式及定制内容</p>
                 </div>
             </nz-code-box>
-        </div> -->
+        </div>
     </div>
     <section class="markdown api-container">
         <h2 id="API"><span>API</span>
@@ -70,7 +70,7 @@
                     <td>请选择</td>
                 </tr>
                 <tr>
-                    <td>metaType</td>
+                    <td>metaType(字典类型)</td>
                     <td>service（服务类型），repair（维修类型），fhreturn（返货类型）， riskReason（出险原因），
                         specifyLogistics（指定物流），abnormalDuty（异常责任方），complement（补件-任务类型），
                         transportCompany（物流公司）， goodsunit（商品单位），abnormalHandleWay（异常处理方式）
@@ -89,7 +89,15 @@
                     <td>'object'</td>
                 </tr>
                 <tr>
-                    <td>customCompanyTemplate</td>
+                    <td>metaMode</td>
+                    <td>设置 Select 的模式,默认单选</td>
+                    <td>
+                        'multiple'
+                    </td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>customTemplate</td>
                     <td>支持自定义公司名称下拉选项，传入模板</td>
                     <td>TemplateRef</td>
                     <td>-</td>
