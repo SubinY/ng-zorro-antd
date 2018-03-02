@@ -30,6 +30,7 @@ import { AreaSelectModule } from './area-select/area-select.component';
 import { AbnormalSelectModule } from './abnormal-select/abnormal-select.component';
 import { DepartmentSelectModule } from './department-select/departement-select.component';
 import { CitySelectModule } from './city-select/city-select.component';
+import { MetaSelectModule } from './meta-select/meta-select.component';
 // ---------------------------------------------------------
 // | Exports
 // ---------------------------------------------------------
@@ -82,6 +83,7 @@ export { NzRootConfig } from '../../components/ng-zorro-antd.module';
     AbnormalSelectModule,
     AreaSelectModule,
     DepartmentSelectModule,
+    MetaSelectModule,
     CitySelectModule
   ]
 })
