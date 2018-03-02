@@ -8,9 +8,10 @@ import { DepartmentSelectDemoBasicComponent } from './department-select-demo-bas
 import { DepartmentSelectDemoComponent } from './department-select-demo.component';
 import { DepartmentSelectDemoRoutingModule } from './department-select-demo.routing.module';
 import { DepartmentSelectDemoValueTypeComponent } from './department-select-demo-valueType.component';
+import { DepartmentSelectDemoTemplateComponent } from './department-select-demo-template.component';
 
 @NgModule({
     imports: [DepartmentSelectDemoRoutingModule,CommonModule, NzCodeBoxModule, YztCustomModule, FormsModule, JsonpModule],
-    declarations: [DepartmentSelectDemoComponent, DepartmentSelectDemoBasicComponent,DepartmentSelectDemoValueTypeComponent]
+    declarations: [DepartmentSelectDemoComponent, DepartmentSelectDemoBasicComponent,DepartmentSelectDemoValueTypeComponent,DepartmentSelectDemoTemplateComponent]
 })
 export class DepartmentSelectDemoModule { }
