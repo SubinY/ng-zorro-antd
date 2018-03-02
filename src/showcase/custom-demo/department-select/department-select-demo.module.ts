@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { YztCustomModule } from '../../../custom-components/yzt-custom.module';
+import { YztCustomModule } from '../../../custom-components/lib/yzt-custom.module';
 import { FormsModule } from '@angular/forms';
 import { JsonpModule } from '@angular/http';
 import { NzCodeBoxModule } from '../../share/nz-codebox/nz-codebox.module';
