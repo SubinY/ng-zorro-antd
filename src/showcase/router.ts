@@ -90,6 +90,11 @@ export const ROUTER_LIST = {
           'path'        : 'components/yzt-department',
           'zh'          : '开单网点'
         },
+        {
+          'label'       : 'Meta',
+          'path'        : 'components/yzt-meta',
+          'zh'          : '字典'
+        },
       ]
     },
     {
@@ -655,6 +660,10 @@ export const DEMO_ROUTES = [
   {
     'path'        : 'components/yzt-department',
     'loadChildren': './custom-demo/department-select/department-select-demo.module#DepartmentSelectDemoModule',
+  },
+  {
+    'path'        : 'components/yzt-meta',
+    'loadChildren': './custom-demo/meta-select-demo/meta-select-demo.module#MetaSelectDemoModule',
   }
 ];
 
