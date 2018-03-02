@@ -10,13 +10,13 @@ import {
     TemplateRef
 } from '@angular/core';
 import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from '@angular/forms';
-import {NgZorroAntdModule} from '../../../index.showcase';
+import {NgZorroAntdModule} from '../../../../index.showcase';
 import {CommonModule} from '@angular/common';
 import 'rxjs';
 
 import {API} from '../services/api';
-import {tagAnimation} from '../../components/core/animation/tag-animations';
-import {dropDownAnimation} from '../../components/core/animation/dropdown-animations';
+import {tagAnimation} from '../../../components/core/animation/tag-animations';
+import {dropDownAnimation} from '../../../components/core/animation/dropdown-animations';
 
 export const EXE_COUNTER_VALUE_ACCESSOR: any = {
     provide: NG_VALUE_ACCESSOR,

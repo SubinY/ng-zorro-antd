@@ -4,7 +4,7 @@ import { FormsModule, ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/f
 import { UISelectBoxModule } from '../select-box/select-box.component';
 import { Subject } from 'rxjs';
 import { API } from '../services/api';
-import { NgZorroAntdModule } from '../../components/ng-zorro-antd.module';
+import { NgZorroAntdModule } from '../../../components/ng-zorro-antd.module';
 
 export interface Department {
     compayId: string;
