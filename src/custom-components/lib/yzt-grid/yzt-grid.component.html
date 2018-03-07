@@ -25,7 +25,8 @@
                     </button>
                 </div>
             </ng-template>
-            <ng-template [ngTemplateOutlet]="_titleTpl || defaultTitle"></ng-template>
+            <ng-template [ngIf]="_title">{{_title}}</ng-template>
+            <ng-template [ngTemplateOutlet]="!_title && (_titleTpl || defaultTitle)"></ng-template>
         </div>
         <ng-template #nzFixedHeader [ngIf]="!_fixScrollY">
             <thead nz-thead>
@@ -44,7 +45,7 @@
             </thead>
         </ng-template>
         <tbody nz-tbody>
-            <tr nz-tbody-tr *ngFor="let data of nzTable.data; let ri = index" (click)="onRowSelectChange(data)" [style.background]="data.checked? '#eee':'#fff'">
+            <tr nz-tbody-tr *ngFor="let data of nzTable.data; let ri = index" (click)="onRowSelectChange(data)" [style.background]="data.checked? selectColor:'#fff'">
                 <td nz-td nzCheckbox *ngIf="mulitipy">
                     <label #checkbox_item nz-checkbox [(ngModel)]="data.checked" (click)="refreshStatus($event)">
                     </label>

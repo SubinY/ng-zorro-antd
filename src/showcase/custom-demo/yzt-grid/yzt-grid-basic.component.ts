@@ -19,7 +19,7 @@ class OptField {
           <a *ngIf="!name" href="javascript:void(0);" title="未锁定" class="operation-a operation-unlock"><i></i></a>
         </ng-template>
       </grid-icon>
-      
+
       <ng-template #search_id>
         <nz-select [(ngModel)]="searchField.id" (nzOpenChange)="optSelect($event)">
           <nz-option *ngFor="let i of [1,2]" [nzLabel]="i" [nzValue]="i"></nz-option>

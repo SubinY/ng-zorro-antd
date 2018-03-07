@@ -1,10 +1,9 @@
 // tslint:disable
 
-import { NgModule, EventEmitter, OnInit,  ViewEncapsulation, Component,Input, Output } from "@angular/core";
+import { NgModule, EventEmitter, OnInit,  ViewEncapsulation, Component,Input, Output, Inject } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { FormsModule } from "@angular/forms";
 
-import { BASEURL } from "../services/api";
 import { NzUploadModule, NzMessageService, UploadFile } from "../../../components/ng-zorro-antd.module";
 import { YztUploadFile } from "./interface";
 
@@ -161,7 +160,7 @@ import { YztUploadFile } from "./interface";
 })
 export class YztUploadComponent implements OnInit {
 
-    action = `${BASEURL}/upload`;
+    action = `${this.BASEURL}/upload`;
 
     loading = false;
 
@@ -212,7 +211,7 @@ export class YztUploadComponent implements OnInit {
     @Output()
     onChange: EventEmitter<YztUploadFile[]> = new EventEmitter<YztUploadFile[]>();
 
-    constructor(private msg: NzMessageService) { }
+    constructor(private msg: NzMessageService, @Inject('API_BASE_URL') private BASEURL) { }
 
     ngOnInit(): void {
         this._fileList = this.getYztUploadFiles(this.fileList);

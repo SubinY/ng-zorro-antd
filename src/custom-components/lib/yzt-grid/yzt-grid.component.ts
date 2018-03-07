@@ -22,7 +22,7 @@ import { DirectivesModule } from '../share/directives/yzt-directives.modules';
 import { YZTViewerDirectiveModule } from '../yzt-viewer/yzt-viewer.directive';
 import { Subject } from 'rxjs/Subject';
 
-interface PageData {
+export interface PageData {
     content: Array<any>;
     numberOfElements: number;
     [portName: string]: any;
@@ -47,7 +47,7 @@ export interface PageIndexAndSize {
 export class UIGridComponent {
     @ViewChild('gridImg', { read: ViewContainerRef }) gridImg: ViewContainerRef;
 
-    _data: PageData;
+    _data: PageData = {content: [], numberOfElements: 0};
     _dataSet = [];
     _selections: any;
     _loading = false;
@@ -102,6 +102,7 @@ export class UIGridComponent {
     @Input() pageSizeValues = [10, 30, 50, 100];
     @Input() showTitle = true;
     @Input() mulitipy = false;
+    @Input() selectColor = '#eee';
 
     @Input()
     set data(value: PageData) {
@@ -473,6 +474,9 @@ export class UIGridComponent {
     ],
     declarations: [
         UIGridComponent
+    ],
+    providers: [
+        GridUtilService
     ],
     exports: [UIGridComponent]
 })
