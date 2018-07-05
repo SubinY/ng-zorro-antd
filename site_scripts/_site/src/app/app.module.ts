@@ -11,6 +11,8 @@ import { environment } from '../environments/environment';
 import { DEMOComponent } from './_demo/demo.component';
 import { AppComponent } from './app.component';
 import { routes } from './app.routing.module';
+import { IpsApiService } from './share/services/ips-api.service';
+import { ZorroExtModule } from '../../../components-ext/public_api';
 
 @NgModule({
   declarations: [
@@ -23,6 +25,7 @@ import { routes } from './app.routing.module';
     HttpClientModule,
     ShareModule,
     NgZorroAntdModule,
+    ZorroExtModule.forRoot(IpsApiService, 'http://192.168.100.90:11101/'),
     RouterModule.forRoot(routes, environment.production ? { preloadingStrategy: PreloadAllModules } : {})
   ],
   providers   : [

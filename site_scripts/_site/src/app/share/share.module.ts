@@ -12,6 +12,8 @@ import { NzCodeBoxModule } from './nz-codebox/nz-codebox.module';
 import { NzCopyIconModule } from './nz-copy-icon/nz-copy-icon.module';
 import { NzHighlightModule } from './nz-highlight/nz-highlight.module';
 import { NzNavBottomModule } from './nz-nav-bottom/nz-nav-bottom.module';
+import { IpsApiService } from './services/ips-api.service';
+import { ZorroExtModule } from 'ng-zorro-antd-ext';
 
 @NgModule({
   imports: [
@@ -25,7 +27,8 @@ import { NzNavBottomModule } from './nz-nav-bottom/nz-nav-bottom.module';
     NzNavBottomModule,
     NzCopyIconModule,
     // third libs
-    ColorSketchModule
+    ColorSketchModule,
+    ZorroExtModule.forRoot(IpsApiService, 'http://192.168.100.90:11101/'),
   ],
   exports: [
     CommonModule,
@@ -40,6 +43,7 @@ import { NzNavBottomModule } from './nz-nav-bottom/nz-nav-bottom.module';
     // third libs
     InfiniteScrollModule,
     ColorSketchModule,
+    ZorroExtModule
   ]
 })
 export class ShareModule { }
