@@ -7,8 +7,8 @@ title:
 
 ## zh-CN
 
-基本的地址下拉选择。
+基本图片预览（数据同步）
 
 ## en-US
 
-A basic selector by area can drop down
+Image preview(sync data)

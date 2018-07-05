@@ -2,7 +2,7 @@ import { Component, OnInit, Input, forwardRef, NgModule, TemplateRef, Output, Ev
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormsModule } from "@angular/forms";
 import { CommonModule, NgForOfContext } from "@angular/common";
 import { ApiService } from '../services/api.service';
-import { BehaviorSubject, Subject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs/Rx';
 import { NgZorroAntdModule } from '../../../components/ng-zorro-antd.module';
 
 export interface AreaInfo {
@@ -36,22 +36,31 @@ export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
         (nzOpenChange)="yztOpenChange($event)"
         [nzDisabled]="yztDisabled"
         [(ngModel)]="value">
-        <ng-container *ngFor="let option of options">
-            <nz-option
-                *ngIf="!loading"
-                [nzLabel]="option.mergerName"
-                [nzValue]="option"
-                [nzDisabled]="option.disabled">
+        <ng-template [ngIf]="!_content">
+            <ng-container *ngFor="let option of options; let i = index;">
+                <nz-option
+                    *ngIf="!loading"
+                    [nzLabel]="option.mergerName"
+                    [nzValue]="option"
+                    [nzDisabled]="option.disabled">
+                </nz-option>
+            </ng-container>
+            <nz-option *ngIf="loading" nzDisabled nzCustomContent>
+            <i class="anticon anticon-loading anticon-spin loading-icon"></i> 加载中...
             </nz-option>
-        </ng-container>
-        <nz-option *ngIf="loading" nzDisabled nzCustomContent>
-          <i class="anticon anticon-loading anticon-spin loading-icon"></i> 加载中...
-        </nz-option>
-        <nz-option *ngIf="_content" nzCustomContent>
-            <ng-template>
-                <ng-container #nzOptionCon [ngTemplateOutlet]="_content" [ngTemplateOutletContext]="option"></ng-container>
-            </ng-template>
-        </nz-option>
+        </ng-template>
+        <ng-template [ngIf]="_content">
+            <ng-container *ngFor="let option of options; let i = index;">
+                <nz-option
+                    *ngIf="!loading"
+                    nzCustomContent
+                    [nzLabel]="option.name"
+                    [nzValue]="option"
+                    [nzDisabled]="option.disabled">
+                    <ng-container [ngTemplateOutlet]="_content" [ngTemplateOutletContext]="{option:option, index: i}"></ng-container>
+                </nz-option>
+            </ng-container>
+        </ng-template>
     </nz-select>
     <span
       role="close-icon"
@@ -87,6 +96,7 @@ export class AreaDownSelectComponent implements ControlValueAccessor, OnInit {
     private onTouchedCallback: () => () => {};
     private onChangeCallback: (_: any) => () => {};
 
+    
     options: Array<AreaInfo> = [];
     // 单选的时候传字符串，多选传数组
     _value: string;
@@ -155,6 +165,7 @@ export class AreaDownSelectComponent implements ControlValueAccessor, OnInit {
     };
 
     @Input() set customTemplate(tpl: TemplateRef<any>) {
+        console.log(tpl);
         if (tpl instanceof TemplateRef) {
             this._content = tpl;
         }
@@ -168,7 +179,7 @@ export class AreaDownSelectComponent implements ControlValueAccessor, OnInit {
 
     ngOnInit() {
         // 限流
-        this.queryData$ = (<any>this.queryDataStream)
+        this.queryData$ = this.queryDataStream
             .debounceTime(250)
             .subscribe(({ currentText, options }) => {
                 this.queryData(currentText, options)

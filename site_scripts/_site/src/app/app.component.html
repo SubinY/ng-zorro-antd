@@ -27,6 +27,12 @@
         </nz-select>
         <ul nz-menu [nzMode]="'horizontal'" id="nav">
           <li nz-menu-item nzSelected>
+            <a routerLink="/doc/introduce/zh" *ngIf="language=='zh'"><span>一智通组件</span></a>
+            <a routerLink="/doc/introduce/en" *ngIf="language=='en'"><span>Components_ext</span></a>
+          </li>
+        </ul>
+        <ul nz-menu [nzMode]="'horizontal'" id="nav">
+          <li nz-menu-item nzSelected>
             <a routerLink="/doc/introduce/zh" *ngIf="language=='zh'"><span>组件</span></a>
             <a routerLink="/doc/introduce/en" *ngIf="language=='en'"><span>Components</span></a>
           </li>
@@ -40,6 +46,21 @@
         <ul nz-menu [nzMode]="'inline'" class="aside-container menu-site" nzInlineIndent="40">
           <li *ngFor="let intro of routerList.intro" nz-menu-item routerLinkActive="ant-menu-item-selected" [hidden]="intro.language!=language">
             <a routerLink="{{intro.path}}">{{intro.label}}</a>
+          </li>
+          <li nz-submenu nzOpen>
+            <span title><h4>Components_ext</h4></span>
+            <ul>
+              <li nz-menu-group *ngFor="let group of routerList.components_ext">
+                <span title>{{group.name}}</span>
+                <ul>
+                  <li nz-menu-item routerLinkActive="ant-menu-item-selected" *ngFor="let component of group.children" [hidden]="component.language!=language">
+                    <a routerLink="{{component.path}}">
+                      <span>{{component.label}}</span><span class="chinese">{{component.zh}}</span>
+                    </a>
+                  </li>
+                </ul>
+              </li>
+            </ul>
           </li>
           <li nz-submenu nzOpen>
             <span title><h4>Components</h4></span>

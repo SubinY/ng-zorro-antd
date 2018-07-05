@@ -16,6 +16,7 @@ import { API } from './services/api';
 import { NgZorroAntdModule } from '../../components/ng-zorro-antd.module';
 import { AreaDownSelectModule } from './area-down-select/area-down-select.component';
 import { ApiService } from './services/api.service';
+import { YZTViewerDirectiveModule } from './yzt-viewer/yzt-viewer.directive';
 // ---------------------------------------------------------
 // | Exports
 // ---------------------------------------------------------
@@ -24,6 +25,7 @@ import { ApiService } from './services/api.service';
 // Modules
 export { NgZorroAntdModule } from '../../components/ng-zorro-antd.module';
 export { AreaDownSelectModule } from './area-down-select/area-down-select.component';
+export { YZTViewerDirectiveModule } from './yzt-viewer/yzt-viewer.directive';
 // Components
 
 // Services
@@ -37,7 +39,8 @@ export { AreaDownSelectModule } from './area-down-select/area-down-select.compon
 @NgModule({
   exports: [
     NgZorroAntdModule,
-    AreaDownSelectModule
+    AreaDownSelectModule,
+    YZTViewerDirectiveModule
   ]
 })
 export class ZorroExtModule {

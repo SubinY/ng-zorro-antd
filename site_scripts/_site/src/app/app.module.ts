@@ -12,7 +12,10 @@ import { DEMOComponent } from './_demo/demo.component';
 import { AppComponent } from './app.component';
 import { routes } from './app.routing.module';
 import { IpsApiService } from './share/services/ips-api.service';
-import { ZorroExtModule } from '../../../components-ext/public_api';
+import { PassPortService, AuthService } from './share/services/auth/auth.service';
+import { ReStorageService } from './share/services/storage/storage.service';
+import { StorageService } from 'rebirth-storage';
+import { RebirthHttpModule } from 'rebirth-http';
 
 @NgModule({
   declarations: [
@@ -25,11 +28,15 @@ import { ZorroExtModule } from '../../../components-ext/public_api';
     HttpClientModule,
     ShareModule,
     NgZorroAntdModule,
-    ZorroExtModule.forRoot(IpsApiService, 'http://192.168.100.90:11101/'),
+    RebirthHttpModule,
     RouterModule.forRoot(routes, environment.production ? { preloadingStrategy: PreloadAllModules } : {})
   ],
   providers   : [
-    Title
+    Title,
+    PassPortService,
+    AuthService,
+    ReStorageService,
+    StorageService
   ],
   bootstrap   : [ AppComponent ]
 })

@@ -16,7 +16,9 @@
       "@zorro-ext": [ "components-ext/" ],
       "@zorro-ext/*": [ "components-ext/*" ],
       "@env": [ "environments/" ],
-      "@env/*": [ "environments/*" ]
+      "@env/*": [ "environments/*" ],
+      "@services": [ "app/share/services/" ],
+      "@services/*": [ "app/share/services/*" ]
     }
   },
   "exclude": [

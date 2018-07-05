@@ -22,9 +22,13 @@
               "site/src/404.html"
             ],
             "styles": [
-              "site/src/styles.less"
+              "site/src/styles.less",
+              "../node_modules/viewerjs/dist/viewer.min.css"
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/lodash/lodash.js",
+              "../node_modules/viewerjs/dist/viewer.min.js"
+            ]
           },
           "configurations": {
             "production": {
@@ -64,7 +68,13 @@
             "karmaConfig": "./components/karma.conf.js",
             "polyfills": "./components/polyfills.ts",
             "tsConfig": "./components/tsconfig.spec.json",
-            "scripts": []
+            "styles": [
+              "../node_modules/viewerjs/dist/viewer.min.css"
+            ],
+            "scripts": [
+              "node_modules/lodash/lodash.js",
+              "../node_modules/viewerjs/dist/viewer.min.js"
+            ]
           }
         },
         "lint": {

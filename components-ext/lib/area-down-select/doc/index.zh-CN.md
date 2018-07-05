@@ -1,24 +1,22 @@
 ---
-category: Components
-type: General
+category: Components-Ext
+type: Business
 title: Area-down
-subtitle: 地址下拉组件
+subtitle: 地址下拉选择组件
 ---
 
-用于页面和区块的加载中状态。
-
-## 何时使用
-
-页面局部处于等待异步数据或正在渲染过程时，合适的加载动效会有效缓解用户的焦虑。
+输入地址下拉选择
 
 ## API
 
-### nz-spin
+### area-down
 
 | 参数 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
-| `[nzDelay]` | 延迟显示加载效果的时间（防止闪烁） | number (毫秒) | - |
-| `[nzIndicator]` | 加载指示符 | `TemplateRef<void>` | - |
-| `[nzSize]` | 组件大小，可选值为 `small` `default` `large` | string | 'default' |
-| `[nzSpinning]` | 是否旋转 | boolean | true |
-| `[nzTip]` | 当作为包裹元素时，可以自定义描述文案 | string | - |
+| `[(ngModel)]` | 支持双向绑定 | object/string | - |
+| `[valueType]` | 用于定制输出值类型,可选值为 `object` `fullObject` | string | - |
+| `[areaName]` | 用于初始化回显对象(传具体地址) | string | - |
+| `[width]` | 输入选择框宽度(支持`px` `%`) | string/number | `100%` |
+| `[dropdownStyle]` | 下拉框样式(支持`px` `%`) | string | `100%` |
+| `[rowsNum]` | 下拉选项数目 | number | 10 |
+| `[customTemplate]` | 定制下拉选项 | TemplateRef | - |

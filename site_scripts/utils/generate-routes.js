@@ -6,6 +6,7 @@ const camelCase = require('./camelcase');
 module.exports = function generateRoutes(showCaseTargetPath, componentsMap, docsMeta) {
   let intro = [];
   let components = [];
+  let components_ext = [];
   let routes = '';
   for (const key in docsMeta) {
     intro.push({
@@ -24,6 +25,7 @@ module.exports = function generateRoutes(showCaseTargetPath, componentsMap, docs
   intro.sort((pre, next) => pre.order - next.order);
   fs.writeFileSync(path.join(showCaseTargetPath, `intros.json`), JSON.stringify(intro, null, 2));
   const reverseMap = {};
+  const reverseMap_ext = {};
   for (const key in componentsMap) {
     const zh = {
       label   : componentsMap[key].title,
@@ -37,19 +39,35 @@ module.exports = function generateRoutes(showCaseTargetPath, componentsMap, docs
       zh      : '',
       language: 'en'
     }
-    if (!reverseMap[componentsMap[key].type]) {
-      reverseMap[componentsMap[key].type] = [zh, en];
+    if(componentsMap[key].category === 'Components-Ext') {
+      if (!reverseMap_ext[componentsMap[key].type]) {
+          reverseMap_ext[componentsMap[key].type] = [zh, en]; 
+      } else {
+        reverseMap_ext[componentsMap[key].type].push(zh);
+        reverseMap_ext[componentsMap[key].type].push(en);
+      }
     } else {
-      reverseMap[componentsMap[key].type].push(zh);
-      reverseMap[componentsMap[key].type].push(en);
+      if (!reverseMap[componentsMap[key].type]) {
+        reverseMap[componentsMap[key].type] = [zh, en]; 
+      } else {
+          reverseMap[componentsMap[key].type].push(zh);
+          reverseMap[componentsMap[key].type].push(en);
+      }
     }
     const moduleName = capitalizeFirstLetter(camelCase(key));
     routes += `  {'path': 'components/${key}', 'loadChildren': './${key}/index.module#NzDemo${moduleName}Module'},\n`;
   }
+
   for (const key in reverseMap) {
     components.push({
       name    : key,
       children: reverseMap[key]
+    })
+  }
+  for (const key in reverseMap_ext) {
+    components_ext.push({
+      name    : key,
+      children: reverseMap_ext[key]
     })
   }
 
@@ -63,10 +81,21 @@ module.exports = function generateRoutes(showCaseTargetPath, componentsMap, docs
     Localization  : 6,
     Other         : 7,
   };
+
+  const sortMap_ext = {
+    Business       : 0,
+    UI             : 1
+  };
   components.sort((pre, next) => {
     return sortMap[pre.name] - sortMap[next.name];
   });
-  const fileContent = templateRouter.replace(/{{intro}}/g, JSON.stringify(intro, null, 2)).replace(/{{components}}/g, JSON.stringify(components, null, 2)).replace(/{{routes}}/g, routes);
+  components_ext.sort((pre, next) => {
+    return sortMap_ext[pre.name] - sortMap_ext[next.name];
+  });
+  const fileContent = templateRouter.replace(/{{intro}}/g, JSON.stringify(intro, null, 2))
+    .replace(/{{components_ext}}/g, JSON.stringify(components_ext, null, 2))
+    .replace(/{{components}}/g, JSON.stringify(components, null, 2))
+    .replace(/{{routes}}/g, routes);
   fs.writeFileSync(path.join(showCaseTargetPath, `router.ts`), fileContent);
 
 };
