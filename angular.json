@@ -23,11 +23,11 @@
             ],
             "styles": [
               "site/src/styles.less",
-              "../node_modules/viewerjs/dist/viewer.min.css"
+              "node_modules/viewerjs/dist/viewer.min.css"
             ],
             "scripts": [
               "node_modules/lodash/lodash.js",
-              "../node_modules/viewerjs/dist/viewer.min.js"
+              "node_modules/viewerjs/dist/viewer.min.js"
             ]
           },
           "configurations": {
@@ -69,11 +69,11 @@
             "polyfills": "./components/polyfills.ts",
             "tsConfig": "./components/tsconfig.spec.json",
             "styles": [
-              "../node_modules/viewerjs/dist/viewer.min.css"
+              "node_modules/viewerjs/dist/viewer.min.css"
             ],
             "scripts": [
               "node_modules/lodash/lodash.js",
-              "../node_modules/viewerjs/dist/viewer.min.js"
+              "node_modules/viewerjs/dist/viewer.min.js"
             ]
           }
         },
