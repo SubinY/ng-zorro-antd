@@ -40,7 +40,12 @@
 
 ### Edit Doc Notice
 
-### 组件文档基于Markdown文件生成，每个组件中都必须有以下目录
+#### 运行命令 
+
+* **npm run site:start**   本地运行
+* **npm run doc**          打包部署
+
+#### 组件文档基于Markdown文件生成，每个组件中都必须有以下目录
 
 * **demo** 存放示例，通过.md文档生成对应的组件基本描述; .ts文件为具体的示例代码
 * **doc**  描述组件基本属性，其中.md文件中'category'代表大类分组，'type'代表小类分组，'title'代表组件选择器
