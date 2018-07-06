@@ -53,6 +53,9 @@ title: Area-down
 ```
 * **index.ts** 为每个组件的入口文件
 
+### Other
+
+* 部署到github page上的docs文件是打包后的文件，这与zorro仓库上的docs（非组件类的md文档文件夹）有冲突，1ziton上的docs1就是原zorro仓库上的docs文件，故在push zorro仓库的时候要注意这个地方可能会有冲突影响，更新前把docs1文件改为docs文件
 
 ## Features（y1.0.0）
 
