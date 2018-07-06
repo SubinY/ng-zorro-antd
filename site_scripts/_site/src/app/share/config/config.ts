@@ -17,7 +17,7 @@ export const IPS_CERTIFICATE_KEY = 'V6TI6ikg2NZOqcwE'; // IPS免密登录密匙
 /**passport服务地址 */
 export const PASSPORT_URL = environment.PASSPORT_URL;
 /**登陆服务地址 */
-export const OAUTH_LOGIN_URL = PASSPORT_URL + 'oauth/authorize?client_id=scm&response_type=token&redirect_uri=' + window.location.origin + '/';
+export const OAUTH_LOGIN_URL = PASSPORT_URL + 'oauth/authorize?client_id=scm&response_type=token&redirect_uri=' + window.location.href + '/';
 /**退出登陆服务 */
 export const LOGOUT_URL = '/logout';
 /**访问领域（获取当前登录用户url），token */
